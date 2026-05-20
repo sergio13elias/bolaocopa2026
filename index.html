@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bolao Copa 2026 ZAPZAP</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:Arial,sans-serif;background:#f0f2f5;padding-bottom:90px;}
+.hdr{background:#002776;padding:20px 16px;text-align:center;}
+.hdr h1{color:#ffdf00;font-size:22px;line-height:1.3;}
+.hdr h2{color:rgba(255,255,255,.8);font-size:13px;margin-top:4px;}
+.info{background:#ffdf00;padding:10px 16px;}
+.info p{color:#002776;font-size:13px;font-weight:700;margin-bottom:3px;}
+.card{background:#fff;border-radius:12px;padding:14px;margin:12px 12px 0;box-shadow:0 2px 8px rgba(0,0,0,.08);}
+.regras{background:#002776;border-radius:12px;padding:14px;margin:12px 12px 0;color:#fff;}
+.regras h3{color:#ffdf00;font-size:16px;margin-bottom:10px;}
+.rg{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.ri{background:rgba(255,255,255,.1);border-radius:8px;padding:8px;font-size:12px;}
+.ri b{display:block;font-size:20px;color:#ffdf00;}
+label{display:block;font-weight:700;font-size:14px;color:#002776;margin-bottom:6px;}
+.inp{width:100%;border:2px solid #dde1e7;border-radius:10px;padding:12px;font-size:16px;font-weight:600;outline:none;}
+.inp:focus{border-color:#009c3b;}
+.prog-wrap{font-size:12px;font-weight:700;color:#666;}
+.prog-lbl{display:flex;justify-content:space-between;margin-bottom:4px;}
+.prog-bg{height:8px;background:#dde1e7;border-radius:4px;overflow:hidden;}
+.prog-bar{height:100%;background:#009c3b;border-radius:4px;transition:width .3s;width:0%;}
+.fase-hdr{margin:14px 12px 4px;background:#009c3b;border-radius:8px;padding:6px 14px;color:#fff;font-size:13px;font-weight:700;}
+.fase-hdr.f32{background:#e67e00;}
+.fase-hdr.foi{background:#8e44ad;}
+.fase-hdr.fqu{background:#c0392b;}
+.fase-hdr.fse{background:#16213e;}
+.fase-hdr.ffi{background:#ffdf00;color:#002776;}
+.grp{font-size:11px;font-weight:700;color:#999;letter-spacing:1px;padding:4px 12px 0;}
+.jogo{background:#fff;border-radius:12px;margin:4px 12px;box-shadow:0 2px 6px rgba(0,0,0,.07);border:2px solid transparent;overflow:hidden;}
+.jogo.ok{border-color:#009c3b;}
+.jogo-top{display:flex;justify-content:space-between;padding:5px 10px;background:#f7f8fa;font-size:10px;color:#999;font-weight:700;}
+.jogo-body{display:flex;align-items:center;padding:8px 10px;gap:6px;}
+.time{flex:1;font-weight:700;font-size:13px;line-height:1.2;}
+.time.a{text-align:right;}
+.time.b{text-align:left;}
+.sc-wrap{display:flex;align-items:center;gap:3px;flex-shrink:0;}
+.sc{width:42px;height:42px;border:2px solid #dde1e7;border-radius:8px;text-align:center;font-size:18px;font-weight:700;outline:none;-webkit-appearance:none;appearance:none;background:#fff;color:#002776;padding:0;}
+.sc:focus{border-color:#009c3b;background:#f0fff4;}
+.sep{font-size:18px;color:#ccc;}
+.finais{background:#002776;border-radius:12px;padding:16px;margin:12px 12px 0;color:#fff;}
+.finais h3{color:#ffdf00;font-size:18px;margin-bottom:12px;text-align:center;}
+.fi-row{margin-bottom:10px;}
+.fi-row label{color:rgba(255,255,255,.9);font-size:13px;margin-bottom:5px;}
+.fi-pts{background:#ffdf00;color:#002776;font-size:12px;font-weight:700;padding:2px 7px;border-radius:8px;margin-left:6px;}
+.fi-inp{width:100%;padding:11px 12px;border-radius:9px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);color:#fff;font-size:15px;font-weight:600;outline:none;-webkit-appearance:none;}
+.fi-inp::placeholder{color:rgba(255,255,255,.4);}
+.fi-inp:focus{border-color:#ffdf00;}
+.bottom{position:fixed;bottom:0;left:0;right:0;padding:10px 14px 16px;background:linear-gradient(to top,#fff 70%,transparent);}
+.btn-main{width:100%;padding:16px;background:#009c3b;color:#fff;font-size:17px;font-weight:700;border:none;border-radius:12px;cursor:pointer;letter-spacing:.5px;}
+.btn-main:active{background:#007a2f;}
+/* TELA COMPROVANTE */
+#tela-comp{display:none;position:fixed;inset:0;background:#f0f2f5;z-index:999;overflow-y:auto;padding-bottom:90px;}
+.comp-bar{background:#002776;padding:12px 14px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:10;}
+.btn-voltar{background:rgba(255,255,255,.15);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:14px;font-weight:700;cursor:pointer;}
+.comp-titulo{flex:1;color:#ffdf00;font-weight:700;font-size:15px;text-align:center;}
+.btn-share-top{background:#ffdf00;color:#002776;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:700;cursor:pointer;}
+.comp-dica{background:#fff8e1;border:2px solid #ffdf00;border-radius:10px;margin:12px;padding:12px;font-size:13px;color:#7b5e00;font-weight:600;text-align:center;line-height:1.7;}
+#comp-conteudo{margin:0 12px;}
+.comp-cabecalho{background:#002776;border-radius:12px;padding:14px;color:#fff;text-align:center;margin-bottom:8px;}
+.comp-cabecalho h2{color:#ffdf00;font-size:18px;}
+.comp-cabecalho p{color:rgba(255,255,255,.7);font-size:12px;margin-top:3px;}
+.comp-nome{background:#ffdf00;color:#002776;font-weight:700;font-size:14px;text-align:center;padding:8px;border-radius:8px;margin-bottom:8px;}
+.comp-palpites{background:#002776;border-radius:12px;padding:14px;color:#fff;margin-bottom:8px;}
+.comp-palpites h3{color:#ffdf00;font-size:15px;margin-bottom:10px;text-align:center;}
+.cp-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.cp-item{background:rgba(255,255,255,.1);border-radius:8px;padding:8px;}
+.cp-item .lb{font-size:10px;color:rgba(255,255,255,.6);font-weight:700;}
+.cp-item .vl{font-size:14px;font-weight:700;margin-top:2px;}
+.cp-item .pt{font-size:11px;color:#ffdf00;}
+.comp-jogo-linha{display:flex;align-items:center;padding:4px 6px;font-size:11px;border-bottom:1px solid #eee;}
+.comp-jogo-linha:nth-child(even){background:#fafafa;}
+.cj-n{color:#ccc;width:22px;font-size:10px;flex-shrink:0;}
+.cj-d{color:#aaa;width:44px;flex-shrink:0;}
+.cj-a{flex:1;text-align:right;font-weight:700;color:#002776;padding-right:4px;font-size:11px;}
+.cj-pl{min-width:38px;text-align:center;font-weight:700;font-size:11px;padding:2px 4px;border-radius:4px;flex-shrink:0;}
+.cj-pl.p{background:#009c3b;color:#fff;}
+.cj-pl.v{background:#ddd;color:#999;}
+.cj-b{flex:1;font-weight:700;color:#002776;padding-left:4px;font-size:11px;}
+.comp-rodape{background:#ffdf00;color:#002776;font-weight:700;font-size:12px;text-align:center;padding:12px;border-radius:10px;margin-top:10px;line-height:1.7;}
+.comp-bottom{position:fixed;bottom:0;left:0;right:0;padding:10px 14px 16px;background:linear-gradient(to top,#fff 70%,transparent);}
+.btn-wpp{width:100%;padding:15px;background:#25d366;color:#fff;font-size:17px;font-weight:700;border:none;border-radius:12px;cursor:pointer;}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <h1>&#9917; Bol&atilde;o da Copa 2026<br>ZAPZAP</h1>
+  <h2>Amigos Apaixonados por Futebol</h2>
+</div>
+
+<div class="info">
+  <p>&#128176; R$ 20,00 por inscri&ccedil;&atilde;o &mdash; pode jogar mais de um!</p>
+  <p>&#128179; PIX para pagamento: <strong>27 99913-5090</strong></p>
+  <p>&#128172; D&uacute;vidas no ZAP: <strong>27 99913-5090</strong></p>
+</div>
+
+<div class="card" style="background:#fff8e1;border:2px solid #ffdf00;">
+  <strong style="color:#002776;font-size:14px;display:block;margin-bottom:8px;">&#128203; Como participar</strong>
+  <ol style="padding-left:16px;font-size:13px;line-height:2;">
+    <li>Preencha seu <strong>nome</strong></li>
+    <li>Digite os <strong>placares</strong> dos jogos</li>
+    <li>Escolha <strong>campe&atilde;, vice, artilheiro e vice</strong></li>
+    <li>Toque em <strong>"Salvar em PDF para enviar"</strong></li>
+    <li>Toque em <strong>"Compartilhar"</strong> e envie pelo WhatsApp para <strong>(27) 99913-5090</strong></li>
+    <li>Fa&ccedil;a o <strong>PIX de R$ 20,00</strong> para confirmar!</li>
+  </ol>
+</div>
+
+<div class="regras">
+  <h3>&#127942; Pontua&ccedil;&atilde;o</h3>
+  <div class="rg">
+    <div class="ri"><b>3 pts</b>Placar exato</div>
+    <div class="ri"><b>1 pt</b>Vencedor/empate</div>
+    <div class="ri"><b>5 pts</b>Sele&ccedil;&atilde;o Campe&atilde;</div>
+    <div class="ri"><b>3 pts</b>Vice-Campe&atilde;</div>
+    <div class="ri"><b>5 pts</b>Artilheiro</div>
+    <div class="ri"><b>3 pts</b>Vice-Artilheiro</div>
+  </div>
+</div>
+
+<div class="card">
+  <label>&#128100; Seu nome completo</label>
+  <input class="inp" type="text" id="nome" placeholder="Digite seu nome..." autocomplete="name">
+</div>
+
+<div class="card prog-wrap">
+  <div class="prog-lbl"><span>&#127919; Jogos preenchidos</span><span id="ptxt">0 / 104</span></div>
+  <div class="prog-bg"><div class="prog-bar" id="pbar"></div></div>
+</div>
+
+<div id="lista-jogos"></div>
+
+<div class="finais">
+  <h3>&#11088; Palpites Finais</h3>
+  <div class="fi-row">
+    <label>&#127942; Campe&atilde; <span class="fi-pts">5 pts</span></label>
+    <input class="fi-inp" type="text" id="campea" placeholder="Ex: Brasil...">
+  </div>
+  <div class="fi-row">
+    <label>&#129352; Vice-Campe&atilde; <span class="fi-pts">3 pts</span></label>
+    <input class="fi-inp" type="text" id="vice" placeholder="Ex: Argentina...">
+  </div>
+  <div class="fi-row">
+    <label>&#9917; Artilheiro <span class="fi-pts">5 pts</span></label>
+    <input class="fi-inp" type="text" id="artilheiro" placeholder="Nome do jogador...">
+  </div>
+  <div class="fi-row">
+    <label>&#129349; Vice-Artilheiro <span class="fi-pts">3 pts</span></label>
+    <input class="fi-inp" type="text" id="vart" placeholder="Nome do jogador...">
+  </div>
+</div>
+
+<div class="bottom">
+  <button class="btn-main" onclick="mostrarComprovante()">&#128196; SALVAR EM PDF PARA ENVIAR</button>
+</div>
+
+<!-- TELA COMPROVANTE -->
+<div id="tela-comp">
+  <div class="comp-bar">
+    <button class="btn-voltar" onclick="fecharComp()">&#8592; Voltar</button>
+    <span class="comp-titulo">&#128196; Comprovante</span>
+    <button class="btn-share-top" onclick="compartilhar()">Compartilhar &#8679;</button>
+  </div>
+  <div class="comp-dica">
+    Toque em <strong>"Compartilhar &#8679;"</strong> acima ou no bot&atilde;o verde abaixo<br>
+    para enviar pelo WhatsApp para <strong>(27) 99913-5090</strong>
+  </div>
+  <div id="comp-conteudo"></div>
+  <div class="comp-bottom">
+    <button class="btn-wpp" onclick="compartilhar()">&#128242; COMPARTILHAR NO WHATSAPP</button>
+  </div>
+</div>
+
+<script>
+var JOGOS = [
+  {n:1,f:"G",g:"A",d:"11/Jun",h:"16:00",a:"MEXICO",b:"AFRICA DO S."},
+  {n:2,f:"G",g:"A",d:"11/Jun",h:"23:00",a:"COREIA DO S.",b:"REP. CHECA"},
+  {n:7,f:"G",g:"B",d:"12/Jun",h:"16:00",a:"CANADA",b:"BOSNIA"},
+  {n:19,f:"G",g:"D",d:"12/Jun",h:"22:00",a:"EUA",b:"PARAGUAI"},
+  {n:8,f:"G",g:"B",d:"13/Jun",h:"16:00",a:"CATAR",b:"SUICA"},
+  {n:13,f:"G",g:"C",d:"13/Jun",h:"19:00",a:"BRASIL",b:"MARROCOS"},
+  {n:14,f:"G",g:"C",d:"13/Jun",h:"22:00",a:"HAITI",b:"ESCOCIA"},
+  {n:20,f:"G",g:"D",d:"14/Jun",h:"01:00",a:"AUSTRALIA",b:"TURQUIA"},
+  {n:25,f:"G",g:"E",d:"14/Jun",h:"14:00",a:"ALEMANHA",b:"CURACAU"},
+  {n:31,f:"G",g:"F",d:"14/Jun",h:"17:00",a:"HOLANDA",b:"JAPAO"},
+  {n:26,f:"G",g:"E",d:"14/Jun",h:"20:00",a:"C.MARFIM",b:"EQUADOR"},
+  {n:32,f:"G",g:"F",d:"14/Jun",h:"23:00",a:"SUECIA",b:"TUNISIA"},
+  {n:43,f:"G",g:"H",d:"15/Jun",h:"13:00",a:"ESPANHA",b:"CABO VERDE"},
+  {n:37,f:"G",g:"G",d:"15/Jun",h:"16:00",a:"BELGICA",b:"EGITO"},
+  {n:44,f:"G",g:"H",d:"15/Jun",h:"19:00",a:"A.SAUDITA",b:"URUGUAI"},
+  {n:38,f:"G",g:"G",d:"15/Jun",h:"22:00",a:"IRA",b:"N.ZELANDIA"},
+  {n:49,f:"G",g:"I",d:"16/Jun",h:"16:00",a:"FRANCA",b:"SENEGAL"},
+  {n:50,f:"G",g:"I",d:"16/Jun",h:"19:00",a:"IRAQUE",b:"NORUEGA"},
+  {n:55,f:"G",g:"J",d:"16/Jun",h:"22:00",a:"ARGENTINA",b:"ARGELIA"},
+  {n:56,f:"G",g:"J",d:"17/Jun",h:"01:00",a:"AUSTRIA",b:"JORDANIA"},
+  {n:61,f:"G",g:"K",d:"17/Jun",h:"14:00",a:"PORTUGAL",b:"RD CONGO"},
+  {n:67,f:"G",g:"L",d:"17/Jun",h:"17:00",a:"INGLATERRA",b:"CROACIA"},
+  {n:68,f:"G",g:"L",d:"17/Jun",h:"20:00",a:"GANA",b:"PANAMA"},
+  {n:62,f:"G",g:"K",d:"17/Jun",h:"23:00",a:"UZBEQUISTAO",b:"COLOMBIA"},
+  {n:3,f:"G",g:"A",d:"18/Jun",h:"13:00",a:"REP.CHECA",b:"AFRICA DO S."},
+  {n:9,f:"G",g:"B",d:"18/Jun",h:"16:00",a:"SUICA",b:"BOSNIA"},
+  {n:10,f:"G",g:"B",d:"18/Jun",h:"19:00",a:"CANADA",b:"CATAR"},
+  {n:4,f:"G",g:"A",d:"18/Jun",h:"22:00",a:"MEXICO",b:"COREIA DO S."},
+  {n:21,f:"G",g:"D",d:"19/Jun",h:"16:00",a:"EUA",b:"AUSTRALIA"},
+  {n:15,f:"G",g:"C",d:"19/Jun",h:"19:00",a:"ESCOCIA",b:"MARROCOS"},
+  {n:16,f:"G",g:"C",d:"19/Jun",h:"21:30",a:"BRASIL",b:"HAITI"},
+  {n:22,f:"G",g:"D",d:"20/Jun",h:"00:00",a:"TURQUIA",b:"PARAGUAI"},
+  {n:33,f:"G",g:"F",d:"20/Jun",h:"14:00",a:"HOLANDA",b:"SUECIA"},
+  {n:27,f:"G",g:"E",d:"20/Jun",h:"17:00",a:"ALEMANHA",b:"C.MARFIM"},
+  {n:28,f:"G",g:"E",d:"20/Jun",h:"21:00",a:"EQUADOR",b:"CURACAU"},
+  {n:34,f:"G",g:"F",d:"21/Jun",h:"01:00",a:"TUNISIA",b:"JAPAO"},
+  {n:45,f:"G",g:"H",d:"21/Jun",h:"13:00",a:"ESPANHA",b:"A.SAUDITA"},
+  {n:39,f:"G",g:"G",d:"21/Jun",h:"16:00",a:"BELGICA",b:"IRA"},
+  {n:46,f:"G",g:"H",d:"21/Jun",h:"19:00",a:"URUGUAI",b:"CABO VERDE"},
+  {n:40,f:"G",g:"G",d:"21/Jun",h:"22:00",a:"N.ZELANDIA",b:"EGITO"},
+  {n:57,f:"G",g:"J",d:"22/Jun",h:"14:00",a:"ARGENTINA",b:"AUSTRIA"},
+  {n:51,f:"G",g:"I",d:"22/Jun",h:"18:00",a:"FRANCA",b:"IRAQUE"},
+  {n:52,f:"G",g:"I",d:"22/Jun",h:"21:00",a:"NORUEGA",b:"SENEGAL"},
+  {n:58,f:"G",g:"J",d:"23/Jun",h:"00:00",a:"JORDANIA",b:"ARGELIA"},
+  {n:63,f:"G",g:"K",d:"23/Jun",h:"14:00",a:"PORTUGAL",b:"UZBEQUISTAO"},
+  {n:69,f:"G",g:"L",d:"23/Jun",h:"17:00",a:"INGLATERRA",b:"GANA"},
+  {n:70,f:"G",g:"L",d:"23/Jun",h:"20:00",a:"PANAMA",b:"CROACIA"},
+  {n:64,f:"G",g:"K",d:"23/Jun",h:"23:00",a:"COLOMBIA",b:"RD CONGO"},
+  {n:11,f:"G",g:"B",d:"24/Jun",h:"16:00",a:"BOSNIA",b:"CATAR"},
+  {n:12,f:"G",g:"B",d:"24/Jun",h:"16:00",a:"SUICA",b:"CANADA"},
+  {n:17,f:"G",g:"C",d:"24/Jun",h:"19:00",a:"MARROCOS",b:"HAITI"},
+  {n:18,f:"G",g:"C",d:"24/Jun",h:"19:00",a:"ESCOCIA",b:"BRASIL"},
+  {n:5,f:"G",g:"A",d:"24/Jun",h:"22:00",a:"AFRICA DO S.",b:"COREIA DO S."},
+  {n:6,f:"G",g:"A",d:"24/Jun",h:"22:00",a:"REP.CHECA",b:"MEXICO"},
+  {n:29,f:"G",g:"E",d:"25/Jun",h:"17:00",a:"EQUADOR",b:"ALEMANHA"},
+  {n:30,f:"G",g:"E",d:"25/Jun",h:"17:00",a:"CURACAU",b:"C.MARFIM"},
+  {n:35,f:"G",g:"F",d:"25/Jun",h:"20:00",a:"TUNISIA",b:"HOLANDA"},
+  {n:36,f:"G",g:"F",d:"25/Jun",h:"20:00",a:"JAPAO",b:"SUECIA"},
+  {n:23,f:"G",g:"D",d:"25/Jun",h:"23:00",a:"TURQUIA",b:"EUA"},
+  {n:24,f:"G",g:"D",d:"25/Jun",h:"23:00",a:"PARAGUAI",b:"AUSTRALIA"},
+  {n:53,f:"G",g:"I",d:"26/Jun",h:"16:00",a:"NORUEGA",b:"FRANCA"},
+  {n:54,f:"G",g:"I",d:"26/Jun",h:"16:00",a:"SENEGAL",b:"IRAQUE"},
+  {n:47,f:"G",g:"H",d:"26/Jun",h:"21:00",a:"URUGUAI",b:"ESPANHA"},
+  {n:48,f:"G",g:"H",d:"26/Jun",h:"21:00",a:"CABO VERDE",b:"A.SAUDITA"},
+  {n:41,f:"G",g:"G",d:"27/Jun",h:"00:00",a:"N.ZELANDIA",b:"BELGICA"},
+  {n:42,f:"G",g:"G",d:"27/Jun",h:"00:00",a:"EGITO",b:"IRA"},
+  {n:71,f:"G",g:"L",d:"27/Jun",h:"18:00",a:"PANAMA",b:"INGLATERRA"},
+  {n:72,f:"G",g:"L",d:"27/Jun",h:"18:00",a:"CROACIA",b:"GANA"},
+  {n:65,f:"G",g:"K",d:"27/Jun",h:"20:30",a:"COLOMBIA",b:"PORTUGAL"},
+  {n:66,f:"G",g:"K",d:"27/Jun",h:"20:30",a:"RD CONGO",b:"UZBEQUISTAO"},
+  {n:59,f:"G",g:"J",d:"27/Jun",h:"23:00",a:"JORDANIA",b:"ARGENTINA"},
+  {n:60,f:"G",g:"J",d:"27/Jun",h:"23:00",a:"ARGELIA",b:"AUSTRIA"},
+  {n:73,f:"32",g:"",d:"28/Jun",h:"16:00",a:"2A",b:"2B"},
+  {n:76,f:"32",g:"",d:"29/Jun",h:"14:00",a:"1C",b:"2F"},
+  {n:74,f:"32",g:"",d:"29/Jun",h:"17:30",a:"1E",b:"3o grupo"},
+  {n:75,f:"32",g:"",d:"29/Jun",h:"22:00",a:"1F",b:"2C"},
+  {n:78,f:"32",g:"",d:"30/Jun",h:"14:00",a:"2E",b:"2I"},
+  {n:77,f:"32",g:"",d:"30/Jun",h:"18:00",a:"1I",b:"3o grupo"},
+  {n:79,f:"32",g:"",d:"30/Jun",h:"22:00",a:"1A",b:"3o grupo"},
+  {n:80,f:"32",g:"",d:"01/Jul",h:"13:00",a:"1L",b:"3o grupo"},
+  {n:82,f:"32",g:"",d:"01/Jul",h:"17:00",a:"1G",b:"3o grupo"},
+  {n:81,f:"32",g:"",d:"01/Jul",h:"21:00",a:"1D",b:"3o grupo"},
+  {n:84,f:"32",g:"",d:"02/Jul",h:"16:00",a:"1H",b:"2J"},
+  {n:83,f:"32",g:"",d:"02/Jul",h:"20:00",a:"2K",b:"2L"},
+  {n:85,f:"32",g:"",d:"03/Jul",h:"00:00",a:"1B",b:"3o grupo"},
+  {n:88,f:"32",g:"",d:"03/Jul",h:"15:00",a:"2D",b:"2G"},
+  {n:86,f:"32",g:"",d:"03/Jul",h:"19:00",a:"1J",b:"2H"},
+  {n:87,f:"32",g:"",d:"03/Jul",h:"22:30",a:"1K",b:"3o grupo"},
+  {n:90,f:"OI",g:"",d:"04/Jul",h:"14:00",a:"V.J73",b:"V.J75"},
+  {n:89,f:"OI",g:"",d:"04/Jul",h:"18:00",a:"V.J74",b:"V.J77"},
+  {n:91,f:"OI",g:"",d:"05/Jul",h:"17:00",a:"V.J76",b:"V.J78"},
+  {n:92,f:"OI",g:"",d:"05/Jul",h:"21:00",a:"V.J79",b:"V.J80"},
+  {n:93,f:"OI",g:"",d:"06/Jul",h:"16:00",a:"V.J83",b:"V.J84"},
+  {n:94,f:"OI",g:"",d:"06/Jul",h:"21:00",a:"V.J81",b:"V.J82"},
+  {n:95,f:"OI",g:"",d:"07/Jul",h:"13:00",a:"V.J86",b:"V.J88"},
+  {n:96,f:"OI",g:"",d:"07/Jul",h:"17:00",a:"V.J85",b:"V.J87"},
+  {n:97,f:"QU",g:"",d:"09/Jul",h:"17:00",a:"V.J89",b:"V.J90"},
+  {n:98,f:"QU",g:"",d:"10/Jul",h:"16:00",a:"V.J93",b:"V.J94"},
+  {n:99,f:"QU",g:"",d:"11/Jul",h:"18:00",a:"V.J91",b:"V.J92"},
+  {n:100,f:"QU",g:"",d:"11/Jul",h:"22:00",a:"V.J95",b:"V.J96"},
+  {n:101,f:"SE",g:"",d:"14/Jul",h:"16:00",a:"V.J97",b:"V.J98"},
+  {n:102,f:"SE",g:"",d:"15/Jul",h:"16:00",a:"V.J99",b:"V.J100"},
+  {n:103,f:"FI",g:"",d:"18/Jul",h:"18:00",a:"Perd.J101",b:"Perd.J102",e:"3o Lugar"},
+  {n:104,f:"FI",g:"",d:"19/Jul",h:"16:00",a:"Venc.J101",b:"Venc.J102",e:"FINAL"}
+];
+
+var FASES = {
+  "G":  {label:"FASE DE GRUPOS",    css:""},
+  "32": {label:"SEGUNDA FASE (32-avos)", css:"f32"},
+  "OI": {label:"OITAVAS DE FINAL",  css:"foi"},
+  "QU": {label:"QUARTAS DE FINAL",  css:"fqu"},
+  "SE": {label:"SEMIFINAL",         css:"fse"},
+  "FI": {label:"FINAL",             css:"ffi"}
+};
+
+function init() {
+  var container = document.getElementById("lista-jogos");
+  var html = "";
+  var lf = null, lg = null;
+
+  for (var i = 0; i < JOGOS.length; i++) {
+    var j = JOGOS[i];
+
+    if (j.f !== lf) {
+      var fase = FASES[j.f];
+      html += '<div class="fase-hdr ' + fase.css + '">' + fase.label + '</div>';
+      lf = j.f;
+      lg = null;
+    }
+
+    if (j.f === "G" && j.g !== lg) {
+      html += '<div class="grp">GRUPO ' + j.g + '</div>';
+      lg = j.g;
+    }
+
+    var extra = j.e ? '<span style="font-size:10px;font-weight:700;color:#e67e00;margin-left:4px;">' + j.e + '</span>' : '';
+
+    html += '<div class="jogo" id="jg' + j.n + '">';
+    html += '<div class="jogo-top"><span>Jogo ' + j.n + extra + '</span><span>' + j.d + ' ' + j.h + '</span></div>';
+    html += '<div class="jogo-body">';
+    html += '<span class="time a">' + j.a + '</span>';
+    html += '<div class="sc-wrap">';
+    html += '<input class="sc" type="number" min="0" max="99" inputmode="numeric" id="ga' + j.n + '" placeholder="-" oninput="atualizar(' + j.n + ')">';
+    html += '<span class="sep">x</span>';
+    html += '<input class="sc" type="number" min="0" max="99" inputmode="numeric" id="gb' + j.n + '" placeholder="-" oninput="atualizar(' + j.n + ')">';
+    html += '</div>';
+    html += '<span class="time b">' + j.b + '</span>';
+    html += '</div></div>';
+  }
+
+  container.innerHTML = html;
+}
+
+function atualizar(n) {
+  var a = document.getElementById("ga" + n).value;
+  var b = document.getElementById("gb" + n).value;
+  var card = document.getElementById("jg" + n);
+  if (a !== "" && b !== "") {
+    card.className = "jogo ok";
+  } else {
+    card.className = "jogo";
+  }
+  atualizarProg();
+}
+
+function atualizarProg() {
+  var total = JOGOS.length;
+  var preench = 0;
+  for (var i = 0; i < JOGOS.length; i++) {
+    var a = document.getElementById("ga" + JOGOS[i].n);
+    var b = document.getElementById("gb" + JOGOS[i].n);
+    if (a && b && a.value !== "" && b.value !== "") preench++;
+  }
+  document.getElementById("ptxt").textContent = preench + " / " + total;
+  document.getElementById("pbar").style.width = Math.round(preench / total * 100) + "%";
+}
+
+function mostrarComprovante() {
+  var nome = document.getElementById("nome").value.trim();
+  if (!nome) {
+    alert("Preencha seu nome antes de continuar!");
+    document.getElementById("nome").focus();
+    return;
+  }
+
+  var campea = document.getElementById("campea").value.trim() || "-";
+  var vice   = document.getElementById("vice").value.trim()   || "-";
+  var art    = document.getElementById("artilheiro").value.trim() || "-";
+  var vart   = document.getElementById("vart").value.trim()   || "-";
+  var agora  = new Date().toLocaleString("pt-BR");
+
+  var preench = 0;
+  for (var i = 0; i < JOGOS.length; i++) {
+    var a = document.getElementById("ga" + JOGOS[i].n);
+    var b = document.getElementById("gb" + JOGOS[i].n);
+    if (a && b && a.value !== "" && b.value !== "") preench++;
+  }
+
+  var lf = null, lg = null;
+  var jogosHTML = "";
+  for (var i = 0; i < JOGOS.length; i++) {
+    var j = JOGOS[i];
+    if (j.f !== lf) {
+      jogosHTML += '<div><span class="cfase ' + FASES[j.f].css + '">' + FASES[j.f].label + '</span></div>';
+      lf = j.f; lg = null;
+    }
+    if (j.f === "G" && j.g !== lg) {
+      jogosHTML += '<div style="font-size:10px;font-weight:700;color:#999;letter-spacing:1px;padding:3px 0;">GRUPO ' + j.g + '</div>';
+      lg = j.g;
+    }
+    var va = document.getElementById("ga" + j.n) ? document.getElementById("ga" + j.n).value : "";
+    var vb = document.getElementById("gb" + j.n) ? document.getElementById("gb" + j.n).value : "";
+    var tp = va !== "" && vb !== "";
+    var pl = tp ? va + " x " + vb : "_ x _";
+    var pc = tp ? "p" : "v";
+    var bg = i % 2 === 0 ? "#fff" : "#fafafa";
+    jogosHTML += '<div class="comp-jogo-linha" style="background:' + bg + '">';
+    jogosHTML += '<span class="cj-n">' + j.n + '</span>';
+    jogosHTML += '<span class="cj-d">' + j.d + '</span>';
+    jogosHTML += '<span class="cj-a">' + j.a + '</span>';
+    jogosHTML += '<span class="cj-pl ' + pc + '">' + pl + '</span>';
+    jogosHTML += '<span class="cj-b">' + j.b + '</span>';
+    jogosHTML += '</div>';
+  }
+
+  var html = "";
+  html += '<div class="comp-cabecalho">';
+  html += '<h2>BOLAO COPA 2026 ZAPZAP</h2>';
+  html += '<p>Amigos Apaixonados por Futebol</p>';
+  html += '<p style="font-size:11px;color:rgba(255,255,255,.5);margin-top:4px;">Gerado em ' + agora + '</p>';
+  html += '</div>';
+  html += '<div class="comp-nome">PARTICIPANTE: ' + nome.toUpperCase() + '</div>';
+  html += '<div class="comp-palpites">';
+  html += '<h3>PALPITES FINAIS</h3>';
+  html += '<div class="cp-grid">';
+  html += '<div class="cp-item"><div class="lb">CAMPEA</div><div class="vl">' + campea + '</div><div class="pt">5 pts</div></div>';
+  html += '<div class="cp-item"><div class="lb">VICE</div><div class="vl">' + vice + '</div><div class="pt">3 pts</div></div>';
+  html += '<div class="cp-item"><div class="lb">ARTILHEIRO</div><div class="vl">' + art + '</div><div class="pt">5 pts</div></div>';
+  html += '<div class="cp-item"><div class="lb">VICE-ART.</div><div class="vl">' + vart + '</div><div class="pt">3 pts</div></div>';
+  html += '</div></div>';
+  html += '<div style="font-size:11px;color:#888;text-align:center;padding:5px 0;">' + preench + ' de ' + JOGOS.length + ' placares preenchidos</div>';
+  html += jogosHTML;
+  html += '<div class="comp-rodape">Envie este comprovante para (27) 99913-5090 no WhatsApp<br>e realize o PIX de R$ 20,00 para confirmar sua vaga!</div>';
+
+  document.getElementById("comp-conteudo").innerHTML = html;
+  var tela = document.getElementById("tela-comp");
+  tela.style.display = "block";
+  tela.scrollTop = 0;
+}
+
+function fecharComp() {
+  document.getElementById("tela-comp").style.display = "none";
+}
+
+function compartilhar() {
+  var nome   = document.getElementById("nome").value.trim() || "Participante";
+  var campea = document.getElementById("campea").value.trim() || "-";
+  var vice   = document.getElementById("vice").value.trim()   || "-";
+  var art    = document.getElementById("artilheiro").value.trim() || "-";
+  var vart   = document.getElementById("vart").value.trim()   || "-";
+  var agora  = new Date().toLocaleString("pt-BR");
+
+  var linhas = "";
+  var lf = null;
+  for (var i = 0; i < JOGOS.length; i++) {
+    var j = JOGOS[i];
+    if (j.f !== lf) { linhas += "\n-- " + FASES[j.f].label + " --\n"; lf = j.f; }
+    var va = document.getElementById("ga" + j.n) ? document.getElementById("ga" + j.n).value : "";
+    var vb = document.getElementById("gb" + j.n) ? document.getElementById("gb" + j.n).value : "";
+    if (va !== "" && vb !== "") {
+      linhas += "#" + j.n + " " + j.a + " " + va + "x" + vb + " " + j.b + "\n";
+    }
+  }
+
+  var txt = "BOLAO COPA 2026 ZAPZAP\n"
+    + "Participante: " + nome + "\n"
+    + "Data: " + agora + "\n\n"
+    + "Campea: " + campea + " (5pts)\n"
+    + "Vice: " + vice + " (3pts)\n"
+    + "Artilheiro: " + art + " (5pts)\n"
+    + "Vice-art: " + vart + " (3pts)\n"
+    + linhas
+    + "\nPIX R$20,00: 27 99913-5090";
+
+  var tel = "5527999135090";
+  var enc = encodeURIComponent(txt);
+
+  if (navigator.share) {
+    navigator.share({ title: "Bolao Copa 2026 - " + nome, text: txt, url: "" })
+      .catch(function(e) {
+        if (e.name !== "AbortError") {
+          window.location.href = "whatsapp://send?phone=" + tel + "&text=" + enc;
+        }
+      });
+  } else {
+    window.location.href = "whatsapp://send?phone=" + tel + "&text=" + enc;
+    setTimeout(function() {
+      window.open("https://api.whatsapp.com/send?phone=" + tel + "&text=" + enc, "_blank");
+    }, 1500);
+  }
+}
+
+window.onload = function() { init(); };
+</script>
+</body>
+</html>
