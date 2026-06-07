@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0idXJsKCcjZ3JhZGllbnQnKSI+PC9yZWN0PjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZGllbnQiIGdyYWRpZW50VHJhbnNmb3JtPSJyb3RhdGUoMTI1IDAuNSAwLjUpIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMmZkODFmIj48L3N0b3A+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZTBlMzQyIj48L3N0b3A+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PGc+PGcgZmlsbD0iIzFiMzg1NSIgdHJhbnNmb3JtPSJtYXRyaXgoMy42MDkxNjM4OTI2OTYyOTkyLDAsMCwzLjYwOTE2Mzg5MjY5NjI5OTIsNi4xMjQ5MDM0MzMxNjkzMDgsMTI2Ljc2Mzk0MTEwODE2NTA2KSIgc3Ryb2tlPSIjMGU1Mjc4IiBzdHJva2Utd2lkdGg9IjAuOCI+PHBhdGggZD0iTTYuODUgMEwxLjA3IDBMMS4wNy0xNC4yMkw2LjE4LTE0LjIyUTguOTMtMTQuMjIgMTAuMzYtMTMuMjFRMTEuNzktMTIuMjEgMTEuNzktMTAuMjlMMTEuNzktMTAuMjlRMTEuNzktOS4xOSAxMS4yOC04LjQxUTEwLjc3LTcuNjMgOS43OS03LjI2TDkuNzktNy4yNlExMC45MC02Ljk2IDExLjQ5LTYuMTZRMTIuMDktNS4zNiAxMi4wOS00LjIxTDEyLjA5LTQuMjFRMTIuMDktMi4xMiAxMC43Ny0xLjA3UTkuNDQtMC4wMiA2Ljg1IDBMNi44NSAwWk02LjkwLTYuMDRMNC41MC02LjA0TDQuNTAtMi42NEw2Ljc1LTIuNjRRNy42OC0yLjY0IDguMTctMy4wNlE4LjY3LTMuNDkgOC42Ny00LjI2TDguNjctNC4yNlE4LjY3LTYuMDQgNi45MC02LjA0TDYuOTAtNi4wNFpNNC41MC0xMS41N0w0LjUwLTguMjlMNi4yOS04LjI5UTcuNDEtOC4zMCA3Ljg5LTguNzBROC4zNy05LjEwIDguMzctOS44OEw4LjM3LTkuODhROC4zNy0xMC43OCA3Ljg1LTExLjE4UTcuMzMtMTEuNTcgNi4xOC0xMS41N0w2LjE4LTExLjU3TDQuNTAtMTEuNTdaTTEzLjQyLTQuODJMMTMuNDEtNS4zOFExMy40MS02Ljk2IDE0LjAyLTguMjBRMTQuNjQtOS40MyAxNS43OS0xMC4xMFExNi45NC0xMC43NiAxOC41MC0xMC43NkwxOC41MC0xMC43NlEyMC44Ny0xMC43NiAyMi4yNC05LjI5UTIzLjYwLTcuODIgMjMuNjAtNS4yOUwyMy42MC01LjI5TDIzLjYwLTUuMThRMjMuNjAtMi43MSAyMi4yMy0xLjI1UTIwLjg2IDAuMjAgMTguNTIgMC4yMEwxOC41MiAwLjIwUTE2LjI2IDAuMjAgMTQuODktMS4xNlExMy41My0yLjUxIDEzLjQyLTQuODJMMTMuNDItNC44MlpNMTYuNzEtNS43N0wxNi43MC01LjE4UTE2LjcwLTMuNzEgMTcuMTYtMy4wM1ExNy42Mi0yLjM0IDE4LjUyLTIuMzRMMTguNTItMi4zNFEyMC4yNy0yLjM0IDIwLjMxLTUuMDVMMjAuMzEtNS4wNUwyMC4zMS01LjM4UTIwLjMxLTguMjIgMTguNTAtOC4yMkwxOC41MC04LjIyUTE2Ljg1LTguMjIgMTYuNzEtNS43N0wxNi43MS01Ljc3Wk0yOC41My0xNUwyOC41MyAwTDI1LjIyIDBMMjUuMjItMTVMMjguNTMtMTVaTTM5Ljc5IDBMMzYuNTAgMFEzNi4zMy0wLjMyIDM2LjE5LTAuOTVMMzYuMTktMC45NVEzNS4yOCAwLjIwIDMzLjY1IDAuMjBMMzMuNjUgMC4yMFEzMi4xNiAwLjIwIDMxLjExLTAuNzFRMzAuMDctMS42MSAzMC4wNy0yLjk4TDMwLjA3LTIuOThRMzAuMDctNC43MCAzMS4zNC01LjU4UTMyLjYxLTYuNDYgMzUuMDMtNi40NkwzNS4wMy02LjQ2TDM2LjA0LTYuNDZMMzYuMDQtNy4wMVEzNi4wNC04LjQ3IDM0Ljc5LTguNDdMMzQuNzktOC40N1EzMy42MS04LjQ3IDMzLjYxLTcuMzFMMzMuNjEtNy4zMUwzMC4zMi03LjMxUTMwLjMyLTguODUgMzEuNjMtOS44MFEzMi45My0xMC43NiAzNC45NS0xMC43NlEzNi45Ny0xMC43NiAzOC4xNC05Ljc4UTM5LjMyLTguNzkgMzkuMzUtNy4wN0wzOS4zNS03LjA3TDM5LjM1LTIuMzlRMzkuMzctMC45NCAzOS43OS0wLjE3TDM5Ljc5LTAuMTdMMzkuNzkgMFpNMzQuNDQtMi4xNUwzNC40NC0yLjE1UTM1LjA2LTIuMTUgMzUuNDYtMi40MVEzNS44Ny0yLjY4IDM2LjA0LTMuMDFMMzYuMDQtMy4wMUwzNi4wNC00LjcwTDM1LjA5LTQuNzBRMzMuMzctNC43MCAzMy4zNy0zLjE1TDMzLjM3LTMuMTVRMzMuMzctMi43MSAzMy42Ny0yLjQzUTMzLjk3LTIuMTUgMzQuNDQtMi4xNVpNMzYuODAtMTUuMDNMMzguNjEtMTQuOTJRMzguNjEtMTMuODEgMzcuOTYtMTMuMDNRMzcuMzEtMTIuMjYgMzYuMzYtMTIuMjZMMzYuMzYtMTIuMjZRMzUuNzEtMTIuMjYgMzQuOTItMTIuNjdRMzQuMTMtMTMuMDggMzMuNjQtMTMuMDhMMzMuNjQtMTMuMDhRMzMuMzMtMTMuMDggMzMuMTEtMTIuODZRMzIuODktMTIuNjUgMzIuODktMTIuMjBMMzIuODktMTIuMjBMMzEuMDYtMTIuMjlRMzEuMDYtMTMuMzggMzEuNzEtMTQuMTdRMzIuMzYtMTQuOTYgMzMuMzEtMTQuOTZMMzMuMzEtMTQuOTZRMzMuODAtMTQuOTYgMzQuNTktMTQuNjBRMzUuMzgtMTQuMjUgMzUuNTktMTQuMjBRMzUuODAtMTQuMTUgMzYuMDQtMTQuMTVMMzYuMDQtMTQuMTVRMzYuMzUtMTQuMTUgMzYuNTctMTQuMzdRMzYuODAtMTQuNTggMzYuODAtMTUuMDNMMzYuODAtMTUuMDNaTTQwLjc2LTQuODJMNDAuNzUtNS4zOFE0MC43NS02Ljk2IDQxLjM3LTguMjBRNDEuOTgtOS40MyA0My4xMy0xMC4xMFE0NC4yOS0xMC43NiA0NS44NC0xMC43Nkw0NS44NC0xMC43NlE0OC4yMS0xMC43NiA0OS41OC05LjI5UTUwLjk1LTcuODIgNTAuOTUtNS4yOUw1MC45NS01LjI5TDUwLjk1LTUuMThRNTAuOTUtMi43MSA0OS41OC0xLjI1UTQ4LjIwIDAuMjAgNDUuODYgMC4yMEw0NS44NiAwLjIwUTQzLjYwIDAuMjAgNDIuMjQtMS4xNlE0MC44Ny0yLjUxIDQwLjc2LTQuODJMNDAuNzYtNC44MlpNNDQuMDUtNS43N0w0NC4wNC01LjE4UTQ0LjA0LTMuNzEgNDQuNTAtMy4wM1E0NC45Ni0yLjM0IDQ1Ljg2LTIuMzRMNDUuODYtMi4zNFE0Ny42Mi0yLjM0IDQ3LjY2LTUuMDVMNDcuNjYtNS4wNUw0Ny42Ni01LjM4UTQ3LjY2LTguMjIgNDUuODQtOC4yMkw0NS44NC04LjIyUTQ0LjE5LTguMjIgNDQuMDUtNS43N0w0NC4wNS01Ljc3WiI+PC9wYXRoPjwvZz48L2c+PC9zdmc+">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Bolão Copa 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:Arial,sans-serif;background:#f0f2f5;color:#1a1a2e;}
+.hdr{background:#002776;padding:16px;text-align:center;}
+.hdr h1{color:#ffdf00;font-size:20px;}
+.hdr h2{color:rgba(255,255,255,.7);font-size:12px;margin-top:3px;}
+.tabs{display:flex;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.08);position:sticky;top:0;z-index:10;}
+.tab{flex:1;padding:11px 4px;text-align:center;font-size:12px;font-weight:700;background:none;border:none;cursor:pointer;color:#888;border-bottom:3px solid transparent;}
+.tab.ativo{color:#002776;border-bottom-color:#002776;background:#f0f4ff;}
+.secao{display:none;padding:12px 12px 80px;}
+.secao.ativo{display:block;}
+.st{border-radius:8px;padding:10px 12px;font-size:12px;font-weight:700;margin-bottom:10px;}
+.st-ok{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7;}
+.st-err{background:#ffebee;color:#b71c1c;border:1px solid #ef9a9a;}
+.st-load{background:#fff8e1;color:#7b5e00;border:1px solid #ffe082;}
+.card{background:#fff;border-radius:12px;padding:14px;margin-bottom:10px;box-shadow:0 2px 6px rgba(0,0,0,.07);}
+.card h3{font-size:13px;font-weight:700;color:#002776;margin-bottom:10px;}
+input,textarea{border:1px solid #dde1e7;border-radius:8px;padding:8px 10px;font-size:14px;font-family:Arial,sans-serif;outline:none;width:100%;}
+input:focus,textarea:focus{border-color:#002776;}
+textarea{resize:vertical;min-height:140px;font-size:12px;}
+.pw-wrap{position:relative;}
+.pw-wrap input{padding-right:44px;}
+.pw-eye{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:18px;color:#888;padding:4px;width:auto;}
+.btn{padding:11px 16px;border:none;border-radius:9px;font-size:14px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:8px;}
+.btn-verde{background:#009c3b;color:#fff;}
+.btn-azul{background:#002776;color:#fff;}
+.btn-laranja{background:#e67e00;color:#fff;}
+.btn-roxo{background:#8e44ad;color:#fff;}
+.btn-cinza{background:#f0f2f5;color:#555;border:1px solid #dde1e7;}
+.btn-sm{width:auto;padding:6px 12px;font-size:12px;margin-top:0;}
+.btn:disabled{opacity:.5;cursor:not-allowed;}
+/* FASE SECTION */
+.fase-sec{border:2px solid #e0e3e8;border-radius:10px;margin-bottom:10px;overflow:hidden;}
+.fase-sec-hdr{padding:10px 12px;font-size:13px;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:space-between;}
+.fase-sec-body{padding:10px 12px;}
+.fase-g .fase-sec-hdr{background:#009c3b;}
+.fase-32 .fase-sec-hdr{background:#e67e00;}
+.fase-oi .fase-sec-hdr{background:#8e44ad;}
+/* SWITCH */
+.sw-wrap{display:flex;align-items:center;gap:8px;}
+.sw{position:relative;width:42px;height:24px;flex-shrink:0;}
+.sw input{opacity:0;width:0;height:0;position:absolute;}
+.sw-slider{position:absolute;inset:0;background:#ccc;border-radius:24px;cursor:pointer;transition:.3s;}
+.sw-slider:before{content:"";position:absolute;height:18px;width:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s;}
+.sw input:checked+.sw-slider{background:#009c3b;}
+.sw input:checked+.sw-slider:before{transform:translateX(18px);}
+.sw-label{font-size:13px;font-weight:700;color:#333;}
+/* JOGOS RES */
+.fase-lbl{font-size:11px;font-weight:700;color:#fff;padding:3px 10px;border-radius:4px;margin:8px 0 3px;display:inline-block;}
+.j-row{display:flex;align-items:center;gap:5px;padding:4px 6px;border-radius:6px;margin-bottom:2px;background:#fafafa;border:1px solid #eee;}
+.j-row.ok{background:#f0fff4;border-color:#a5d6a7;}
+.j-n{font-size:10px;color:#aaa;font-weight:700;width:22px;flex-shrink:0;}
+.j-nm{flex:1;font-size:10px;font-weight:700;color:#002776;overflow:hidden;}
+.j-nm span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sc{width:32px;height:30px;text-align:center;font-size:14px;font-weight:700;border:1px solid #c8cdd5;border-radius:5px;-webkit-appearance:none;appearance:none;background:#fff;color:#002776;padding:0;}
+.sc:focus{border-color:#009c3b;}
+.sc-x{font-size:11px;color:#bbb;flex-shrink:0;}
+.prog-bg{height:5px;background:#dde1e7;border-radius:3px;overflow:hidden;margin:6px 0 8px;}
+.prog-fill{height:100%;background:#009c3b;border-radius:3px;transition:width .3s;}
+/* PART */
+.pt-item{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;padding:10px;background:#fafafa;border-radius:8px;margin-bottom:6px;border:1px solid #eee;}
+.pt-nome{font-weight:700;font-size:13px;color:#002776;}
+.pt-info{font-size:11px;color:#888;margin-top:2px;line-height:1.5;}
+.bdg{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:8px;flex-shrink:0;}
+.bdg-ok{background:#e8f5e9;color:#1b5e20;}
+.bdg-warn{background:#fff3e0;color:#e67e00;}
+.bdg-err{background:#ffebee;color:#c0392b;}
+/* FINAL */
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.fg label{display:block;font-size:11px;font-weight:700;color:#666;margin-bottom:4px;}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#002776;color:#fff;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:700;z-index:9999;display:none;box-shadow:0 4px 16px rgba(0,0,0,.3);max-width:90%;text-align:center;}
+/* LOGIN */
+#tela-login{max-width:400px;margin:30px auto;background:#fff;border-radius:14px;padding:22px;box-shadow:0 4px 20px rgba(0,0,0,.12);}
+#tela-login h3{color:#002776;font-size:16px;margin-bottom:6px;}
+#tela-login p{font-size:12px;color:#888;margin-bottom:14px;line-height:1.6;}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <h1>⚙️ Admin — Bolão Copa 2026 ZAPZAP</h1>
+  <h2>Painel do Organizador</h2>
+</div>
+
+<!-- LOGIN -->
+<div id="tela-login">
+  <h3>🔑 Token de Acesso GitHub</h3>
+  <p>Digite seu Personal Access Token (PAT) com permissão <strong>Contents: Read & write</strong> no repositório.<br>
+  O token fica apenas na memória do browser.</p>
+  <div class="pw-wrap">
+    <input type="password" id="inp-token" placeholder="github_pat_..." autocomplete="off">
+    <button class="pw-eye" onclick="togglePwd()">👁</button>
+  </div>
+  <div style="font-size:11px;color:#888;margin-top:5px;">Repositório: <strong>sergio13elias/bolaocopa2026</strong></div>
+  <button class="btn btn-azul" onclick="fazerLogin()">🔐 Entrar</button>
+  <div id="login-erro" style="display:none;color:#c0392b;font-size:12px;margin-top:8px;font-weight:700;"></div>
+</div>
+
+<!-- PAINEL -->
+<div id="tela-admin" style="display:none;">
+  <div class="tabs">
+    <button class="tab ativo" onclick="aba('fases')">🚦 Fases</button>
+    <button class="tab" onclick="aba('resultados')">⚽ Resultados</button>
+    <button class="tab" onclick="aba('participantes')">👥 Participantes</button>
+    <button class="tab" onclick="aba('final')">🏆 Final</button>
+  </div>
+
+  <!-- ABA FASES -->
+  <div id="s-fases" class="secao ativo">
+    <div id="st-fases" class="st st-load">⏳ Carregando...</div>
+    <div class="card">
+      <h3>🚦 Controle de Fases — quais estão abertas para preenchimento</h3>
+      <p style="font-size:11px;color:#888;margin-bottom:12px;">Ative cada fase quando chegar o momento. O index.html verifica isso automaticamente.</p>
+      <div class="fase-sec fase-g">
+        <div class="fase-sec-hdr">
+          <span>⚽ Fase de Grupos</span>
+          <div class="sw-wrap">
+            <label class="sw"><input type="checkbox" id="sw-f1" checked disabled><span class="sw-slider"></span></label>
+            <span class="sw-label" style="color:#fff;">Sempre aberta</span>
+          </div>
+        </div>
+        <div class="fase-sec-body">
+          <p style="font-size:12px;color:#555;">Prazo: <strong>10/jun/2026 às 20:00 BRT</strong> — 72 jogos + Palpites Finais</p>
+        </div>
+      </div>
+      <div class="fase-sec fase-32">
+        <div class="fase-sec-hdr">
+          <span>🟠 Segunda Fase (32-avos)</span>
+          <div class="sw-wrap">
+            <label class="sw"><input type="checkbox" id="sw-f2"><span class="sw-slider"></span></label>
+            <span class="sw-label" style="color:#fff;" id="lbl-f2">Bloqueada</span>
+          </div>
+        </div>
+        <div class="fase-sec-body">
+          <p style="font-size:12px;color:#555;">Libere após o término da Fase de Grupos.<br>Prazo: 1h antes do 1º jogo da 2ª Fase (28/Jun)</p>
+        </div>
+      </div>
+      <div class="fase-sec fase-oi">
+        <div class="fase-sec-hdr">
+          <span>🟣 Oitavas até Final</span>
+          <div class="sw-wrap">
+            <label class="sw"><input type="checkbox" id="sw-f3"><span class="sw-slider"></span></label>
+            <span class="sw-label" style="color:#fff;" id="lbl-f3">Bloqueada</span>
+          </div>
+        </div>
+        <div class="fase-sec-body">
+          <p style="font-size:12px;color:#555;">Libere após o término da Segunda Fase.<br>Prazo: 1h antes do 1º jogo das Oitavas (04/Jul)</p>
+        </div>
+      </div>
+      <button class="btn btn-verde" onclick="salvarFases()">💾 Salvar Configuração de Fases</button>
+    </div>
+  </div>
+
+  <!-- ABA RESULTADOS -->
+  <div id="s-resultados" class="secao">
+    <div id="st-res" class="st st-load">⏳ Carregando...</div>
+    <div class="card">
+      <h3>⚽ Lançar Resultados Reais</h3>
+      <div id="prog-wrap">
+        <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:700;color:#555;">
+          <span>Jogos apurados</span><span id="prog-txt">0/104</span>
+        </div>
+        <div class="prog-bg"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+      </div>
+      <div id="form-jogos"></div>
+      <button class="btn btn-verde" id="btn-sr" onclick="salvarResultados()">💾 Salvar Resultados no GitHub</button>
+    </div>
+  </div>
+
+  <!-- ABA PARTICIPANTES -->
+  <div id="s-participantes" class="secao">
+    <div id="st-part" class="st st-load">⏳ Carregando...</div>
+    <div class="card">
+      <h3>📥 Colar Palpite do WhatsApp</h3>
+      <p style="font-size:11px;color:#888;margin-bottom:6px;">
+        Cole o texto completo enviado pelo participante (qualquer fase).<br>
+        O sistema detecta automaticamente se é Fase 1, 2 ou 3.
+      </p>
+      <textarea id="txt-wpp" placeholder="BOLÃO COPA 2026 ZAPZAP&#10;Participante: Nome&#10;..."></textarea>
+      <button class="btn btn-azul" onclick="importar()">📥 Importar e Salvar</button>
+    </div>
+    <div class="card">
+      <h3>👥 Participantes Cadastrados (<span id="n-parts">0</span>)</h3>
+      <div id="lista-parts"><p style="color:#888;font-size:12px;">Nenhum participante ainda.</p></div>
+    </div>
+  </div>
+
+  <!-- ABA FINAL -->
+  <div id="s-final" class="secao">
+    <div id="st-final" class="st st-load">⏳ Carregando...</div>
+    <div class="card">
+      <h3>🏆 Palpites Finais — Apurar em 19/07/2026</h3>
+      <p style="font-size:11px;color:#888;margin-bottom:12px;">Preencha somente após o fim da Copa.</p>
+      <div class="fg">
+        <div><label>🏆 Seleção Campeã</label><input type="text" id="f-campea" placeholder="Ex: Brasil"></div>
+        <div><label>🥈 Vice-Campeã</label><input type="text" id="f-vice" placeholder="Ex: Argentina"></div>
+        <div><label>⚽ Artilheiro</label><input type="text" id="f-art" placeholder="Nome do jogador"></div>
+        <div><label>🥅 Vice-Artilheiro</label><input type="text" id="f-vart" placeholder="Nome do jogador"></div>
+      </div>
+      <button class="btn btn-laranja" onclick="salvarFinal()">💾 Salvar Final no GitHub</button>
+    </div>
+  </div>
+</div>
+<div id="toast"></div>
+
+<script>
+var GH_OWNER='sergio13elias',GH_REPO='bolaocopa2026',GH_FILE='resultados.txt',GH_BRANCH='main';
+var TOKEN='',SHA=null;
+var DADOS={resultados:{},campea:'',vice:'',artilheiro:'',vice_artilheiro:'',fases:{f1:true,f2:false,f3:false},participantes:[]};
+
+var JOGOS_TODOS=[
+  {n:1,f:'G',a:'MEXICO',b:'AFRICA DO SUL'},{n:2,f:'G',a:'COREIA DO SUL',b:'REP. TCHECA'},
+  {n:3,f:'G',a:'CANADA',b:'BOSNIA'},{n:4,f:'G',a:'EUA',b:'PARAGUAI'},
+  {n:5,f:'G',a:'HAITI',b:'ESCOCIA'},{n:6,f:'G',a:'AUSTRALIA',b:'TURQUIA'},
+  {n:7,f:'G',a:'BRASIL',b:'MARROCOS'},{n:8,f:'G',a:'CATAR',b:'SUICA'},
+  {n:9,f:'G',a:'COSTA DO MARFIM',b:'EQUADOR'},{n:10,f:'G',a:'ALEMANHA',b:'CURACAU'},
+  {n:11,f:'G',a:'HOLANDA',b:'JAPAO'},{n:12,f:'G',a:'SUECIA',b:'TUNISIA'},
+  {n:13,f:'G',a:'ARABIA SAUDITA',b:'URUGUAI'},{n:14,f:'G',a:'ESPANHA',b:'CABO VERDE'},
+  {n:15,f:'G',a:'IRA',b:'NOVA ZELANDIA'},{n:16,f:'G',a:'BELGICA',b:'EGITO'},
+  {n:17,f:'G',a:'FRANCA',b:'SENEGAL'},{n:18,f:'G',a:'IRAQUE',b:'NORUEGA'},
+  {n:19,f:'G',a:'ARGENTINA',b:'ARGELIA'},{n:20,f:'G',a:'AUSTRIA',b:'JORDANIA'},
+  {n:21,f:'G',a:'GANA',b:'PANAMA'},{n:22,f:'G',a:'INGLATERRA',b:'CROACIA'},
+  {n:23,f:'G',a:'PORTUGAL',b:'RD CONGO'},{n:24,f:'G',a:'UZBEQUISTAO',b:'COLOMBIA'},
+  {n:25,f:'G',a:'REP. TCHECA',b:'AFRICA DO SUL'},{n:26,f:'G',a:'SUICA',b:'BOSNIA'},
+  {n:27,f:'G',a:'CANADA',b:'CATAR'},{n:28,f:'G',a:'MEXICO',b:'COREIA DO SUL'},
+  {n:29,f:'G',a:'BRASIL',b:'HAITI'},{n:30,f:'G',a:'ESCOCIA',b:'MARROCOS'},
+  {n:31,f:'G',a:'TURQUIA',b:'PARAGUAI'},{n:32,f:'G',a:'EUA',b:'AUSTRALIA'},
+  {n:33,f:'G',a:'ALEMANHA',b:'COSTA DO MARFIM'},{n:34,f:'G',a:'EQUADOR',b:'CURACAU'},
+  {n:35,f:'G',a:'HOLANDA',b:'SUECIA'},{n:36,f:'G',a:'TUNISIA',b:'JAPAO'},
+  {n:37,f:'G',a:'URUGUAI',b:'CABO VERDE'},{n:38,f:'G',a:'ESPANHA',b:'ARABIA SAUDITA'},
+  {n:39,f:'G',a:'BELGICA',b:'IRA'},{n:40,f:'G',a:'NOVA ZELANDIA',b:'EGITO'},
+  {n:41,f:'G',a:'NORUEGA',b:'SENEGAL'},{n:42,f:'G',a:'FRANCA',b:'IRAQUE'},
+  {n:43,f:'G',a:'ARGENTINA',b:'AUSTRIA'},{n:44,f:'G',a:'JORDANIA',b:'ARGELIA'},
+  {n:45,f:'G',a:'INGLATERRA',b:'GANA'},{n:46,f:'G',a:'PANAMA',b:'CROACIA'},
+  {n:47,f:'G',a:'PORTUGAL',b:'UZBEQUISTAO'},{n:48,f:'G',a:'COLOMBIA',b:'RD CONGO'},
+  {n:49,f:'G',a:'ESCOCIA',b:'BRASIL'},{n:50,f:'G',a:'MARROCOS',b:'HAITI'},
+  {n:51,f:'G',a:'SUICA',b:'CANADA'},{n:52,f:'G',a:'BOSNIA',b:'CATAR'},
+  {n:53,f:'G',a:'REP. TCHECA',b:'MEXICO'},{n:54,f:'G',a:'AFRICA DO SUL',b:'COREIA DO SUL'},
+  {n:55,f:'G',a:'CURACAU',b:'COSTA DO MARFIM'},{n:56,f:'G',a:'EQUADOR',b:'ALEMANHA'},
+  {n:57,f:'G',a:'JAPAO',b:'SUECIA'},{n:58,f:'G',a:'TUNISIA',b:'HOLANDA'},
+  {n:59,f:'G',a:'TURQUIA',b:'EUA'},{n:60,f:'G',a:'PARAGUAI',b:'AUSTRALIA'},
+  {n:61,f:'G',a:'NORUEGA',b:'FRANCA'},{n:62,f:'G',a:'SENEGAL',b:'IRAQUE'},
+  {n:63,f:'G',a:'EGITO',b:'IRA'},{n:64,f:'G',a:'NOVA ZELANDIA',b:'BELGICA'},
+  {n:65,f:'G',a:'CABO VERDE',b:'ARABIA SAUDITA'},{n:66,f:'G',a:'URUGUAI',b:'ESPANHA'},
+  {n:67,f:'G',a:'PANAMA',b:'INGLATERRA'},{n:68,f:'G',a:'CROACIA',b:'GANA'},
+  {n:69,f:'G',a:'ARGELIA',b:'AUSTRIA'},{n:70,f:'G',a:'JORDANIA',b:'ARGENTINA'},
+  {n:71,f:'G',a:'COLOMBIA',b:'PORTUGAL'},{n:72,f:'G',a:'RD CONGO',b:'UZBEQUISTAO'},
+  {n:73,f:'32',a:'2A',b:'2B'},{n:74,f:'32',a:'1E',b:'3o'},{n:75,f:'32',a:'1F',b:'2C'},
+  {n:76,f:'32',a:'1C',b:'2F'},{n:77,f:'32',a:'1I',b:'3o'},{n:78,f:'32',a:'2E',b:'2I'},
+  {n:79,f:'32',a:'1A',b:'3o'},{n:80,f:'32',a:'1L',b:'3o'},{n:81,f:'32',a:'1D',b:'3o'},
+  {n:82,f:'32',a:'1G',b:'3o'},{n:83,f:'32',a:'2K',b:'2L'},{n:84,f:'32',a:'1H',b:'2J'},
+  {n:85,f:'32',a:'1B',b:'3o'},{n:86,f:'32',a:'1J',b:'2H'},{n:87,f:'32',a:'1K',b:'3o'},
+  {n:88,f:'32',a:'2D',b:'2G'},
+  {n:89,f:'OI',a:'V.J74',b:'V.J77'},{n:90,f:'OI',a:'V.J73',b:'V.J75'},
+  {n:91,f:'OI',a:'V.J76',b:'V.J78'},{n:92,f:'OI',a:'V.J79',b:'V.J80'},
+  {n:93,f:'OI',a:'V.J83',b:'V.J84'},{n:94,f:'OI',a:'V.J81',b:'V.J82'},
+  {n:95,f:'OI',a:'V.J86',b:'V.J88'},{n:96,f:'OI',a:'V.J85',b:'V.J87'},
+  {n:97,f:'QU',a:'V.J89',b:'V.J90'},{n:98,f:'QU',a:'V.J93',b:'V.J94'},
+  {n:99,f:'QU',a:'V.J91',b:'V.J92'},{n:100,f:'QU',a:'V.J95',b:'V.J96'},
+  {n:101,f:'SE',a:'V.J97',b:'V.J98'},{n:102,f:'SE',a:'V.J99',b:'V.J100'},
+  {n:103,f:'3L',a:'P.J101',b:'P.J102'},{n:104,f:'FI',a:'V.J101',b:'V.J102'}
+];
+var FASE_CORES={'G':'#009c3b','32':'#e67e00','OI':'#8e44ad','QU':'#c0392b','SE':'#16213e','3L':'#e67e00','FI':'#b8860b'};
+var FASE_LABELS={'G':'FASE DE GRUPOS','32':'FASE DE 32','OI':'OITAVAS DE FINAL','QU':'QUARTAS DE FINAL','SE':'SEMIFINAL','3L':'DISPUTA 3\u00ba LUGAR','FI':'FINAL'};
+
+// ===== LOGIN =====
+function togglePwd(){var i=document.getElementById('inp-token');i.type=i.type==='password'?'text':'password';}
+function fazerLogin(){
+  var t=document.getElementById('inp-token').value.trim();
+  if(!t){mostraLoginErro('Digite o token.');return;}
+  TOKEN=t;
+  document.getElementById('tela-login').style.display='none';
+  document.getElementById('tela-admin').style.display='block';
+  setStatus('st-load','\u23f3 Conectando ao GitHub...');
+  carregar();
+}
+function mostraLoginErro(m){var e=document.getElementById('login-erro');e.style.display='block';e.textContent=m;}
+
+// ===== GITHUB =====
+function ghH(){return{'Authorization':'token '+TOKEN,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'};}
+function carregar(){
+  fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+GH_FILE+'?ref='+GH_BRANCH,{headers:ghH()})
+    .then(function(r){
+      if(r.status===404){SHA=null;return '';}
+      if(!r.ok)return r.json().then(function(e){throw new Error(e.message||r.status);});
+      return r.json();
+    })
+    .then(function(j){
+      if(j&&j.sha){SHA=j.sha;return decodeURIComponent(escape(atob(j.content.replace(/\n/g,''))));}
+      return j||'';
+    })
+    .then(function(txt){
+      parseTxt(txt);
+      renderJogos();renderParts();preencherFinal();sincronizarSwitches();
+      setStatus('st-ok','\u2705 Conectado. '+Object.keys(DADOS.resultados).length+' jogos | '+DADOS.participantes.length+' participantes');
+    })
+    .catch(function(e){setStatus('st-err','\u274c Erro: '+e.message+'. Verifique o token (Contents: Read & write).');});
+}
+function salvarGH(conteudo,msg){
+  var body={message:msg||'Atualiza resultados',content:btoa(unescape(encodeURIComponent(conteudo))),branch:GH_BRANCH};
+  if(SHA)body.sha=SHA;
+  return fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+GH_FILE,
+    {method:'PUT',headers:ghH(),body:JSON.stringify(body)})
+    .then(function(r){if(!r.ok)return r.json().then(function(e){throw new Error(e.message);});return r.json();})
+    .then(function(j){SHA=j.content.sha;toast('\u2705 Salvo no GitHub!');});
+}
+
+// ===== PARSE / GERAR TXT =====
+// Formato do resultados.txt:
+// [RESULTADOS] ... [CAMPEA] ... [VICE] ... [ARTILHEIRO] ... [VICE_ARTILHEIRO] ...
+// [FASES] f1:true f2:false f3:false
+// [PARTICIPANTE] NOME: X [FASE1] ... [FASE2] ... [FASE3] ...
+
+function parseTxt(txt){
+  var ls=txt.split('\n').map(function(l){return l.trim();});
+  DADOS={resultados:{},campea:'',vice:'',artilheiro:'',vice_artilheiro:'',fases:{f1:true,f2:false,f3:false},participantes:[]};
+  var sec=null,pt=null,ptFase=null;
+  ls.forEach(function(l){
+    if(!l||l[0]==='#')return;
+    if(l==='[RESULTADOS]'){sec='r';return;}
+    if(l==='[CAMPEA]'){sec='c';return;}if(l==='[VICE]'){sec='v';return;}
+    if(l==='[ARTILHEIRO]'){sec='a';return;}if(l==='[VICE_ARTILHEIRO]'){sec='va';return;}
+    if(l==='[FASES]'){sec='fases';return;}
+    if(l==='[PARTICIPANTE]'){
+      sec='pt';pt={nome:'',fase1:{},fase2:{},fase3:{},campea:'',vice:'',artilheiro:'',vice_artilheiro:''};
+      ptFase=null;DADOS.participantes.push(pt);return;
+    }
+    if(l==='[FASE1]'){ptFase='f1';return;}if(l==='[FASE2]'){ptFase='f2';return;}if(l==='[FASE3]'){ptFase='f3';return;}
+    var mN=l.match(/^(\d+)\s+(\d+)[xX](\d+)/);
+    if(sec==='r'&&mN)DADOS.resultados[+mN[1]]={ga:+mN[2],gb:+mN[3]};
+    else if(sec==='c'&&l)DADOS.campea=l;
+    else if(sec==='v'&&l)DADOS.vice=l;
+    else if(sec==='a'&&l)DADOS.artilheiro=l;
+    else if(sec==='va'&&l)DADOS.vice_artilheiro=l;
+    else if(sec==='fases'){
+      var mF=l.match(/f(\d):(true|false)/g);
+      if(mF)mF.forEach(function(m){var p=m.split(':');DADOS.fases['f'+p[0][1]]=(p[1]==='true');});
+    }
+    else if(sec==='pt'&&pt){
+      var u=l.toUpperCase();
+      if(u.startsWith('NOME:'))pt.nome=l.slice(5).trim();
+      else if(u.startsWith('CAMPEA:'))pt.campea=l.slice(7).trim();
+      else if(u.startsWith('VICE:'))pt.vice=l.slice(5).trim();
+      else if(u.startsWith('ARTILHEIRO:'))pt.artilheiro=l.slice(11).trim();
+      else if(u.startsWith('VICE_ARTILHEIRO:'))pt.vice_artilheiro=l.slice(16).trim();
+      else if(mN&&ptFase){
+        var obj=ptFase==='f1'?pt.fase1:ptFase==='f2'?pt.fase2:pt.fase3;
+        obj[+mN[1]]={ga:+mN[2],gb:+mN[3]};
+      }
+    }
+  });
+}
+
+function gerarTxt(){
+  var ls=['[RESULTADOS]'];
+  Object.keys(DADOS.resultados).map(Number).sort(function(a,b){return a-b;}).forEach(function(n){
+    var r=DADOS.resultados[n];ls.push(n+' '+r.ga+'x'+r.gb);
+  });
+  ls.push('','[CAMPEA]');if(DADOS.campea)ls.push(DADOS.campea);
+  ls.push('','[VICE]');if(DADOS.vice)ls.push(DADOS.vice);
+  ls.push('','[ARTILHEIRO]');if(DADOS.artilheiro)ls.push(DADOS.artilheiro);
+  ls.push('','[VICE_ARTILHEIRO]');if(DADOS.vice_artilheiro)ls.push(DADOS.vice_artilheiro);
+  ls.push('','[FASES]');
+  ls.push('f1:'+DADOS.fases.f1+' f2:'+DADOS.fases.f2+' f3:'+DADOS.fases.f3);
+  ls.push('');
+  DADOS.participantes.forEach(function(p){
+    ls.push('[PARTICIPANTE]','NOME: '+p.nome);
+    // FASE1
+    var ns1=Object.keys(p.fase1).map(Number).sort(function(a,b){return a-b;});
+    if(ns1.length){
+      ls.push('[FASE1]');
+      ns1.forEach(function(n){var pl=p.fase1[n];ls.push(n+' '+pl.ga+'x'+pl.gb);});
+      if(p.campea)ls.push('CAMPEA: '+p.campea);
+      if(p.vice)ls.push('VICE: '+p.vice);
+      if(p.artilheiro)ls.push('ARTILHEIRO: '+p.artilheiro);
+      if(p.vice_artilheiro)ls.push('VICE_ARTILHEIRO: '+p.vice_artilheiro);
+    }
+    // FASE2
+    var ns2=Object.keys(p.fase2).map(Number).sort(function(a,b){return a-b;});
+    if(ns2.length){
+      ls.push('[FASE2]');
+      ns2.forEach(function(n){var pl=p.fase2[n];ls.push(n+' '+pl.ga+'x'+pl.gb);});
+    }
+    // FASE3
+    var ns3=Object.keys(p.fase3).map(Number).sort(function(a,b){return a-b;});
+    if(ns3.length){
+      ls.push('[FASE3]');
+      ns3.forEach(function(n){var pl=p.fase3[n];ls.push(n+' '+pl.ga+'x'+pl.gb);});
+    }
+    ls.push('');
+  });
+  return ls.join('\n');
+}
+
+// ===== FASES SWITCH =====
+function sincronizarSwitches(){
+  document.getElementById('sw-f2').checked=DADOS.fases.f2;
+  document.getElementById('sw-f3').checked=DADOS.fases.f3;
+  document.getElementById('lbl-f2').textContent=DADOS.fases.f2?'Aberta':'Bloqueada';
+  document.getElementById('lbl-f3').textContent=DADOS.fases.f3?'Aberta':'Bloqueada';
+}
+document.getElementById&&document.addEventListener('change',function(e){
+  if(e.target.id==='sw-f2'){document.getElementById('lbl-f2').textContent=e.target.checked?'Aberta':'Bloqueada';}
+  if(e.target.id==='sw-f3'){document.getElementById('lbl-f3').textContent=e.target.checked?'Aberta':'Bloqueada';}
+});
+function salvarFases(){
+  DADOS.fases.f2=document.getElementById('sw-f2').checked;
+  DADOS.fases.f3=document.getElementById('sw-f3').checked;
+  // Salva tb no localStorage para index.html ler
+  try{localStorage.setItem('bolao_fases',JSON.stringify(DADOS.fases));}catch(e){}
+  setStatus('st-load','\u23f3 Salvando fases...');
+  salvarGH(gerarTxt(),'Atualiza config fases')
+    .then(function(){setStatus('st-ok','\u2705 Fases salvas! F2:'+DADOS.fases.f2+' F3:'+DADOS.fases.f3);})
+    .catch(function(e){setStatus('st-err','\u274c '+e.message);});
+}
+
+// ===== JOGOS FORM =====
+function renderJogos(){
+  var pre=0,h='',fa=null;
+  JOGOS_TODOS.forEach(function(j){
+    if(j.f!==fa){
+      if(fa)h+='</div>';
+      h+='<span class="fase-lbl" style="background:'+FASE_CORES[j.f]+'">'+FASE_LABELS[j.f]+'</span><div>';
+      fa=j.f;
+    }
+    var r=DADOS.resultados[j.n];if(r!==undefined)pre++;
+    h+='<div class="j-row'+(r!==undefined?' ok':'')+'" id="jr'+j.n+'">'
+      +'<span class="j-n">'+j.n+'</span>'
+      +'<div class="j-nm"><span>'+j.a+'</span><span>'+j.b+'</span></div>'
+      +'<input class="sc" type="number" min="0" max="30" id="ra'+j.n+'" value="'+(r?r.ga:'')+'" placeholder="-" oninput="onR('+j.n+')">'
+      +'<span class="sc-x">x</span>'
+      +'<input class="sc" type="number" min="0" max="30" id="rb'+j.n+'" value="'+(r?r.gb:'')+'" placeholder="-" oninput="onR('+j.n+')">'
+      +'</div>';
+  });
+  if(fa)h+='</div>';
+  document.getElementById('prog-txt').textContent=pre+'/104';
+  document.getElementById('prog-fill').style.width=Math.round(pre/104*100)+'%';
+  document.getElementById('form-jogos').innerHTML=h;
+}
+function onR(n){
+  var a=document.getElementById('ra'+n),b=document.getElementById('rb'+n),c=document.getElementById('jr'+n);
+  if(a.value!==''&&b.value!==''){DADOS.resultados[n]={ga:+a.value,gb:+b.value};c.className='j-row ok';}
+  else{delete DADOS.resultados[n];c.className='j-row';}
+  var pre=Object.keys(DADOS.resultados).length;
+  document.getElementById('prog-txt').textContent=pre+'/104';
+  document.getElementById('prog-fill').style.width=Math.round(pre/104*100)+'%';
+}
+function salvarResultados(){
+  JOGOS_TODOS.forEach(function(j){
+    var a=document.getElementById('ra'+j.n),b=document.getElementById('rb'+j.n);
+    if(a&&b&&a.value!==''&&b.value!=='')DADOS.resultados[j.n]={ga:+a.value,gb:+b.value};
+    else delete DADOS.resultados[j.n];
+  });
+  var btn=document.getElementById('btn-sr');btn.disabled=true;btn.textContent='\u23f3 Salvando...';
+  setStatus('st-load','\u23f3 Salvando...');
+  salvarGH(gerarTxt(),'Atualiza resultados '+new Date().toLocaleString('pt-BR'))
+    .then(function(){setStatus('st-ok','\u2705 '+Object.keys(DADOS.resultados).length+' jogos salvos!');renderJogos();})
+    .catch(function(e){setStatus('st-err','\u274c '+e.message);})
+    .finally(function(){btn.disabled=false;btn.textContent='\ud83d\udcbe Salvar Resultados no GitHub';});
+}
+
+// ===== IMPORTAR PALPITE =====
+// Detecta fase pelo conteudo do texto
+function detectarFase(txt){
+  if(/-- OITAVAS DE FINAL --/i.test(txt))return 3;
+  if(/-- FASE DE 32 --/i.test(txt))return 2;
+  if(/-- FASE DE GRUPOS --/i.test(txt))return 1;
+  return 0;
+}
+
+function importar(){
+  var btnImp=document.querySelector('[onclick="importar()"]');
+  if(btnImp&&btnImp.disabled)return;
+  var txt=document.getElementById('txt-wpp').value.trim();
+  if(!txt){toast('Cole o texto!');return;}
+  var ls=txt.split('\n').map(function(l){return l.trim();});
+  var nome='';
+  ls.forEach(function(l){if(l.startsWith('Participante:'))nome=l.slice(13).trim();});
+  if(!nome){toast('\u274c Nome n\u00e3o encontrado. Verifique o formato.');return;}
+
+  var fase=detectarFase(txt);
+  if(!fase){toast('\u274c Fase n\u00e3o identificada no texto.');return;}
+
+  // Extrai palpites
+  var palpites={};
+  ls.forEach(function(l){
+    var mJ=l.match(/^#(\d+)\s+.+?\s+(\d+)[xX](\d+)/);
+    if(mJ)palpites[+mJ[1]]={ga:+mJ[2],gb:+mJ[3]};
+  });
+
+  // Extrai finais (só fase 1)
+  var campea='',vice='',artilheiro='',vart='';
+  ls.forEach(function(l){
+    var mC=l.match(/^Campe[a\u00e3]:\s*(.+?)(\s*\(\d+.*\))?$/i);if(mC)campea=mC[1].trim();
+    var mV=l.match(/^Vice[\-\s]?campe[a\u00e3]:\s*(.+?)(\s*\(\d+.*\))?$/i);if(mV)vice=mV[1].trim();
+    var mA=l.match(/^Artilheiro:\s*(.+?)(\s*\(\d+.*\))?$/i);if(mA)artilheiro=mA[1].trim();
+    var mVA=l.match(/^Vice[\-\s]?artilheiro:\s*(.+?)(\s*\(\d+.*\))?$/i);if(mVA)vart=mVA[1].trim();
+  });
+
+  var total=Object.keys(palpites).length;
+  var faseLbl=['','Fase de Grupos','Segunda Fase (32-avos)','Oitavas at\u00e9 Final'][fase];
+
+  // Acha ou cria participante
+  var idx=DADOS.participantes.findIndex(function(p){return p.nome.trim().toLowerCase()===nome.trim().toLowerCase();});
+  var msg='';
+  if(idx<0){
+    var pt={nome:nome,fase1:{},fase2:{},fase3:{},campea:'',vice:'',artilheiro:'',vice_artilheiro:''};
+    DADOS.participantes.push(pt);idx=DADOS.participantes.length-1;
+    msg='\u2705 "'+nome+'" cadastrado';
+  }else{
+    msg='\u2705 "'+nome+'" atualizado';
+  }
+  var pt=DADOS.participantes[idx];
+  if(fase===1){pt.fase1=palpites;if(campea)pt.campea=campea;if(vice)pt.vice=vice;if(artilheiro)pt.artilheiro=artilheiro;if(vart)pt.vice_artilheiro=vart;}
+  if(fase===2)pt.fase2=palpites;
+  if(fase===3)pt.fase3=palpites;
+
+  toast(msg+' | '+faseLbl+': '+total+' jogos');
+  document.getElementById('txt-wpp').value='';
+  renderParts();
+  setStatus('st-load','\u23f3 Salvando...');
+  if(btnImp)btnImp.disabled=true;
+  salvarGH(gerarTxt(),'Palpite '+faseLbl+': '+nome)
+    .then(function(){setStatus('st-ok','✅ SALVO no GitHub! Participante: "'+nome+'" | Total: '+DADOS.participantes.length+' participantes | '+new Date().toLocaleTimeString('pt-BR'));renderParts();})
+    .catch(function(e){setStatus('st-err','❌ '+e.message+' — recarregue a página e tente novamente.');})
+    .finally(function(){if(btnImp)btnImp.disabled=false;});
+}
+
+function renderParts(){
+  document.getElementById('n-parts').textContent=DADOS.participantes.length;
+  if(!DADOS.participantes.length){
+    document.getElementById('lista-parts').innerHTML='<p style="color:#888;font-size:12px;">Nenhum participante cadastrado ainda.</p>';return;
+  }
+  var h='';
+  DADOS.participantes.forEach(function(p,i){
+    var n1=Object.keys(p.fase1).length,n2=Object.keys(p.fase2).length,n3=Object.keys(p.fase3).length;
+    var cls1=n1===72?'bdg-ok':n1>0?'bdg-warn':'bdg-err';
+    var cls2=n2===16?'bdg-ok':n2>0?'bdg-warn':'bdg-err';
+    var cls3=n3===16?'bdg-ok':n3>0?'bdg-warn':'bdg-err';
+    h+='<div class="pt-item">'
+      +'<div><div class="pt-nome">'+esc(p.nome)+'</div>'
+      +'<div class="pt-info">'
+      +'<span class="bdg '+cls1+'">F1: '+n1+'/72</span> '
+      +'<span class="bdg '+cls2+'">F2: '+n2+'/16</span> '
+      +'<span class="bdg '+cls3+'">F3: '+n3+'/16</span><br>'
+      +'Campe\u00e3: '+esc(p.campea||'\u2014')+'</div></div>'
+      +'<button class="btn btn-cinza btn-sm" onclick="remover('+i+')">\u2715</button>'
+      +'</div>';
+  });
+  document.getElementById('lista-parts').innerHTML=h;
+}
+
+function remover(i){
+  var nome=DADOS.participantes[i].nome;
+  if(!confirm('Remover "'+nome+'"?'))return;
+  DADOS.participantes.splice(i,1);renderParts();
+  salvarGH(gerarTxt(),'Remove: '+nome)
+    .then(function(){setStatus('st-ok','\u2705 "'+nome+'" removido.');})
+    .catch(function(e){setStatus('st-err','\u274c '+e.message);});
+}
+
+// ===== FINAL =====
+function preencherFinal(){
+  document.getElementById('f-campea').value=DADOS.campea||'';
+  document.getElementById('f-vice').value=DADOS.vice||'';
+  document.getElementById('f-art').value=DADOS.artilheiro||'';
+  document.getElementById('f-vart').value=DADOS.vice_artilheiro||'';
+}
+function salvarFinal(){
+  DADOS.campea=document.getElementById('f-campea').value.trim();
+  DADOS.vice=document.getElementById('f-vice').value.trim();
+  DADOS.artilheiro=document.getElementById('f-art').value.trim();
+  DADOS.vice_artilheiro=document.getElementById('f-vart').value.trim();
+  setStatus('st-load','\u23f3 Salvando final...');
+  salvarGH(gerarTxt(),'Registra final Copa 2026')
+    .then(function(){setStatus('st-ok','\u2705 Final salva! Painel atualizar\u00e1 em instantes.');})
+    .catch(function(e){setStatus('st-err','\u274c '+e.message);});
+}
+
+// ===== UTEIS =====
+function aba(n){
+  document.querySelectorAll('.tab').forEach(function(t,i){t.classList.toggle('ativo',['fases','resultados','participantes','final'][i]===n);});
+  document.querySelectorAll('.secao').forEach(function(s){s.classList.remove('ativo');});
+  document.getElementById('s-'+n).classList.add('ativo');
+}
+function setStatus(cls,msg){
+  ['st-fases','st-res','st-part','st-final'].forEach(function(id){
+    var e=document.getElementById(id);if(e){e.className='st '+cls;e.textContent=msg;}
+  });
+}
+function toast(m){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';setTimeout(function(){t.style.display='none';},3500);}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+window.onload=function(){
+  document.addEventListener('change',function(e){
+    if(e.target.id==='sw-f2')document.getElementById('lbl-f2').textContent=e.target.checked?'Aberta':'Bloqueada';
+    if(e.target.id==='sw-f3')document.getElementById('lbl-f3').textContent=e.target.checked?'Aberta':'Bloqueada';
+  });
+};
+</script>
+</body>
+</html>
