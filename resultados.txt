@@ -890,3 +890,83 @@ CAMPEA: Brasil
 VICE: Franca
 ARTILHEIRO: Dembele...franca
 VICE_ARTILHEIRO: Rafinha ..brasil
+
+[PARTICIPANTE]
+NOME: Almir Ribeiro 2
+[FASE1]
+1 1x1
+2 1x1
+3 1x2
+4 1x2
+5 0x3
+6 1x3
+7 2x0
+8 0x2
+9 1x1
+10 4x0
+11 2x1
+12 1x1
+13 1x2
+14 3x0
+15 2x0
+16 1x1
+17 3x0
+18 1x3
+19 2x1
+20 2x1
+21 3x1
+22 2x1
+23 4x1
+24 1x4
+25 2x1
+26 3x1
+27 2x0
+28 1x2
+29 5x0
+30 1x1
+31 2x0
+32 2x1
+33 3x1
+34 4x0
+35 1x1
+36 1x3
+37 3x0
+38 3x1
+39 3x1
+40 0x2
+41 2x0
+42 3x0
+43 2x0
+44 1x3
+45 2x0
+46 0x3
+47 4x0
+48 3x1
+49 1x3
+50 3x0
+51 3x0
+52 3x0
+53 1x2
+54 1x1
+55 0x3
+56 1x3
+57 1x1
+58 0x2
+59 2x1
+60 2x1
+61 2x3
+62 2x2
+63 3x1
+64 1x3
+65 2x1
+66 1x2
+67 0x3
+68 2x0
+69 1x1
+70 1x1
+71 1x2
+72 3x1
+CAMPEA: França
+VICE: Brasil
+ARTILHEIRO: Dembele da franca
+VICE_ARTILHEIRO: Vinícius Junio brasil
