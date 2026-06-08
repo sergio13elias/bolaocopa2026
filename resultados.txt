@@ -410,3 +410,83 @@ CAMPEA: ESPANHA
 VICE: FRANCA
 ARTILHEIRO: David Villa
 VICE_ARTILHEIRO: Kylian Mbappé
+
+[PARTICIPANTE]
+NOME: Igor Luz Carminat
+[FASE1]
+1 2x0
+2 0x1
+3 1x1
+4 1x0
+5 1x2
+6 0x2
+7 1x1
+8 0x1
+9 0x1
+10 3x0
+11 1x2
+12 0x0
+13 0x2
+14 4x1
+15 2x2
+16 2x1
+17 2x0
+18 0x2
+19 1x0
+20 2x0
+21 2x0
+22 1x2
+23 3x0
+24 1x2
+25 1x0
+26 0x1
+27 2x2
+28 1x0
+29 4x1
+30 1x2
+31 2x1
+32 2x0
+33 2x0
+34 3x0
+35 2x1
+36 0x2
+37 1x1
+38 2x0
+39 1x0
+40 1x1
+41 2x1
+42 3x0
+43 1x1
+44 0x0
+45 1x1
+46 0x2
+47 1x0
+48 1x0
+49 1x2
+50 2x0
+51 0x0
+52 2x0
+53 1x1
+54 0x1
+55 0x1
+56 1x2
+57 1x0
+58 1x1
+59 1x0
+60 0x0
+61 1x2
+62 2x0
+63 2x0
+64 0x0
+65 0x1
+66 1x2
+67 0x2
+68 1x0
+69 0x0
+70 0x1
+71 2x1
+72 2x2
+CAMPEA: Espanha
+VICE: França
+ARTILHEIRO: Mbappe
+VICE_ARTILHEIRO: Harry Kane
