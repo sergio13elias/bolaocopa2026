@@ -970,3 +970,83 @@ CAMPEA: França
 VICE: Brasil
 ARTILHEIRO: Dembele da franca
 VICE_ARTILHEIRO: Vinícius Junio brasil
+
+[PARTICIPANTE]
+NOME: Heitor Silva Ramos
+[FASE1]
+1 2x1
+2 1x1
+3 2x0
+4 2x2
+5 0x1
+6 0x1
+7 1x2
+8 1x1
+9 0x2
+10 4x0
+11 1x1
+12 1x1
+13 2x2
+14 2x0
+15 1x0
+16 2x1
+17 2x1
+18 0x1
+19 2x1
+20 1x0
+21 0x0
+22 1x1
+23 2x0
+24 0x1
+25 0x1
+26 1x1
+27 1x0
+28 1x1
+29 3x0
+30 1x2
+31 1x1
+32 1x0
+33 2x0
+34 2x0
+35 1x1
+36 0x1
+37 2x0
+38 2x1
+39 1x0
+40 0x1
+41 1x1
+42 2x0
+43 2x1
+44 1x1
+45 2x1
+46 0x3
+47 2x1
+48 1x1
+49 1x2
+50 2x1
+51 1x1
+52 1x1
+53 1x2
+54 1x2
+55 0x2
+56 2x3
+57 2x1
+58 0x1
+59 0x1
+60 1x0
+61 1x3
+62 2x0
+63 1x1
+64 0x1
+65 1x0
+66 1x2
+67 0x3
+68 1x2
+69 1x0
+70 0x2
+71 2x1
+72 0x0
+CAMPEA: Espanha
+VICE: Inglaterra
+ARTILHEIRO: Harry Kane
+VICE_ARTILHEIRO: Mpabbe
