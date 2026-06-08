@@ -330,3 +330,83 @@ CAMPEA: França
 VICE: Espanha
 ARTILHEIRO: Mbappé
 VICE_ARTILHEIRO: Erling Haaland
+
+[PARTICIPANTE]
+NOME: Sidney Henrique
+[FASE1]
+1 1x1
+2 0x0
+3 2x0
+4 0x0
+5 1x1
+6 1x2
+7 1x2
+8 0x0
+9 2x2
+10 4x1
+11 1x1
+12 0x0
+13 1x2
+14 1x2
+15 1x0
+16 2x1
+17 1x2
+18 0x0
+19 2x0
+20 0x0
+21 3x1
+22 1x1
+23 2x1
+24 0x3
+25 1x1
+26 1x0
+27 1x1
+28 1x1
+29 2x1
+30 1x1
+31 2x1
+32 2x1
+33 3x2
+34 3x1
+35 1x0
+36 1x1
+37 1x1
+38 3x1
+39 2x0
+40 0x1
+41 1x3
+42 2x0
+43 3x1
+44 0x0
+45 2x2
+46 1x3
+47 3x0
+48 2x1
+49 1x3
+50 2x0
+51 1x1
+52 0x0
+53 1x2
+54 2x2
+55 1x3
+56 2x1
+57 2x0
+58 1x1
+59 2x1
+60 3x0
+61 0x3
+62 3x1
+63 1x0
+64 0x3
+65 2x1
+66 1x2
+67 1x3
+68 2x1
+69 1x1
+70 1x3
+71 1x1
+72 0x0
+CAMPEA: ESPANHA
+VICE: FRANCA
+ARTILHEIRO: David Villa
+VICE_ARTILHEIRO: Kylian Mbappé
