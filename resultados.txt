@@ -1050,3 +1050,83 @@ CAMPEA: Espanha
 VICE: Inglaterra
 ARTILHEIRO: Harry Kane
 VICE_ARTILHEIRO: Mpabbe
+
+[PARTICIPANTE]
+NOME: Elionaldo Santos
+[FASE1]
+1 3x1
+2 0x0
+3 1x2
+4 0x1
+5 0x1
+6 0x2
+7 1x1
+8 1x1
+9 0x3
+10 4x0
+11 1x1
+12 0x0
+13 1x2
+14 3x0
+15 2x0
+16 2x1
+17 2x0
+18 2x2
+19 2x0
+20 0x0
+21 0x0
+22 2x1
+23 4x0
+24 0x3
+25 1x0
+26 1x1
+27 1x2
+28 2x1
+29 3x0
+30 2x1
+31 1x2
+32 1x0
+33 2x0
+34 4x0
+35 2x1
+36 0x1
+37 3x0
+38 2x0
+39 2x1
+40 0x1
+41 1x0
+42 2x0
+43 2x0
+44 0x2
+45 3x0
+46 0x3
+47 3x0
+48 3x0
+49 0x0
+50 3x0
+51 2x0
+52 1x1
+53 1x1
+54 2x2
+55 0x2
+56 1x1
+57 1x1
+58 1x2
+59 2x1
+60 1x0
+61 1x2
+62 1x1
+63 0x0
+64 1x2
+65 0x1
+66 1x2
+67 0x3
+68 2x1
+69 1x1
+70 0x3
+71 2x2
+72 2x2
+CAMPEA: Argentina
+VICE: Colômbia
+ARTILHEIRO: Hery Cane
+VICE_ARTILHEIRO: Leonel Messi
