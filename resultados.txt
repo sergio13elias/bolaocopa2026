@@ -1930,3 +1930,83 @@ CAMPEA: França
 VICE: Argentina
 ARTILHEIRO: Kylian Mbappé
 VICE_ARTILHEIRO: Harry Kane
+
+[PARTICIPANTE]
+NOME: Alan Cesar da Silva
+[FASE1]
+1 3x0
+2 1x0
+3 2x0
+4 1x0
+5 1x1
+6 0x1
+7 2x0
+8 0x2
+9 1x1
+10 4x0
+11 0x1
+12 0x1
+13 1x2
+14 4x0
+15 1x0
+16 1x1
+17 2x1
+18 0x1
+19 0x0
+20 1x0
+21 1x0
+22 1x1
+23 3x0
+24 0x2
+25 1x0
+26 2x0
+27 3x1
+28 1x1
+29 5x0
+30 0x1
+31 1x1
+32 2x1
+33 1x0
+34 2x0
+35 1x0
+36 1x1
+37 3x0
+38 2x0
+39 2x0
+40 0x0
+41 1x1
+42 4x0
+43 2x0
+44 0x0
+45 1x0
+46 0x2
+47 5x0
+48 3x0
+49 0x3
+50 3x0
+51 0x0
+52 0x0
+53 0x1
+54 0x1
+55 0x2
+56 1x1
+57 1x1
+58 1x1
+59 1x1
+60 1x1
+61 1x1
+62 2x0
+63 1x1
+64 0x2
+65 0x1
+66 1x2
+67 0x2
+68 1x1
+69 0x0
+70 0x2
+71 1x1
+72 0x0
+CAMPEA: Brasil
+VICE: Espanha
+ARTILHEIRO: Cristiano Ronaldo
+VICE_ARTILHEIRO: Vini Jr
