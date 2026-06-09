@@ -2010,3 +2010,83 @@ CAMPEA: Brasil
 VICE: Espanha
 ARTILHEIRO: Cristiano Ronaldo
 VICE_ARTILHEIRO: Vini Jr
+
+[PARTICIPANTE]
+NOME: Fábio Abib
+[FASE1]
+1 1x0
+2 2x0
+3 1x0
+4 1x1
+5 0x2
+6 1x1
+7 1x0
+8 0x3
+9 2x2
+10 5x0
+11 1x1
+12 1x1
+13 0x1
+14 5x0
+15 2x0
+16 2x0
+17 2x1
+18 1x1
+19 1x1
+20 2x0
+21 2x0
+22 1x1
+23 3x0
+24 0x2
+25 1x0
+26 2x0
+27 2x0
+28 1x1
+29 3x0
+30 1x1
+31 1x0
+32 1x1
+33 2x0
+34 3x0
+35 2x0
+36 0x2
+37 3x0
+38 3x0
+39 1x0
+40 1x1
+41 0x2
+42 3x0
+43 2x0
+44 0x2
+45 2x1
+46 0x2
+47 3x0
+48 2x0
+49 0x2
+50 2x0
+51 1x1
+52 1x0
+53 1x1
+54 0x1
+55 0x2
+56 1x1
+57 2x0
+58 1x2
+59 1x0
+60 1x0
+61 0x2
+62 2x0
+63 1x1
+64 0x1
+65 1x1
+66 0x2
+67 0x3
+68 1x1
+69 1x1
+70 0x3
+71 1x1
+72 1x1
+CAMPEA: Espanha
+VICE: Franca
+ARTILHEIRO: Harry Kane
+VICE_ARTILHEIRO: Mbappe
