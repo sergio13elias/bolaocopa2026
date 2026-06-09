@@ -1530,3 +1530,83 @@ CAMPEA: Portugal
 VICE: França
 ARTILHEIRO: Mbape
 VICE_ARTILHEIRO: Cristiano Ronaldo
+
+[PARTICIPANTE]
+NOME: André dos Santos Bessa
+[FASE1]
+1 2x0
+2 1x3
+3 3x0
+4 2x1
+5 0x2
+6 0x3
+7 3x0
+8 0x0
+9 1x1
+10 3x0
+11 1x2
+12 1x0
+13 1x2
+14 4x1
+15 4x2
+16 5x3
+17 4x1
+18 2x3
+19 5x1
+20 3x0
+21 1x0
+22 3x1
+23 5x0
+24 1x2
+25 1x1
+26 2x0
+27 3x1
+28 3x0
+29 4x0
+30 2x4
+31 2x0
+32 3x1
+33 4x0
+34 2x0
+35 2x1
+36 0x2
+37 3x2
+38 5x0
+39 3x1
+40 0x3
+41 4x3
+42 4x0
+43 3x0
+44 0x2
+45 3x0
+46 0x2
+47 3x0
+48 2x0
+49 0x2
+50 3x0
+51 2x1
+52 1x0
+53 1x2
+54 0x1
+55 0x2
+56 1x3
+57 2x1
+58 1x2
+59 1x3
+60 2x1
+61 0x3
+62 2x0
+63 2x0
+64 0x3
+65 0x1
+66 1x3
+67 0x3
+68 1x0
+69 2x1
+70 0x4
+71 2x3
+72 1x2
+CAMPEA: Brasil
+VICE: Inglaterra
+ARTILHEIRO: Harry kane
+VICE_ARTILHEIRO: Vinicius jr
