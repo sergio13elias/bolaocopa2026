@@ -1850,3 +1850,83 @@ CAMPEA: Portugal
 VICE: Espanha
 ARTILHEIRO: Harry Kane
 VICE_ARTILHEIRO: Mbappe
+
+[PARTICIPANTE]
+NOME: Ronan Alves da Silva
+[FASE1]
+1 2x1
+2 2x0
+3 1x0
+4 2x0
+5 0x2
+6 2x2
+7 2x0
+8 1x2
+9 1x1
+10 3x0
+11 3x2
+12 2x0
+13 0x2
+14 3x0
+15 2x1
+16 3x1
+17 3x0
+18 0x2
+19 3x1
+20 3x0
+21 1x1
+22 2x2
+23 3x0
+24 0x2
+25 2x1
+26 2x0
+27 2x1
+28 2x1
+29 2x1
+30 1x0
+31 2x2
+32 1x0
+33 2x0
+34 3x0
+35 1x0
+36 1x3
+37 2x0
+38 3x0
+39 2x1
+40 0x2
+41 2x0
+42 3x0
+43 2x1
+44 1x0
+45 2x1
+46 0x2
+47 2x1
+48 2x0
+49 1x1
+50 1x1
+51 2x2
+52 1x1
+53 1x2
+54 1x3
+55 1x2
+56 0x2
+57 2x2
+58 1x2
+59 0x2
+60 2x2
+61 1x2
+62 1x1
+63 2x1
+64 1x2
+65 1x2
+66 1x2
+67 0x2
+68 2x1
+69 0x2
+70 0x2
+71 2x2
+72 1x1
+CAMPEA: França
+VICE: Argentina
+ARTILHEIRO: Kylian Mbappé
+VICE_ARTILHEIRO: Harry Kane
