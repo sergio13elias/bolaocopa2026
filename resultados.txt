@@ -2570,3 +2570,83 @@ CAMPEA: Inglaterra
 VICE: Espanha
 ARTILHEIRO: Harry Kane
 VICE_ARTILHEIRO: Lâmina Yamal
+
+[PARTICIPANTE]
+NOME: Alexandre Barriga
+[FASE1]
+1 1x0
+2 0x1
+3 0x0
+4 0x1
+5 0x1
+6 1x0
+7 1x0
+8 0x1
+9 1x0
+10 2x0
+11 0x1
+12 1x0
+13 0x1
+14 2x0
+15 1x1
+16 1x0
+17 2x0
+18 0x1
+19 1x0
+20 1x0
+21 1x0
+22 1x0
+23 2x0
+24 0x1
+25 1x0
+26 1x0
+27 1x0
+28 1x0
+29 2x0
+30 0x1
+31 0x1
+32 1x0
+33 1x0
+34 1x0
+35 1x0
+36 0x1
+37 1x0
+38 2x0
+39 1x0
+40 0x1
+41 0x1
+42 2x0
+43 2x0
+44 0x1
+45 1x0
+46 0x1
+47 2x0
+48 1x0
+49 0x1
+50 1x0
+51 1x0
+52 1x0
+53 1x0
+54 1x0
+55 0x2
+56 0x1
+57 1x0
+58 0x1
+59 0x1
+60 1x0
+61 0x2
+62 1x0
+63 1x0
+64 0x2
+65 0x1
+66 1x2
+67 0x2
+68 1x0
+69 0x1
+70 0x2
+71 0x1
+72 1x0
+CAMPEA: França
+VICE: Espanha
+ARTILHEIRO: M bapee França
+VICE_ARTILHEIRO: Yamal
