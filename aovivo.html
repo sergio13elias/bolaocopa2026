@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ao Vivo — Bolão Copa 2026 ZAPZAP</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:Arial,sans-serif;background:#0a0e1a;color:#fff;min-height:100vh;}
+/* HEADER */
+.hdr{background:linear-gradient(135deg,#002776,#001550);padding:16px;text-align:center;border-bottom:3px solid #ffdf00;}
+.hdr h1{color:#ffdf00;font-size:22px;font-weight:900;}
+.hdr h2{color:rgba(255,255,255,.7);font-size:12px;margin-top:3px;}
+/* STATUS BAR */
+.status-bar{background:#111827;padding:8px 14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;border-bottom:1px solid #1f2937;}
+.status-item{font-size:12px;font-weight:700;color:#9ca3af;}
+.status-item.live{color:#ef4444;}
+.pulse{display:inline-block;width:8px;height:8px;border-radius:50%;background:#ef4444;margin-right:5px;animation:pulse 1.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.3);}}
+.btn-refresh{background:#1f2937;border:1px solid #374151;color:#9ca3af;border-radius:6px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer;}
+.btn-refresh:hover{background:#374151;color:#fff;}
+/* JOGOS AO VIVO */
+.secao-titulo{font-size:12px;font-weight:700;letter-spacing:1px;padding:8px 14px;display:flex;align-items:center;gap:6px;}
+/* JOGO CARD */
+.jogos-grid{padding:0 12px 8px;display:flex;flex-direction:column;gap:8px;}
+.jogo-card{border-radius:12px;overflow:hidden;}
+.jogo-card.live{border:1px solid #ef4444;background:linear-gradient(135deg,#1a0505,#0d0d0d);}
+.jogo-card.finished{border:1px solid #374151;background:#111827;}
+.jogo-card.scheduled{border:1px solid #1f2937;background:#0d1117;opacity:.7;}
+.jogo-top{display:flex;justify-content:space-between;padding:6px 12px;font-size:10px;}
+.jogo-badge-live{background:#ef4444;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;display:flex;align-items:center;gap:4px;}
+.jogo-badge-fin{background:#374151;color:#9ca3af;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;}
+.jogo-badge-sched{background:#1f2937;color:#6b7280;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;}
+.jogo-minuto{color:#f59e0b;font-size:11px;font-weight:700;}
+.jogo-body{display:flex;align-items:center;padding:10px 14px;gap:8px;}
+.team-name{flex:1;font-size:13px;font-weight:700;line-height:1.2;}
+.team-name.a{text-align:right;}
+.placar-wrap{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.placar{font-size:24px;font-weight:900;width:36px;text-align:center;color:#fff;}
+.placar.live{color:#f59e0b;}
+.placar-sep{font-size:16px;color:#4b5563;}
+.team-logo{width:28px;height:28px;object-fit:contain;flex-shrink:0;}
+.no-logo{width:28px;height:28px;background:#1f2937;border-radius:50%;flex-shrink:0;}
+/* CLASSIFICACAO */
+.classif-wrap{margin:0 12px 12px;border-radius:12px;overflow:hidden;border:1px solid #1f2937;}
+.cl-hdr{display:grid;grid-template-columns:28px 1fr 40px 40px 40px 40px;gap:3px;padding:7px 10px;background:#111827;font-size:10px;font-weight:700;color:#6b7280;letter-spacing:.5px;}
+.cl-row{display:grid;grid-template-columns:28px 1fr 40px 40px 40px 40px;gap:3px;padding:7px 10px;border-bottom:1px solid #1f2937;align-items:center;cursor:pointer;transition:background .15s;}
+.cl-row:last-child{border-bottom:none;}
+.cl-row:hover{background:#111827;}
+.cl-row.top1{background:linear-gradient(90deg,#1a1500,#0d0d0d);}
+.cl-row.top2{background:linear-gradient(90deg,#0d1117,#0d0d0d);}
+.cl-row.top3{background:linear-gradient(90deg,#100d00,#0d0d0d);}
+.pos-n{font-size:12px;font-weight:900;text-align:center;}
+.pos-n.p1{color:#f1c40f;}.pos-n.p2{color:#9ca3af;}.pos-n.p3{color:#d97706;}
+.nome-cl{font-size:12px;font-weight:700;color:#e5e7eb;}
+.pts-cl{font-size:14px;font-weight:900;text-align:center;color:#34d399;}
+.col-n{font-size:11px;font-weight:700;text-align:center;color:#6b7280;}
+/* DELTA */
+.delta-up{color:#34d399;font-size:10px;}
+.delta-dn{color:#ef4444;font-size:10px;}
+/* VAZIO */
+.vazio{text-align:center;padding:30px;color:#4b5563;font-size:13px;}
+/* CONFIG MODAL */
+#config-btn{position:fixed;bottom:20px;right:16px;background:#002776;border:none;color:#ffdf00;border-radius:50%;width:48px;height:48px;font-size:20px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.5);z-index:100;}
+#config-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;align-items:center;justify-content:center;}
+#config-modal.show{display:flex;}
+.config-box{background:#111827;border:1px solid #374151;border-radius:14px;padding:20px;width:90%;max-width:360px;}
+.config-box h3{color:#ffdf00;font-size:15px;margin-bottom:14px;}
+.config-box label{display:block;font-size:12px;color:#9ca3af;margin-bottom:4px;}
+.config-box input{width:100%;background:#0d1117;border:1px solid #374151;border-radius:8px;padding:9px 12px;color:#fff;font-size:13px;outline:none;margin-bottom:12px;}
+.config-box input:focus{border-color:#ffdf00;}
+.cfg-btns{display:flex;gap:8px;}
+.cfg-btn{flex:1;padding:10px;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;}
+.cfg-save{background:#002776;color:#ffdf00;}
+.cfg-close{background:#1f2937;color:#9ca3af;}
+/* LOADING */
+.spinner{width:32px;height:32px;border:3px solid #1f2937;border-top-color:#ffdf00;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 10px;}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <h1>⚽ Bolão Copa 2026 ZAPZAP</h1>
+  <h2>Acompanhamento Ao Vivo</h2>
+</div>
+
+<div class="status-bar">
+  <span class="status-item live" id="st-live"><span class="pulse"></span>Carregando...</span>
+  <span class="status-item" id="st-hora"></span>
+  <button class="btn-refresh" onclick="atualizar()">🔄 Atualizar</button>
+</div>
+
+<!-- JOGOS DO DIA -->
+<div class="secao-titulo" style="color:#ef4444;">
+  <span class="pulse"></span> JOGOS DE HOJE
+</div>
+<div id="jogos-wrap">
+  <div class="vazio"><div class="spinner"></div>Buscando jogos...</div>
+</div>
+
+<!-- CLASSIFICACAO -->
+<div class="secao-titulo" style="color:#ffdf00;margin-top:8px;">
+  🏆 CLASSIFICAÇÃO EM TEMPO REAL
+</div>
+<div class="classif-wrap" id="classif-wrap">
+  <div class="vazio"><div class="spinner"></div>Calculando pontuação...</div>
+</div>
+
+<button id="config-btn" onclick="abrirConfig()">⚙️</button>
+
+<div id="config-modal">
+  <div class="config-box">
+    <h3>⚙️ Configuração</h3>
+    <label>Chave API-Football</label>
+    <input type="password" id="cfg-apikey" placeholder="1bea831c...">
+    <label>URL resultados.txt (GitHub raw)</label>
+    <input type="text" id="cfg-url" placeholder="https://raw.githubusercontent.com/...">
+    <div class="cfg-btns">
+      <button class="cfg-btn cfg-save" onclick="salvarConfig()">💾 Salvar</button>
+      <button class="cfg-btn cfg-close" onclick="fecharConfig()">✕ Fechar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// =====================================================
+// CONFIG (salva em localStorage)
+// =====================================================
+var API_KEY = '1bea831c6befbcf2ecf64e7572e0fee4';
+var RAW_URL = 'https://raw.githubusercontent.com/sergio13elias/bolaocopa2026/main/resultados.txt';
+var LEAGUE_ID = 1;
+var SEASON = 2026;
+var INTERVALO = 5 * 60 * 1000; // 5 minutos
+var timer = null;
+
+function carregarConfig(){
+  try{
+    var k=localStorage.getItem('bolao_apikey');
+    var u=localStorage.getItem('bolao_rawurl');
+    if(k)API_KEY=k;
+    if(u)RAW_URL=u;
+  }catch(e){}
+}
+
+function salvarConfig(){
+  var k=document.getElementById('cfg-apikey').value.trim();
+  var u=document.getElementById('cfg-url').value.trim();
+  if(k)API_KEY=k;
+  if(u)RAW_URL=u;
+  try{if(k)localStorage.setItem('bolao_apikey',k);if(u)localStorage.setItem('bolao_rawurl',u);}catch(e){}
+  fecharConfig();
+  atualizar();
+}
+
+function abrirConfig(){
+  document.getElementById('cfg-apikey').value=API_KEY||'';
+  document.getElementById('cfg-url').value=RAW_URL||'';
+  document.getElementById('config-modal').classList.add('show');
+}
+function fecharConfig(){document.getElementById('config-modal').classList.remove('show');}
+
+// =====================================================
+// DADOS
+// =====================================================
+var DADOS_BOLAO = null;
+var JOGOS_HOJE = [];
+var RANKINGS_ANTERIOR = {};
+
+// =====================================================
+// NORMALIZAR NOME DO TIME (API -> nosso formato)
+// =====================================================
+var NOMES_MAP = {
+  'Mexico':'MEXICO','South Africa':'AFRICA DO SUL','Korea Republic':'COREIA DO SUL',
+  'Czech Republic':'REP. TCHECA','Canada':'CANADA','Bosnia and Herzegovina':'BOSNIA',
+  'USA':'EUA','Paraguay':'PARAGUAI','Haiti':'HAITI','Scotland':'ESCOCIA',
+  'Australia':'AUSTRALIA','Turkey':'TURQUIA','Brazil':'BRASIL','Morocco':'MARROCOS',
+  'Qatar':'CATAR','Switzerland':'SUICA',"Ivory Coast":'COSTA DO MARFIM',
+  "Côte d'Ivoire":'COSTA DO MARFIM','Ecuador':'EQUADOR','Germany':'ALEMANHA',
+  'Curacao':'CURACAU','Netherlands':'HOLANDA','Japan':'JAPAO','Sweden':'SUECIA',
+  'Tunisia':'TUNISIA','Saudi Arabia':'ARABIA SAUDITA','Uruguay':'URUGUAI',
+  'Iran':'IRA','New Zealand':'NOVA ZELANDIA','Belgium':'BELGICA','Egypt':'EGITO',
+  'France':'FRANCA','Senegal':'SENEGAL','Iraq':'IRAQUE','Norway':'NORUEGA',
+  'Argentina':'ARGENTINA','Algeria':'ARGELIA','Austria':'AUSTRIA','Jordan':'JORDANIA',
+  'Ghana':'GANA','Panama':'PANAMA','England':'INGLATERRA','Croatia':'CROACIA',
+  'Portugal':'PORTUGAL','Congo DR':'RD CONGO','Uzbekistan':'UZBEQUISTAO','Colombia':'COLOMBIA'
+};
+
+function normTime(nome){return NOMES_MAP[nome]||nome.toUpperCase();}
+
+// =====================================================
+// FETCH API-FOOTBALL
+// =====================================================
+function fetchAPI(endpoint){
+  if(!API_KEY){return Promise.reject(new Error('Configure a chave da API (botão ⚙️)'));}
+  return fetch('https://v3.football.api-sports.io/'+endpoint,{
+    headers:{'x-apisports-key':API_KEY}
+  }).then(function(r){
+    if(!r.ok)throw new Error('API error '+r.status);
+    return r.json();
+  }).then(function(d){
+    if(d.errors&&Object.keys(d.errors).length){
+      var errs=Object.values(d.errors).join(', ');
+      throw new Error(errs);
+    }
+    return d;
+  });
+}
+
+// =====================================================
+// BUSCAR JOGOS DO DIA
+// =====================================================
+function buscarJogosHoje(){
+  var hoje=new Date();
+  var dd=String(hoje.getDate()).padStart(2,'0');
+  var mm=String(hoje.getMonth()+1).padStart(2,'0');
+  var yyyy=hoje.getFullYear();
+  var dataStr=yyyy+'-'+mm+'-'+dd;
+
+  return fetchAPI('fixtures?league='+LEAGUE_ID+'&season='+SEASON+'&date='+dataStr)
+    .then(function(d){
+      JOGOS_HOJE=d.response||[];
+      return JOGOS_HOJE;
+    });
+}
+
+// =====================================================
+// FETCH RESULTADOS.TXT
+// =====================================================
+function buscarResultadosTxt(){
+  return fetch(RAW_URL+'?v='+Date.now(),{cache:'no-store'})
+    .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.text();})
+    .then(function(txt){DADOS_BOLAO=parseTxt(txt);return DADOS_BOLAO;});
+}
+
+// =====================================================
+// PARSER resultados.txt
+// =====================================================
+function parseTxt(txt){
+  var ls=txt.split('\n').map(function(l){return l.trim();});
+  var d={resultados:{},campea:'',vice:'',artilheiro:'',vice_artilheiro:'',participantes:[]};
+  var sec=null,pt=null,ptf=null;
+  ls.forEach(function(l){
+    if(!l||l[0]==='#')return;
+    if(l==='[RESULTADOS]'){sec='r';return;}if(l==='[CAMPEA]'){sec='c';return;}
+    if(l==='[VICE]'){sec='v';return;}if(l==='[ARTILHEIRO]'){sec='a';return;}
+    if(l==='[VICE_ARTILHEIRO]'){sec='va';return;}if(l==='[FASES]'){sec='skip';return;}
+    if(l==='[PARTICIPANTE]'){sec='pt';pt={nome:'',fase1:{},fase2:{},fase3:{},campea:'',vice:'',artilheiro:'',vice_artilheiro:''};d.participantes.push(pt);ptf=null;return;}
+    if(l==='[FASE1]'){ptf='f1';return;}if(l==='[FASE2]'){ptf='f2';return;}if(l==='[FASE3]'){ptf='f3';return;}
+    var mN=l.match(/^(\d+)\s+(\d+)[xX](\d+)/);
+    if(sec==='r'&&mN)d.resultados[+mN[1]]={ga:+mN[2],gb:+mN[3]};
+    else if(sec==='c'&&l)d.campea=l;else if(sec==='v'&&l)d.vice=l;
+    else if(sec==='a'&&l)d.artilheiro=l;else if(sec==='va'&&l)d.vice_artilheiro=l;
+    else if(sec==='pt'&&pt){
+      var u=l.toUpperCase();
+      if(u.startsWith('NOME:'))pt.nome=l.slice(5).trim();
+      else if(u.startsWith('CAMPEA:'))pt.campea=l.slice(7).trim();
+      else if(u.startsWith('VICE:'))pt.vice=l.slice(5).trim();
+      else if(u.startsWith('ARTILHEIRO:'))pt.artilheiro=l.slice(11).trim();
+      else if(u.startsWith('VICE_ARTILHEIRO:'))pt.vice_artilheiro=l.slice(16).trim();
+      else if(mN&&ptf){var o=ptf==='f1'?pt.fase1:ptf==='f2'?pt.fase2:pt.fase3;o[+mN[1]]={ga:+mN[2],gb:+mN[3]};}
+    }
+  });
+  return d;
+}
+
+// =====================================================
+// INTEGRAR PLACARES AO VIVO no resultados
+// =====================================================
+// Mapeamento jogo API -> número do bolão
+// Usamos time names para identificar
+var JOGOS_F1_MAP = [
+  {n:1,a:'MEXICO',b:'AFRICA DO SUL'},{n:2,a:'COREIA DO SUL',b:'REP. TCHECA'},
+  {n:3,a:'CANADA',b:'BOSNIA'},{n:4,a:'EUA',b:'PARAGUAI'},
+  {n:5,a:'HAITI',b:'ESCOCIA'},{n:6,a:'AUSTRALIA',b:'TURQUIA'},
+  {n:7,a:'BRASIL',b:'MARROCOS'},{n:8,a:'CATAR',b:'SUICA'},
+  {n:9,a:'COSTA DO MARFIM',b:'EQUADOR'},{n:10,a:'ALEMANHA',b:'CURACAU'},
+  {n:11,a:'HOLANDA',b:'JAPAO'},{n:12,a:'SUECIA',b:'TUNISIA'},
+  {n:13,a:'ARABIA SAUDITA',b:'URUGUAI'},{n:14,a:'ESPANHA',b:'CABO VERDE'},
+  {n:15,a:'IRA',b:'NOVA ZELANDIA'},{n:16,a:'BELGICA',b:'EGITO'},
+  {n:17,a:'FRANCA',b:'SENEGAL'},{n:18,a:'IRAQUE',b:'NORUEGA'},
+  {n:19,a:'ARGENTINA',b:'ARGELIA'},{n:20,a:'AUSTRIA',b:'JORDANIA'},
+  {n:21,a:'GANA',b:'PANAMA'},{n:22,a:'INGLATERRA',b:'CROACIA'},
+  {n:23,a:'PORTUGAL',b:'RD CONGO'},{n:24,a:'UZBEQUISTAO',b:'COLOMBIA'},
+  {n:25,a:'REP. TCHECA',b:'AFRICA DO SUL'},{n:26,a:'SUICA',b:'BOSNIA'},
+  {n:27,a:'CANADA',b:'CATAR'},{n:28,a:'MEXICO',b:'COREIA DO SUL'},
+  {n:29,a:'BRASIL',b:'HAITI'},{n:30,a:'ESCOCIA',b:'MARROCOS'},
+  {n:31,a:'TURQUIA',b:'PARAGUAI'},{n:32,a:'EUA',b:'AUSTRALIA'},
+  {n:33,a:'ALEMANHA',b:'COSTA DO MARFIM'},{n:34,a:'EQUADOR',b:'CURACAU'},
+  {n:35,a:'HOLANDA',b:'SUECIA'},{n:36,a:'TUNISIA',b:'JAPAO'},
+  {n:37,a:'URUGUAI',b:'CABO VERDE'},{n:38,a:'ESPANHA',b:'ARABIA SAUDITA'},
+  {n:39,a:'BELGICA',b:'IRA'},{n:40,a:'NOVA ZELANDIA',b:'EGITO'},
+  {n:41,a:'NORUEGA',b:'SENEGAL'},{n:42,a:'FRANCA',b:'IRAQUE'},
+  {n:43,a:'ARGENTINA',b:'AUSTRIA'},{n:44,a:'JORDANIA',b:'ARGELIA'},
+  {n:45,a:'INGLATERRA',b:'GANA'},{n:46,a:'PANAMA',b:'CROACIA'},
+  {n:47,a:'PORTUGAL',b:'UZBEQUISTAO'},{n:48,a:'COLOMBIA',b:'RD CONGO'},
+  {n:49,a:'ESCOCIA',b:'BRASIL'},{n:50,a:'MARROCOS',b:'HAITI'},
+  {n:51,a:'SUICA',b:'CANADA'},{n:52,a:'BOSNIA',b:'CATAR'},
+  {n:53,a:'REP. TCHECA',b:'MEXICO'},{n:54,a:'AFRICA DO SUL',b:'COREIA DO SUL'},
+  {n:55,a:'CURACAU',b:'COSTA DO MARFIM'},{n:56,a:'EQUADOR',b:'ALEMANHA'},
+  {n:57,a:'JAPAO',b:'SUECIA'},{n:58,a:'TUNISIA',b:'HOLANDA'},
+  {n:59,a:'TURQUIA',b:'EUA'},{n:60,a:'PARAGUAI',b:'AUSTRALIA'},
+  {n:61,a:'NORUEGA',b:'FRANCA'},{n:62,a:'SENEGAL',b:'IRAQUE'},
+  {n:63,a:'EGITO',b:'IRA'},{n:64,a:'NOVA ZELANDIA',b:'BELGICA'},
+  {n:65,a:'CABO VERDE',b:'ARABIA SAUDITA'},{n:66,a:'URUGUAI',b:'ESPANHA'},
+  {n:67,a:'PANAMA',b:'INGLATERRA'},{n:68,a:'CROACIA',b:'GANA'},
+  {n:69,a:'ARGELIA',b:'AUSTRIA'},{n:70,a:'JORDANIA',b:'ARGENTINA'},
+  {n:71,a:'COLOMBIA',b:'PORTUGAL'},{n:72,a:'RD CONGO',b:'UZBEQUISTAO'}
+];
+
+function encontrarJogoBolao(timeA, timeB){
+  var nA=normTime(timeA), nB=normTime(timeB);
+  for(var i=0;i<JOGOS_F1_MAP.length;i++){
+    var j=JOGOS_F1_MAP[i];
+    if((j.a===nA&&j.b===nB)||(j.a===nB&&j.b===nA))return j.n;
+  }
+  return null;
+}
+
+function resultadosComLive(){
+  // Copia resultados do TXT
+  var res=Object.assign({},DADOS_BOLAO?DADOS_BOLAO.resultados:{});
+  // Sobrescreve com placares ao vivo
+  JOGOS_HOJE.forEach(function(f){
+    var status=f.fixture.status.short;
+    var terminado=['FT','AET','PEN','FT_PEN'].indexOf(status)>=0;
+    var aoVivo=['1H','HT','2H','ET','BT','P','INT'].indexOf(status)>=0;
+    if(!terminado&&!aoVivo)return;
+    var nA=f.teams.home.name, nB=f.teams.away.name;
+    var ga=f.goals.home, gb=f.goals.away;
+    if(ga===null||gb===null)return;
+    var nBolao=encontrarJogoBolao(nA,nB);
+    if(nBolao){
+      // Inverte se precisar
+      var nAn=normTime(nA);
+      var jBol=JOGOS_F1_MAP.find(function(x){return x.n===nBolao;});
+      if(jBol&&jBol.a!==nAn){var tmp=ga;ga=gb;gb=tmp;}
+      res[nBolao]={ga:ga,gb:gb};
+    }
+  });
+  return res;
+}
+
+// =====================================================
+// CALCULAR PONTUACAO
+// =====================================================
+var JOGOS_NS={f1:[],f2:[],f3:[]};
+for(var i=1;i<=72;i++)JOGOS_NS.f1.push(i);
+for(var i=73;i<=88;i++)JOGOS_NS.f2.push(i);
+for(var i=89;i<=104;i++)JOGOS_NS.f3.push(i);
+
+function calcFase(palpites,resultados,ns){
+  var pts=0,ex=0,vc=0;
+  ns.forEach(function(n){
+    var r=resultados[n],p=palpites[n];
+    if(!r||!p)return;
+    var rv=r.ga>r.gb?'A':r.ga<r.gb?'B':'E';
+    var pv=p.ga>p.gb?'A':p.ga<p.gb?'B':'E';
+    if(r.ga===p.ga&&r.gb===p.gb){pts+=3;ex++;}
+    else if(rv===pv){pts+=1;vc++;}
+  });
+  return{pts:pts,ex:ex,vc:vc};
+}
+
+function norm(s){
+  return String(s||'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+}
+
+function calcTotal(pt,resultados){
+  var c1=calcFase(pt.fase1,resultados,JOGOS_NS.f1);
+  var c2=calcFase(pt.fase2,resultados,JOGOS_NS.f2);
+  var c3=calcFase(pt.fase3,resultados,JOGOS_NS.f3);
+  var pf=0;
+  if(DADOS_BOLAO&&DADOS_BOLAO.campea&&norm(pt.campea)===norm(DADOS_BOLAO.campea))pf+=5;
+  if(DADOS_BOLAO&&DADOS_BOLAO.vice&&norm(pt.vice)===norm(DADOS_BOLAO.vice))pf+=3;
+  if(DADOS_BOLAO&&DADOS_BOLAO.artilheiro&&norm(pt.artilheiro)===norm(DADOS_BOLAO.artilheiro))pf+=5;
+  if(DADOS_BOLAO&&DADOS_BOLAO.vice_artilheiro&&norm(pt.vice_artilheiro)===norm(DADOS_BOLAO.vice_artilheiro))pf+=3;
+  return c1.pts+c2.pts+c3.pts+pf;
+}
+
+// =====================================================
+// RENDER JOGOS
+// =====================================================
+function statusLabel(s){
+  var live=['1H','HT','2H','ET','BT','P','INT'];
+  var fin=['FT','AET','PEN','FT_PEN'];
+  if(live.indexOf(s)>=0)return 'live';
+  if(fin.indexOf(s)>=0)return 'finished';
+  return 'scheduled';
+}
+
+function statusText(f){
+  var s=f.fixture.status.short;
+  var elapsed=f.fixture.status.elapsed;
+  if(s==='1H'||s==='2H')return elapsed+"'";
+  if(s==='HT')return 'Intervalo';
+  if(s==='FT')return 'Encerrado';
+  if(s==='NS'){
+    var d=new Date(f.fixture.date);
+    return d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})+' BRT';
+  }
+  return s;
+}
+
+function renderJogos(){
+  var wrap=document.getElementById('jogos-wrap');
+  if(!JOGOS_HOJE.length){
+    wrap.innerHTML='<div class="vazio">📅 Nenhum jogo da Copa hoje</div>';
+    return;
+  }
+  var h='<div class="jogos-grid">';
+  JOGOS_HOJE.forEach(function(f){
+    var tipo=statusLabel(f.fixture.status.short);
+    var stTxt=statusText(f);
+    var ga=f.goals.home!==null?f.goals.home:'-';
+    var gb=f.goals.away!==null?f.goals.away:'-';
+    var logoA=f.teams.home.logo||'';
+    var logoB=f.teams.away.logo||'';
+    var nomeA=f.teams.home.name;
+    var nomeB=f.teams.away.name;
+    var placarCls=tipo==='live'?' live':'';
+    var badge='';
+    if(tipo==='live')badge='<span class="jogo-badge-live"><span class="pulse"></span>AO VIVO</span>';
+    else if(tipo==='finished')badge='<span class="jogo-badge-fin">⏱ '+stTxt+'</span>';
+    else badge='<span class="jogo-badge-sched">🕐 '+stTxt+'</span>';
+    var minuto=tipo==='live'?'<span class="jogo-minuto">'+stTxt+'</span>':'';
+
+    h+='<div class="jogo-card '+tipo+'">'
+      +'<div class="jogo-top">'+badge+minuto+'</div>'
+      +'<div class="jogo-body">'
+      +(logoA?'<img class="team-logo" src="'+logoA+'" onerror="this.style.display=\'none\'">':'<div class="no-logo"></div>')
+      +'<span class="team-name a">'+nomeA+'</span>'
+      +'<div class="placar-wrap">'
+      +'<span class="placar'+placarCls+'">'+ga+'</span>'
+      +'<span class="placar-sep">×</span>'
+      +'<span class="placar'+placarCls+'">'+gb+'</span>'
+      +'</div>'
+      +'<span class="team-name">'+nomeB+'</span>'
+      +(logoB?'<img class="team-logo" src="'+logoB+'" onerror="this.style.display=\'none\'">':'<div class="no-logo"></div>')
+      +'</div></div>';
+  });
+  h+='</div>';
+  wrap.innerHTML=h;
+}
+
+// =====================================================
+// RENDER CLASSIFICACAO
+// =====================================================
+function renderClassif(resultados){
+  if(!DADOS_BOLAO||!DADOS_BOLAO.participantes.length){
+    document.getElementById('classif-wrap').innerHTML='<div class="vazio">Aguardando dados do bolão...</div>';
+    return;
+  }
+  var rankings=DADOS_BOLAO.participantes.map(function(p,i){
+    return{idx:i,nome:p.nome,pts:calcTotal(p,resultados)};
+  });
+  rankings.sort(function(a,b){return b.pts-a.pts;});
+
+  var h='<div class="cl-hdr"><span>#</span><span>Participante</span>'
+    +'<span style="text-align:center">Pts</span>'
+    +'<span style="text-align:center;font-size:9px;">Ant.</span>'
+    +'<span style="text-align:center;font-size:9px;">Pos ant.</span>'
+    +'<span style="text-align:center">△</span>'
+    +'</div>';
+
+  rankings.forEach(function(r,i){
+    var med=i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
+    var rc='cl-row'+(i===0?' top1':i===1?' top2':i===2?' top3':'');
+    var pc='pos-n '+(i===0?'p1':i===1?'p2':i===2?'p3':'');
+    var ptAnt=RANKINGS_ANTERIOR[r.nome]||r.pts;
+    var diff=r.pts-ptAnt;
+    var diffStr=diff>0?'<span class="delta-up">▲+'+diff+'</span>':diff<0?'<span class="delta-dn">▼'+diff+'</span>':'<span style="color:#4b5563">—</span>';
+    h+='<div class="'+rc+'">'
+      +'<span class="'+pc+'">'+(med||(i+1))+'</span>'
+      +'<span class="nome-cl">'+esc(r.nome)+'</span>'
+      +'<span class="pts-cl">'+r.pts+'</span>'
+      +'<span class="col-n">'+ptAnt+'</span>'
+      +'<span class="col-n" style="font-size:10px;">—</span>'
+      +'<span class="col-n">'+diffStr+'</span>'
+      +'</div>';
+  });
+
+  document.getElementById('classif-wrap').innerHTML=h;
+
+  // Salva ranking atual para comparacao
+  rankings.forEach(function(r){RANKINGS_ANTERIOR[r.nome]=r.pts;});
+}
+
+// =====================================================
+// ATUALIZAR TUDO
+// =====================================================
+function atualizar(){
+  if(!API_KEY){
+    document.getElementById('st-live').innerHTML='⚙️ Configure a chave da API';
+    abrirConfig();
+    return;
+  }
+
+  document.getElementById('st-live').innerHTML='<span class="pulse"></span>Atualizando...';
+
+  Promise.all([buscarJogosHoje(), buscarResultadosTxt()])
+    .then(function(){
+      var resultados=resultadosComLive();
+      renderJogos();
+      renderClassif(resultados);
+
+      var liveCount=JOGOS_HOJE.filter(function(f){
+        return ['1H','HT','2H','ET','BT','P'].indexOf(f.fixture.status.short)>=0;
+      }).length;
+
+      if(liveCount>0){
+        document.getElementById('st-live').innerHTML='<span class="pulse"></span>'+liveCount+' jogo(s) ao vivo';
+      }else{
+        var total=JOGOS_HOJE.length;
+        document.getElementById('st-live').innerHTML=total>0?'📅 '+total+' jogo(s) hoje':'📅 Sem jogos hoje';
+      }
+      document.getElementById('st-hora').textContent='Atualizado: '+new Date().toLocaleTimeString('pt-BR');
+    })
+    .catch(function(e){
+      document.getElementById('st-live').innerHTML='❌ '+e.message;
+      document.getElementById('st-hora').textContent=new Date().toLocaleTimeString('pt-BR');
+    });
+}
+
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+// =====================================================
+// INIT
+// =====================================================
+window.onload=function(){
+  carregarConfig();
+  atualizar();
+  timer=setInterval(atualizar, INTERVALO);
+};
+</script>
+</body>
+</html>
