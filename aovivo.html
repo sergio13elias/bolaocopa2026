@@ -97,7 +97,7 @@ var RAW_URL     = 'https://raw.githubusercontent.com/sergio13elias/bolaocopa2026
 // Limites: 10 req/hora na API free
 // Intervalo mínimo entre chamadas: 6 minutos
 var INTERVALO_API        = 6 * 60 * 1000;   // 6 min entre chamadas à API
-var JANELA_ANTES_JOGO    = 45 * 60 * 1000;  // começa 45min antes do jogo
+var JANELA_ANTES_JOGO    = 30 * 60 * 1000;  // começa 30min antes do jogo
 var JANELA_DEPOIS_JOGO   = 3 * 60 * 60 * 1000; // termina 3h depois
 var INTERVALO_FORA_JOGO  = 30 * 60 * 1000;  // verifica a cada 30min fora do jogo
 var TIMER_ATUALIZACAO    = null;
@@ -217,7 +217,6 @@ function salvarCacheJogos(matches){
     localStorage.setItem('fdCache',JSON.stringify({
       data: hojeISO(),
       ts: Date.now(),
-      rangeOk: true,
       matches: matches||[]
     }));
   }catch(e){}
@@ -291,8 +290,7 @@ function buscarJogosHoje(){
   registrarChamada();
 
   var d=hojeISO();
-  var amanha=amanhaISO();
-  return fdFetch('competitions/'+WC_CODE+'/matches?dateFrom='+d+'&dateTo='+amanha)
+  return fdFetch('competitions/'+WC_CODE+'/matches?dateFrom='+d+'&dateTo='+amanhaISO())
     .then(function(data){
       JOGOS=data.matches||[];
       salvarCacheJogos(JOGOS);
@@ -651,10 +649,7 @@ function atualizarForcar(){
 
 function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-// INIT — limpa cache antigo que pode ter range de data errado
-try{ var _c=localStorage.getItem('fdCache');
-  if(_c){ var _p=JSON.parse(_c); if(!_p.rangeOk){ localStorage.removeItem('fdCache'); } }
-}catch(e){}
+// INIT
 atualizar();
 </script>
 </body>
