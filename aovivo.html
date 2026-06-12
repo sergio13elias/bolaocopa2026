@@ -107,8 +107,8 @@ var TIMER_ATUALIZACAO    = null;
 // =====================================================
 var NMAP = {
   'Mexico':'MEXICO','South Africa':'AFRICA DO SUL',
-  'Korea Republic':'COREIA DO SUL','Czech Republic':'REP. TCHECA','Czechia':'REP. TCHECA',
-  'Canada':'CANADA','Bosnia and Herzegovina':'BOSNIA','Bosnia & Herzegovina':'BOSNIA',
+  'Korea Republic':'COREIA DO SUL','South Korea':'COREIA DO SUL','Czech Republic':'REP. TCHECA','Czechia':'REP. TCHECA',
+  'Canada':'CANADA','Bosnia and Herzegovina':'BOSNIA','Bosnia & Herzegovina':'BOSNIA','Bosnia-Herzegovina':'BOSNIA','Bosnia-H.':'BOSNIA',
   'USA':'EUA','United States':'EUA','Paraguay':'PARAGUAI',
   'Haiti':'HAITI','Scotland':'ESCOCIA',
   'Australia':'AUSTRALIA','Türkiye':'TURQUIA','Turkey':'TURQUIA',
@@ -125,7 +125,7 @@ var NMAP = {
   'Ghana':'GANA','Panama':'PANAMA','England':'INGLATERRA','Croatia':'CROACIA',
   'Portugal':'PORTUGAL','Congo DR':'RD CONGO','DR Congo':'RD CONGO',
   'Uzbekistan':'UZBEQUISTAO','Colombia':'COLOMBIA',
-  'Spain':'ESPANHA','Cabo Verde':'CABO VERDE','Cape Verde':'CABO VERDE'
+  'Spain':'ESPANHA','Cabo Verde':'CABO VERDE','Cape Verde':'CABO VERDE','Cape Verde Islands':'CABO VERDE'
 };
 function normTime(n){ return NMAP[n] || (n||'').toUpperCase(); }
 
@@ -190,21 +190,27 @@ var PTS_ANT = {};
 // =====================================================
 // CACHE LOCAL (localStorage)
 // =====================================================
+var CACHE_KEY_JOGOS = 'fdCacheV3'; // muda a versão para limpar caches antigos/incompletos
+
+function dataSaoPauloISO(offsetDias){
+  var agora = new Date();
+  var sp = new Date(agora.toLocaleString('en-US', {timeZone:'America/Sao_Paulo'}));
+  sp.setDate(sp.getDate() + (offsetDias||0));
+  return sp.getFullYear()+'-'+String(sp.getMonth()+1).padStart(2,'0')+'-'+String(sp.getDate()).padStart(2,'0');
+}
+
 function hojeISO(){
-  var d=new Date();
-  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  return dataSaoPauloISO(0);
 }
 
 function amanhaISO(){
-  var d=new Date();
-  d.setDate(d.getDate()+1);
-  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  return dataSaoPauloISO(1);
 }
 
 // FIX [3][8]: Separar leitura de cache da lógica de controle
 function lerCacheJogos(){
   try{
-    var raw=localStorage.getItem('fdCache');
+    var raw=localStorage.getItem(CACHE_KEY_JOGOS);
     if(!raw) return null;
     var c=JSON.parse(raw);
     if(c.data!==hojeISO()) return null; // cache de outro dia
@@ -214,7 +220,7 @@ function lerCacheJogos(){
 
 function salvarCacheJogos(matches){
   try{
-    localStorage.setItem('fdCache',JSON.stringify({
+    localStorage.setItem(CACHE_KEY_JOGOS,JSON.stringify({
       data: hojeISO(),
       ts: Date.now(),
       matches: matches||[]
@@ -232,13 +238,21 @@ function registrarChamada(){
 
 // FIX [3]: Lógica limpa sem side-effects no if
 function deveConsultarAPI(){
-  // 1. Respeita intervalo mínimo entre chamadas
+  // 1. Respeita intervalo mínimo entre chamadas à API
   if(Date.now()-ultimaChamada() < INTERVALO_API) return false;
-  // 2. Se não tem cache do dia, precisa buscar agenda
+
   var cache=lerCacheJogos();
+
+  // 2. Sem cache válido do dia: busca a agenda do dia imediatamente
   if(!cache) return true;
-  // 3. Com cache, só busca se estiver na janela de jogo
-  return estaNaJanela(cache.matches||[]);
+
+  // 3. Durante janela de jogo: atualiza a cada 6 min
+  if(estaNaJanela(cache.matches||[])) return true;
+
+  // 4. Fora da janela: renova a agenda a cada 30 min para evitar cache antigo/incompleto
+  if(Date.now()-(cache.ts||0) >= INTERVALO_FORA_JOGO) return true;
+
+  return false;
 }
 
 function estaNaJanela(matches){
@@ -614,36 +628,59 @@ function agendarProxima(){
 // =====================================================
 function atualizar(){
   document.getElementById('st-live').innerHTML='<span class="pulse"></span>Atualizando...';
-  Promise.all([buscarJogosHoje(),buscarTxt()])
+
+  // Primeiro busca o resultados.txt. Se a API estiver fora do ar ou no limite,
+  // a classificação continua funcionando com os resultados já lançados no TXT.
+  buscarTxt()
+    .then(function(){
+      return buscarJogosHoje()
+        .then(function(){ return null; })
+        .catch(function(e){
+          // Não deixa erro da API derrubar a página inteira.
+          // Usa cache se existir; se não existir, segue sem jogos ao vivo.
+          var c=lerCacheJogos();
+          if(c){ JOGOS=c.matches||[]; }
+          document.getElementById('info-api').textContent =
+            'API temporariamente indisponível: '+e.message+'. Classificação carregada pelo resultados.txt.';
+          return null;
+        });
+    })
     .then(function(){
       var res=resultadosComLive();
       renderJogos();
       renderClass(res);
       atualizarInfoApi();
+
       var nLive=JOGOS.filter(function(m){return STATUS_LIVE.indexOf(m.status)>=0;}).length;
       var nFin=JOGOS.filter(function(m){return STATUS_FIN.indexOf(m.status)>=0;}).length;
+
       if(nLive>0){
         document.getElementById('st-live').innerHTML='<span class="pulse"></span>'+nLive+' jogo(s) ao vivo';
       } else if(JOGOS.length>0){
         document.getElementById('st-live').innerHTML='📅 '+nFin+'/'+JOGOS.length+' encerrado(s) hoje';
       } else {
-        document.getElementById('st-live').innerHTML='📅 Sem jogos hoje';
+        document.getElementById('st-live').innerHTML='📅 Sem jogos carregados da API';
       }
+
       document.getElementById('st-hora').textContent='Atualizado: '+new Date().toLocaleTimeString('pt-BR');
       agendarProxima();
     })
     .catch(function(e){
+      // Aqui só cai se o resultados.txt falhar.
       document.getElementById('st-live').innerHTML='❌ '+e.message;
       document.getElementById('jogos-wrap').innerHTML=
-        '<div class="erro-msg">⚠️ Erro: <b>'+esc(e.message)+'</b><br>Verifique se o Worker está ativo.</div>';
+        '<div class="erro-msg">⚠️ Erro ao carregar o resultados.txt: <b>'+esc(e.message)+'</b><br>'
+        +'Verifique se o arquivo resultados.txt existe no GitHub e está publicado.</div>';
+      document.getElementById('cl-wrap').innerHTML=
+        '<div class="erro-msg">Classificação não pôde ser calculada porque o resultados.txt não carregou.</div>';
       document.getElementById('st-hora').textContent=new Date().toLocaleTimeString('pt-BR');
       agendarProxima();
     });
 }
 
-// Botão forçar ignora cache de tempo
+// Botão atualizar respeita o limite da API.
+// Ele atualiza a tela e o resultados.txt, mas NÃO zera o controle de 6 minutos.
 function atualizarForcar(){
-  localStorage.removeItem('fdLastCall');
   atualizar();
 }
 
