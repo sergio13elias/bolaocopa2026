@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ao Vivo — Bolão Copa 2026 ZAPZAP</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:Arial,sans-serif;background:#0a0e1a;color:#fff;min-height:100vh;padding-bottom:60px;}
+
+.hdr{background:linear-gradient(135deg,#002776,#001550);padding:16px;text-align:center;border-bottom:3px solid #ffdf00;}
+.hdr h1{color:#ffdf00;font-size:21px;font-weight:900;}
+.hdr h2{color:rgba(255,255,255,.7);font-size:12px;margin-top:3px;}
+
+.status-bar{background:#111827;padding:8px 14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;border-bottom:1px solid #1f2937;}
+.st-item{font-size:12px;font-weight:700;color:#9ca3af;}
+.st-live{color:#ef4444;}
+.pulse{display:inline-block;width:8px;height:8px;border-radius:50%;background:#ef4444;margin-right:5px;animation:pulseAnim 1.5s infinite;}
+@keyframes pulseAnim{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.3);}}
+.btn-rf{background:#1f2937;border:1px solid #374151;color:#9ca3af;border-radius:6px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer;}
+.btn-rf:hover{background:#374151;color:#fff;}
+
+/* SECAO */
+.sec-tit{font-size:12px;font-weight:700;letter-spacing:1px;padding:8px 14px 4px;display:flex;align-items:center;gap:6px;}
+
+/* JOGOS */
+.jogos-wrap{padding:0 10px 6px;display:flex;flex-direction:column;gap:6px;}
+.jcard{border-radius:10px;overflow:hidden;}
+.jcard.live{border:1px solid rgba(239,68,68,.6);background:linear-gradient(135deg,#1a0808,#0d0d0d);}
+.jcard.fin {border:1px solid #374151;background:#111827;}
+.jcard.sched{border:1px solid #1f2937;background:#0d1117;opacity:.75;}
+.jtop{display:flex;justify-content:space-between;align-items:center;padding:5px 10px;}
+.badge-live{background:#ef4444;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;display:flex;align-items:center;gap:4px;}
+.badge-fin {background:#374151;color:#9ca3af;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;}
+.badge-sched{background:#1f2937;color:#6b7280;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;}
+.jmin{color:#f59e0b;font-size:11px;font-weight:700;}
+.jbody{display:flex;align-items:center;padding:8px 12px;gap:6px;}
+.tname{flex:1;font-size:12px;font-weight:700;line-height:1.2;}
+.tname.a{text-align:right;}
+.scbox{display:flex;align-items:center;gap:5px;flex-shrink:0;}
+.sc{font-size:22px;font-weight:900;width:34px;text-align:center;}
+.sc.live-sc{color:#f59e0b;}
+.scsep{font-size:14px;color:#4b5563;}
+.tlogo{width:26px;height:26px;object-fit:contain;flex-shrink:0;}
+.nologo{width:26px;height:26px;background:#1f2937;border-radius:50%;flex-shrink:0;}
+
+/* CLASSIFICACAO */
+.cl-wrap{margin:0 10px 10px;border-radius:10px;overflow:hidden;border:1px solid #1f2937;}
+.cl-hdr{display:grid;grid-template-columns:26px 1fr 38px 38px 38px 38px;gap:2px;padding:6px 8px;background:#111827;font-size:9px;font-weight:700;color:#6b7280;letter-spacing:.5px;}
+.cl-row{display:grid;grid-template-columns:26px 1fr 38px 38px 38px 38px;gap:2px;padding:6px 8px;border-bottom:1px solid #1f2937;align-items:center;background:#0d0d0d;}
+.cl-row:last-child{border-bottom:none;}
+.cl-row.t1{background:linear-gradient(90deg,#1a1400,#0d0d0d);}
+.cl-row.t2{background:linear-gradient(90deg,#0e1014,#0d0d0d);}
+.cl-row.t3{background:linear-gradient(90deg,#110e05,#0d0d0d);}
+.pos{font-size:12px;font-weight:900;text-align:center;}
+.p1{color:#f1c40f;}.p2{color:#9ca3af;}.p3{color:#d97706;}
+.nm{font-size:11px;font-weight:700;color:#e5e7eb;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pt{font-size:13px;font-weight:900;text-align:center;color:#34d399;}
+.cn{font-size:10px;font-weight:700;text-align:center;color:#6b7280;}
+.up{color:#34d399;font-size:9px;font-weight:700;}
+.dn{color:#ef4444;font-size:9px;font-weight:700;}
+
+.vazio{text-align:center;padding:24px;color:#4b5563;font-size:13px;}
+.spinner{width:30px;height:30px;border:3px solid #1f2937;border-top-color:#ffdf00;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 8px;}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.erro-msg{background:#1f0808;border:1px solid #ef4444;border-radius:8px;padding:12px;margin:8px 10px;font-size:12px;color:#fca5a5;line-height:1.6;}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <h1>⚽ Bolão Copa 2026 ZAPZAP</h1>
+  <h2>Acompanhamento Ao Vivo</h2>
+</div>
+
+<div class="status-bar">
+  <span class="st-item st-live" id="st-live"><span class="pulse"></span>Iniciando...</span>
+  <span class="st-item" id="st-hora"></span>
+  <button class="btn-rf" onclick="atualizar()">🔄 Atualizar</button>
+</div>
+
+<div class="sec-tit" style="color:#ef4444;margin-top:6px;">
+  <span class="pulse"></span> JOGOS DE HOJE
+</div>
+<div id="jogos-wrap">
+  <div class="vazio"><div class="spinner"></div>Buscando jogos...</div>
+</div>
+
+<div class="sec-tit" style="color:#ffdf00;margin-top:6px;">
+  🏆 CLASSIFICAÇÃO EM TEMPO REAL
+</div>
+<div class="cl-wrap" id="cl-wrap">
+  <div class="vazio"><div class="spinner"></div>Calculando...</div>
+</div>
+
+<script>
+// =====================================================
+// CONFIG
+// =====================================================
+// API protegida pelo Cloudflare Worker.
+// O token da football-data.org NÃO fica mais neste HTML.
+var WORKER_BASE = 'https://bolaocopa-api.fdv-e09.workers.dev';
+var WC_CODE  = 'WC';  // Copa do Mundo
+var RAW_URL  = 'https://raw.githubusercontent.com/sergio13elias/bolaocopa2026/main/resultados.txt';
+
+// Limite do plano free: 10 chamadas/hora.
+// 6 minutos = no máximo 10 chamadas por hora.
+var INTERVALO_API = 6 * 60 * 1000;
+
+// Janela em que vale buscar placar ao vivo.
+// Antes do jogo: busca começa 30 minutos antes.
+// Depois do início: mantém busca por até 3 horas.
+var JANELA_ANTES_JOGO  = 30 * 60 * 1000;
+var JANELA_DEPOIS_JOGO = 3 * 60 * 60 * 1000;
+
+// Fora da janela de jogo, a página continua viva,
+// mas não consulta a API Football; usa cache local.
+var INTERVALO_FORA_JOGO = 30 * 60 * 1000;
+
+var TIMER_ATUALIZACAO = null;
+
+// =====================================================
+// MAPEAMENTO TIMES (football-data.org -> nosso formato)
+// =====================================================
+var NMAP = {
+  'Mexico':'MEXICO','South Africa':'AFRICA DO SUL',
+  'Korea Republic':'COREIA DO SUL','Czech Republic':'REP. TCHECA','Czechia':'REP. TCHECA',
+  'Canada':'CANADA','Bosnia and Herzegovina':'BOSNIA','Bosnia & Herzegovina':'BOSNIA',
+  'USA':'EUA','United States':'EUA','Paraguay':'PARAGUAI',
+  'Haiti':'HAITI','Scotland':'ESCOCIA',
+  'Australia':'AUSTRALIA','Türkiye':'TURQUIA','Turkey':'TURQUIA',
+  'Brazil':'BRASIL','Morocco':'MARROCOS',
+  'Qatar':'CATAR','Switzerland':'SUICA',
+  "Côte d'Ivoire":'COSTA DO MARFIM','Ivory Coast':'COSTA DO MARFIM',
+  'Ecuador':'EQUADOR','Germany':'ALEMANHA','Curaçao':'CURACAU','Curacao':'CURACAU',
+  'Netherlands':'HOLANDA','Japan':'JAPAO','Sweden':'SUECIA','Tunisia':'TUNISIA',
+  'Saudi Arabia':'ARABIA SAUDITA','Uruguay':'URUGUAI',
+  'Iran':'IRA','IR Iran':'IRA','New Zealand':'NOVA ZELANDIA',
+  'Belgium':'BELGICA','Egypt':'EGITO',
+  'France':'FRANCA','Senegal':'SENEGAL','Iraq':'IRAQUE','Norway':'NORUEGA',
+  'Argentina':'ARGENTINA','Algeria':'ARGELIA','Austria':'AUSTRIA','Jordan':'JORDANIA',
+  'Ghana':'GANA','Panama':'PANAMA','England':'INGLATERRA','Croatia':'CROACIA',
+  'Portugal':'PORTUGAL','Congo DR':'RD CONGO','DR Congo':'RD CONGO',
+  'Uzbekistan':'UZBEQUISTAO','Colombia':'COLOMBIA',
+  'Spain':'ESPANHA','Cabo Verde':'CABO VERDE','Cape Verde':'CABO VERDE',
+  'Uzbekistan':'UZBEQUISTAO'
+};
+
+function normTime(n){ return NMAP[n] || (n||'').toUpperCase(); }
+
+// =====================================================
+// JOGOS ORDEM EXATA (para mapear n -> bolão)
+// =====================================================
+var JM = [
+  {n:1,a:'MEXICO',b:'AFRICA DO SUL'},{n:2,a:'COREIA DO SUL',b:'REP. TCHECA'},
+  {n:3,a:'CANADA',b:'BOSNIA'},{n:4,a:'EUA',b:'PARAGUAI'},
+  {n:5,a:'HAITI',b:'ESCOCIA'},{n:6,a:'AUSTRALIA',b:'TURQUIA'},
+  {n:7,a:'BRASIL',b:'MARROCOS'},{n:8,a:'CATAR',b:'SUICA'},
+  {n:9,a:'COSTA DO MARFIM',b:'EQUADOR'},{n:10,a:'ALEMANHA',b:'CURACAU'},
+  {n:11,a:'HOLANDA',b:'JAPAO'},{n:12,a:'SUECIA',b:'TUNISIA'},
+  {n:13,a:'ARABIA SAUDITA',b:'URUGUAI'},{n:14,a:'ESPANHA',b:'CABO VERDE'},
+  {n:15,a:'IRA',b:'NOVA ZELANDIA'},{n:16,a:'BELGICA',b:'EGITO'},
+  {n:17,a:'FRANCA',b:'SENEGAL'},{n:18,a:'IRAQUE',b:'NORUEGA'},
+  {n:19,a:'ARGENTINA',b:'ARGELIA'},{n:20,a:'AUSTRIA',b:'JORDANIA'},
+  {n:21,a:'GANA',b:'PANAMA'},{n:22,a:'INGLATERRA',b:'CROACIA'},
+  {n:23,a:'PORTUGAL',b:'RD CONGO'},{n:24,a:'UZBEQUISTAO',b:'COLOMBIA'},
+  {n:25,a:'REP. TCHECA',b:'AFRICA DO SUL'},{n:26,a:'SUICA',b:'BOSNIA'},
+  {n:27,a:'CANADA',b:'CATAR'},{n:28,a:'MEXICO',b:'COREIA DO SUL'},
+  {n:29,a:'BRASIL',b:'HAITI'},{n:30,a:'ESCOCIA',b:'MARROCOS'},
+  {n:31,a:'TURQUIA',b:'PARAGUAI'},{n:32,a:'EUA',b:'AUSTRALIA'},
+  {n:33,a:'ALEMANHA',b:'COSTA DO MARFIM'},{n:34,a:'EQUADOR',b:'CURACAU'},
+  {n:35,a:'HOLANDA',b:'SUECIA'},{n:36,a:'TUNISIA',b:'JAPAO'},
+  {n:37,a:'URUGUAI',b:'CABO VERDE'},{n:38,a:'ESPANHA',b:'ARABIA SAUDITA'},
+  {n:39,a:'BELGICA',b:'IRA'},{n:40,a:'NOVA ZELANDIA',b:'EGITO'},
+  {n:41,a:'NORUEGA',b:'SENEGAL'},{n:42,a:'FRANCA',b:'IRAQUE'},
+  {n:43,a:'ARGENTINA',b:'AUSTRIA'},{n:44,a:'JORDANIA',b:'ARGELIA'},
+  {n:45,a:'INGLATERRA',b:'GANA'},{n:46,a:'PANAMA',b:'CROACIA'},
+  {n:47,a:'PORTUGAL',b:'UZBEQUISTAO'},{n:48,a:'COLOMBIA',b:'RD CONGO'},
+  {n:49,a:'ESCOCIA',b:'BRASIL'},{n:50,a:'MARROCOS',b:'HAITI'},
+  {n:51,a:'SUICA',b:'CANADA'},{n:52,a:'BOSNIA',b:'CATAR'},
+  {n:53,a:'REP. TCHECA',b:'MEXICO'},{n:54,a:'AFRICA DO SUL',b:'COREIA DO SUL'},
+  {n:55,a:'CURACAU',b:'COSTA DO MARFIM'},{n:56,a:'EQUADOR',b:'ALEMANHA'},
+  {n:57,a:'JAPAO',b:'SUECIA'},{n:58,a:'TUNISIA',b:'HOLANDA'},
+  {n:59,a:'TURQUIA',b:'EUA'},{n:60,a:'PARAGUAI',b:'AUSTRALIA'},
+  {n:61,a:'NORUEGA',b:'FRANCA'},{n:62,a:'SENEGAL',b:'IRAQUE'},
+  {n:63,a:'EGITO',b:'IRA'},{n:64,a:'NOVA ZELANDIA',b:'BELGICA'},
+  {n:65,a:'CABO VERDE',b:'ARABIA SAUDITA'},{n:66,a:'URUGUAI',b:'ESPANHA'},
+  {n:67,a:'PANAMA',b:'INGLATERRA'},{n:68,a:'CROACIA',b:'GANA'},
+  {n:69,a:'ARGELIA',b:'AUSTRIA'},{n:70,a:'JORDANIA',b:'ARGENTINA'},
+  {n:71,a:'COLOMBIA',b:'PORTUGAL'},{n:72,a:'RD CONGO',b:'UZBEQUISTAO'}
+];
+
+function encontrarJogo(nA, nB){
+  var a=normTime(nA), b=normTime(nB);
+  for(var i=0;i<JM.length;i++){
+    var j=JM[i];
+    if((j.a===a&&j.b===b)||(j.a===b&&j.b===a))return j;
+  }
+  return null;
+}
+
+// =====================================================
+// ESTADO
+// =====================================================
+var DADOS   = null;
+var JOGOS   = [];   // jogos de hoje da API
+var PTS_ANT = {};   // pontos anteriores para mostrar delta
+
+// =====================================================
+// FETCH football-data.org VIA CLOUDFLARE WORKER
+// Com cache e limite de requisições
+// =====================================================
+function hojeLocalISO(){
+  var hoje = new Date();
+  return hoje.getFullYear()+'-'+
+         String(hoje.getMonth()+1).padStart(2,'0')+'-'+
+         String(hoje.getDate()).padStart(2,'0');
+}
+
+function carregarCacheJogos(){
+  try{
+    var raw = localStorage.getItem('fdJogosHojeCache');
+    if(!raw) return false;
+
+    var cache = JSON.parse(raw);
+    if(!cache || cache.data !== hojeLocalISO()) return false;
+
+    JOGOS = cache.matches || [];
+    return true;
+  }catch(e){
+    return false;
+  }
+}
+
+function salvarCacheJogos(matches){
+  try{
+    localStorage.setItem('fdJogosHojeCache', JSON.stringify({
+      data: hojeLocalISO(),
+      atualizadoEm: Date.now(),
+      matches: matches || []
+    }));
+  }catch(e){}
+}
+
+function ultimaChamadaApi(){
+  return Number(localStorage.getItem('fdLastApiCall') || 0);
+}
+
+function registrarChamadaApi(){
+  localStorage.setItem('fdLastApiCall', String(Date.now()));
+}
+
+function estaNaJanelaDeJogo(){
+  var agora = Date.now();
+
+  return JOGOS.some(function(m){
+    if(!m || !m.utcDate) return false;
+
+    var inicio = new Date(m.utcDate).getTime();
+    var abre   = inicio - JANELA_ANTES_JOGO;
+    var fecha  = inicio + JANELA_DEPOIS_JOGO;
+
+    return agora >= abre && agora <= fecha;
+  });
+}
+
+function proximaJanelaDeJogo(){
+  var agora = Date.now();
+  var proxima = null;
+
+  JOGOS.forEach(function(m){
+    if(!m || !m.utcDate) return;
+
+    var inicio = new Date(m.utcDate).getTime();
+    var abre = inicio - JANELA_ANTES_JOGO;
+
+    if(abre > agora && (proxima === null || abre < proxima)){
+      proxima = abre;
+    }
+  });
+
+  return proxima;
+}
+
+function podeChamarApi(){
+  var agora = Date.now();
+  var ultima = ultimaChamadaApi();
+
+  // Nunca passa de 10 chamadas/hora.
+  if(agora - ultima < INTERVALO_API) return false;
+
+  // Se ainda não temos a agenda do dia, faz uma chamada.
+  if(!carregarCacheJogos()) return true;
+
+  // Com agenda em cache, só chama durante janela de jogo.
+  return estaNaJanelaDeJogo();
+}
+
+function fdFetch(endpoint){
+  var endpointLimpo = String(endpoint || '').replace(/^\/+/, '');
+  var url = WORKER_BASE + '/?endpoint=' + encodeURIComponent(endpointLimpo);
+
+  return fetch(url, { cache:'no-store' })
+    .then(function(r){
+      if(!r.ok) return r.json().then(function(e){
+        throw new Error(e.message || e.erro || 'HTTP '+r.status);
+      });
+      return r.json();
+    });
+}
+
+// Busca jogos de hoje da Copa do Mundo.
+// Fora da janela de jogo, usa cache local e NÃO chama a API.
+function buscarJogosHoje(){
+  var d = hojeLocalISO();
+
+  carregarCacheJogos();
+
+  if(!podeChamarApi()){
+    return Promise.resolve(JOGOS);
+  }
+
+  registrarChamadaApi();
+
+  return fdFetch('/competitions/'+WC_CODE+'/matches?dateFrom='+d+'&dateTo='+d)
+    .then(function(data){
+      JOGOS = data.matches || [];
+      salvarCacheJogos(JOGOS);
+      return JOGOS;
+    })
+    .catch(function(e){
+      // Se a API falhar, mas houver cache, mantém a página funcionando.
+      if(carregarCacheJogos()) return JOGOS;
+      throw e;
+    });
+}
+
+function intervaloProximaAtualizacao(){
+  carregarCacheJogos();
+
+  if(estaNaJanelaDeJogo()){
+    return INTERVALO_API;
+  }
+
+  var prox = proximaJanelaDeJogo();
+  if(prox){
+    var falta = prox - Date.now();
+
+    // Se falta pouco para começar a janela, agenda exatamente para perto dela.
+    if(falta > 0 && falta < INTERVALO_FORA_JOGO){
+      return Math.max(falta, 60 * 1000);
+    }
+  }
+
+  return INTERVALO_FORA_JOGO;
+}
+
+function agendarProximaAtualizacao(){
+  if(TIMER_ATUALIZACAO) clearTimeout(TIMER_ATUALIZACAO);
+
+  var intervalo = intervaloProximaAtualizacao();
+
+  TIMER_ATUALIZACAO = setTimeout(function(){
+    atualizar();
+  }, intervalo);
+}
+
+// =====================================================
+// FETCH resultados.txt
+// =====================================================
+function buscarTxt(){
+  return fetch(RAW_URL+'?v='+Date.now(),{cache:'no-store'})
+    .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.text();})
+    .then(function(txt){DADOS=parseTxt(txt);return DADOS;});
+}
+
+// =====================================================
+// PARSER resultados.txt
+// =====================================================
+function parseTxt(txt){
+  var ls=txt.split('\n').map(function(l){return l.trim();});
+  var d={resultados:{},campea:'',vice:'',artilheiro:'',vice_artilheiro:'',participantes:[]};
+  var sec=null,pt=null,ptf=null;
+  ls.forEach(function(l){
+    if(!l||l[0]==='#')return;
+    if(l==='[RESULTADOS]'){sec='r';return;}
+    if(l==='[CAMPEA]'){sec='c';return;}if(l==='[VICE]'){sec='v';return;}
+    if(l==='[ARTILHEIRO]'){sec='a';return;}if(l==='[VICE_ARTILHEIRO]'){sec='va';return;}
+    if(l==='[FASES]'){sec='skip';return;}
+    if(l==='[PARTICIPANTE]'){
+      sec='pt';pt={nome:'',fase1:{},fase2:{},fase3:{},campea:'',vice:'',artilheiro:'',vice_artilheiro:''};
+      d.participantes.push(pt);ptf=null;return;
+    }
+    if(l==='[FASE1]'){ptf='f1';return;}
+    if(l==='[FASE2]'){ptf='f2';return;}
+    if(l==='[FASE3]'){ptf='f3';return;}
+    var mN=l.match(/^(\d+)\s+(\d+)[xX](\d+)/);
+    if(sec==='r'&&mN)d.resultados[+mN[1]]={ga:+mN[2],gb:+mN[3]};
+    else if(sec==='c'&&l)d.campea=l;
+    else if(sec==='v'&&l)d.vice=l;
+    else if(sec==='a'&&l)d.artilheiro=l;
+    else if(sec==='va'&&l)d.vice_artilheiro=l;
+    else if(sec==='pt'&&pt){
+      var u=l.toUpperCase();
+      if(u.startsWith('NOME:'))pt.nome=l.slice(5).trim();
+      else if(u.startsWith('CAMPEA:'))pt.campea=l.slice(7).trim();
+      else if(u.startsWith('VICE:'))pt.vice=l.slice(5).trim();
+      else if(u.startsWith('ARTILHEIRO:'))pt.artilheiro=l.slice(11).trim();
+      else if(u.startsWith('VICE_ARTILHEIRO:'))pt.vice_artilheiro=l.slice(16).trim();
+      else if(mN&&ptf){
+        var o=ptf==='f1'?pt.fase1:ptf==='f2'?pt.fase2:pt.fase3;
+        o[+mN[1]]={ga:+mN[2],gb:+mN[3]};
+      }
+    }
+  });
+  return d;
+}
+
+// =====================================================
+// INTEGRA PLACAR AO VIVO no resultados
+// =====================================================
+// Status football-data.org:
+// TIMED / SCHEDULED = agendado
+// IN_PLAY / PAUSED / HALF_TIME = ao vivo
+// FINISHED / AWARDED = encerrado
+var STATUS_LIVE = ['IN_PLAY','PAUSED','HALF_TIME'];
+var STATUS_FIN  = ['FINISHED','AWARDED'];
+
+function resultadosComLive(){
+  var res = {};
+  // Copia resultados do TXT
+  Object.keys(DADOS.resultados).forEach(function(k){
+    res[+k] = DADOS.resultados[+k];
+  });
+  // Sobrescreve com ao vivo
+  JOGOS.forEach(function(m){
+    var st = m.status;
+    var isLive = STATUS_LIVE.indexOf(st) >= 0;
+    var isFin  = STATUS_FIN.indexOf(st)  >= 0;
+    if(!isLive && !isFin) return;
+    var ga = m.score && m.score.fullTime ? m.score.fullTime.home : null;
+    var gb = m.score && m.score.fullTime ? m.score.fullTime.away : null;
+    // Para jogos ao vivo usa score atual
+    if(isLive){
+      ga = (m.score&&m.score.fullTime&&m.score.fullTime.home!==null) ? m.score.fullTime.home :
+           (m.score&&m.score.halfTime&&m.score.halfTime.home!==null) ? m.score.halfTime.home : 0;
+      gb = (m.score&&m.score.fullTime&&m.score.fullTime.away!==null) ? m.score.fullTime.away :
+           (m.score&&m.score.halfTime&&m.score.halfTime.away!==null) ? m.score.halfTime.away : 0;
+    }
+    if(ga===null||gb===null) return;
+    var nA = m.homeTeam&&m.homeTeam.name ? m.homeTeam.name : '';
+    var nB = m.awayTeam&&m.awayTeam.name ? m.awayTeam.name : '';
+    var jb = encontrarJogo(nA, nB);
+    if(!jb) return;
+    // Inverte se times estão na ordem inversa
+    var nAN = normTime(nA);
+    if(jb.a !== nAN){ var tmp=ga; ga=gb; gb=tmp; }
+    res[jb.n] = {ga:ga, gb:gb};
+  });
+  return res;
+}
+
+// =====================================================
+// CALCULAR PONTUACAO
+// =====================================================
+var NS_F1=[]; for(var _i=1;_i<=72;_i++)NS_F1.push(_i);
+var NS_F2=[]; for(var _i=73;_i<=88;_i++)NS_F2.push(_i);
+var NS_F3=[]; for(var _i=89;_i<=104;_i++)NS_F3.push(_i);
+
+function calcFase(palpites,res,ns){
+  var pts=0,ex=0,vc=0;
+  ns.forEach(function(n){
+    var r=res[n],p=palpites[n];
+    if(!r||!p)return;
+    var rv=r.ga>r.gb?'A':r.ga<r.gb?'B':'E';
+    var pv=p.ga>p.gb?'A':p.ga<p.gb?'B':'E';
+    if(r.ga===p.ga&&r.gb===p.gb){pts+=3;ex++;}
+    else if(rv===pv){pts+=1;vc++;}
+  });
+  return{pts:pts,ex:ex,vc:vc};
+}
+
+function norm(s){
+  return String(s||'').trim().toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+}
+
+function calcTotal(pt,res){
+  var c1=calcFase(pt.fase1,res,NS_F1);
+  var c2=calcFase(pt.fase2,res,NS_F2);
+  var c3=calcFase(pt.fase3,res,NS_F3);
+  var pf=0;
+  if(DADOS.campea&&norm(pt.campea)===norm(DADOS.campea))pf+=5;
+  if(DADOS.vice&&norm(pt.vice)===norm(DADOS.vice))pf+=3;
+  if(DADOS.artilheiro&&norm(pt.artilheiro)===norm(DADOS.artilheiro))pf+=5;
+  if(DADOS.vice_artilheiro&&norm(pt.vice_artilheiro)===norm(DADOS.vice_artilheiro))pf+=3;
+  return c1.pts+c2.pts+c3.pts+pf;
+}
+
+// =====================================================
+// RENDER JOGOS
+// =====================================================
+function tipoStatus(st){
+  if(STATUS_LIVE.indexOf(st)>=0) return 'live';
+  if(STATUS_FIN.indexOf(st)>=0)  return 'fin';
+  return 'sched';
+}
+
+function horaLocal(dateStr){
+  try{
+    var d=new Date(dateStr);
+    return d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})+' BRT';
+  }catch(e){return '';}
+}
+
+function minuteStr(m){
+  if(!m||!m.minute) return '';
+  return m.minute+"'";
+}
+
+function renderJogos(){
+  var wrap=document.getElementById('jogos-wrap');
+  if(!JOGOS.length){
+    wrap.innerHTML='<div class="vazio">📅 Nenhum jogo da Copa hoje</div>';
+    return;
+  }
+  var h='<div class="jogos-wrap">';
+  JOGOS.forEach(function(m){
+    var tipo=tipoStatus(m.status);
+    var nA=m.homeTeam&&m.homeTeam.name?m.homeTeam.name:'?';
+    var nB=m.awayTeam&&m.awayTeam.name?m.awayTeam.name:'?';
+    var logoA=m.homeTeam&&m.homeTeam.crest?m.homeTeam.crest:'';
+    var logoB=m.awayTeam&&m.awayTeam.crest?m.awayTeam.crest:'';
+    var ga='-', gb='-';
+    if(m.score&&m.score.fullTime){
+      if(m.score.fullTime.home!==null) ga=m.score.fullTime.home;
+      if(m.score.fullTime.away!==null) gb=m.score.fullTime.away;
+    }
+    var scCls = tipo==='live' ? ' live-sc' : '';
+    var badge='', minTxt='';
+    if(tipo==='live'){
+      badge='<span class="badge-live"><span class="pulse"></span>AO VIVO</span>';
+      minTxt='<span class="jmin">'+minuteStr(m)+'</span>';
+    } else if(tipo==='fin'){
+      badge='<span class="badge-fin">⏱ Encerrado</span>';
+    } else {
+      badge='<span class="badge-sched">🕐 '+horaLocal(m.utcDate)+'</span>';
+    }
+    h+='<div class="jcard '+tipo+'">'
+      +'<div class="jtop">'+badge+minTxt+'</div>'
+      +'<div class="jbody">'
+      +(logoA?'<img class="tlogo" src="'+logoA+'" onerror="this.style.display=\'none\'">':'<div class="nologo"></div>')
+      +'<span class="tname a">'+esc(nA)+'</span>'
+      +'<div class="scbox">'
+      +'<span class="sc'+scCls+'">'+ga+'</span>'
+      +'<span class="scsep">×</span>'
+      +'<span class="sc'+scCls+'">'+gb+'</span>'
+      +'</div>'
+      +'<span class="tname">'+esc(nB)+'</span>'
+      +(logoB?'<img class="tlogo" src="'+logoB+'" onerror="this.style.display=\'none\'">':'<div class="nologo"></div>')
+      +'</div></div>';
+  });
+  h+='</div>';
+  wrap.innerHTML=h;
+}
+
+// =====================================================
+// RENDER CLASSIFICACAO
+// =====================================================
+function renderClass(res){
+  if(!DADOS||!DADOS.participantes.length){
+    document.getElementById('cl-wrap').innerHTML=
+      '<div class="vazio">Aguardando dados do bolão...</div>';
+    return;
+  }
+  var rnk=DADOS.participantes.map(function(p,i){
+    return{idx:i,nome:p.nome,pts:calcTotal(p,res)};
+  });
+  rnk.sort(function(a,b){
+    if(b.pts!==a.pts)return b.pts-a.pts;
+    return a.nome.localeCompare(b.nome);
+  });
+  var h='<div class="cl-hdr">'
+    +'<span>#</span><span>Participante</span>'
+    +'<span style="text-align:center">Pts</span>'
+    +'<span style="text-align:center;font-size:8px">Ant.</span>'
+    +'<span style="text-align:center;font-size:8px">Δ</span>'
+    +'<span style="text-align:center;font-size:8px">Pos</span>'
+    +'</div>';
+
+  rnk.forEach(function(r,i){
+    var med=i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
+    var rc='cl-row'+(i===0?' t1':i===1?' t2':i===2?' t3':'');
+    var pc='pos '+(i===0?'p1':i===1?'p2':i===2?'p3':'');
+    var ant=PTS_ANT[r.nome]!==undefined?PTS_ANT[r.nome]:r.pts;
+    var diff=r.pts-ant;
+    var diffH=diff>0?'<span class="up">▲+'+diff+'</span>':
+              diff<0?'<span class="dn">▼'+diff+'</span>':
+              '<span style="color:#4b5563">—</span>';
+    h+='<div class="'+rc+'">'
+      +'<span class="'+pc+'">'+(med||i+1)+'</span>'
+      +'<span class="nm">'+esc(r.nome)+'</span>'
+      +'<span class="pt">'+r.pts+'</span>'
+      +'<span class="cn">'+ant+'</span>'
+      +'<span class="cn">'+diffH+'</span>'
+      +'<span class="cn" style="font-size:9px;">'+(i+1)+'º</span>'
+      +'</div>';
+  });
+  document.getElementById('cl-wrap').innerHTML=h;
+  // Salva para próxima comparação
+  rnk.forEach(function(r){PTS_ANT[r.nome]=r.pts;});
+}
+
+// =====================================================
+// ATUALIZAR TUDO
+// =====================================================
+function atualizar(){
+  document.getElementById('st-live').innerHTML='<span class="pulse"></span>Atualizando...';
+
+  Promise.all([buscarJogosHoje(), buscarTxt()])
+    .then(function(){
+      var res = resultadosComLive();
+      renderJogos();
+      renderClass(res);
+
+      var nLive = JOGOS.filter(function(m){
+        return STATUS_LIVE.indexOf(m.status)>=0;
+      }).length;
+      var nFin = JOGOS.filter(function(m){
+        return STATUS_FIN.indexOf(m.status)>=0;
+      }).length;
+      var nTotal = JOGOS.length;
+
+      if(nLive>0){
+        document.getElementById('st-live').innerHTML=
+          '<span class="pulse"></span>'+nLive+' jogo(s) ao vivo';
+      } else if(nTotal>0){
+        document.getElementById('st-live').innerHTML=
+          '📅 '+nFin+'/'+nTotal+' encerrado(s) hoje';
+      } else {
+        document.getElementById('st-live').innerHTML='📅 Sem jogos hoje';
+      }
+      var msgExtra = estaNaJanelaDeJogo()
+        ? ' • próxima consulta em 6 min'
+        : ' • fora da janela de jogo';
+
+      document.getElementById('st-hora').textContent=
+        'Atualizado: '+new Date().toLocaleTimeString('pt-BR') + msgExtra;
+
+      agendarProximaAtualizacao();
+    })
+    .catch(function(e){
+      document.getElementById('st-live').innerHTML='❌ '+e.message;
+      document.getElementById('jogos-wrap').innerHTML=
+        '<div class="erro-msg">⚠️ Erro ao buscar dados: <b>'+esc(e.message)+'</b><br>'
+        +'Verifique a conexão e tente novamente.</div>';
+      document.getElementById('st-hora').textContent=
+        new Date().toLocaleTimeString('pt-BR');
+
+      agendarProximaAtualizacao();
+    });
+}
+
+function esc(s){
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// =====================================================
+// INIT
+// =====================================================
+atualizar();
+// Não usamos setInterval fixo para evitar ultrapassar o limite da API.
+// A próxima atualização é agendada dinamicamente por agendarProximaAtualizacao().
+</script>
+</body>
+</html>

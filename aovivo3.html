@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ao Vivo — Bolão Copa 2026 ZAPZAP</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:Arial,sans-serif;background:#0a0e1a;color:#fff;min-height:100vh;padding-bottom:60px;}
+.hdr{background:linear-gradient(135deg,#002776,#001550);padding:16px;text-align:center;border-bottom:3px solid #ffdf00;}
+.hdr h1{color:#ffdf00;font-size:21px;font-weight:900;}
+.hdr h2{color:rgba(255,255,255,.7);font-size:12px;margin-top:3px;}
+.status-bar{background:#111827;padding:8px 14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;border-bottom:1px solid #1f2937;}
+.st-item{font-size:12px;font-weight:700;color:#9ca3af;}
+.st-live{color:#ef4444;}
+.pulse{display:inline-block;width:8px;height:8px;border-radius:50%;background:#ef4444;margin-right:5px;animation:pulseAnim 1.5s infinite;}
+@keyframes pulseAnim{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.3);}}
+.btn-rf{background:#1f2937;border:1px solid #374151;color:#9ca3af;border-radius:6px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer;}
+.btn-rf:hover{background:#374151;color:#fff;}
+.sec-tit{font-size:12px;font-weight:700;letter-spacing:1px;padding:8px 14px 4px;display:flex;align-items:center;gap:6px;}
+.jogos-wrap{padding:0 10px 6px;display:flex;flex-direction:column;gap:6px;}
+.jcard{border-radius:10px;overflow:hidden;}
+.jcard.live{border:1px solid rgba(239,68,68,.6);background:linear-gradient(135deg,#1a0808,#0d0d0d);}
+.jcard.fin{border:1px solid #374151;background:#111827;}
+.jcard.sched{border:1px solid #1f2937;background:#0d1117;opacity:.75;}
+.jtop{display:flex;justify-content:space-between;align-items:center;padding:5px 10px;}
+.badge-live{background:#ef4444;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;display:flex;align-items:center;gap:4px;}
+.badge-fin{background:#374151;color:#9ca3af;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;}
+.badge-sched{background:#1f2937;color:#6b7280;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;}
+.jmin{color:#f59e0b;font-size:11px;font-weight:700;}
+.jbody{display:flex;align-items:center;padding:8px 12px;gap:6px;}
+.tname{flex:1;font-size:12px;font-weight:700;line-height:1.2;}
+.tname.a{text-align:right;}
+.scbox{display:flex;align-items:center;gap:5px;flex-shrink:0;}
+.sc{font-size:22px;font-weight:900;width:34px;text-align:center;}
+.sc.live-sc{color:#f59e0b;}
+.scsep{font-size:14px;color:#4b5563;}
+.tlogo{width:26px;height:26px;object-fit:contain;flex-shrink:0;}
+.nologo{width:26px;height:26px;background:#1f2937;border-radius:50%;flex-shrink:0;}
+.cl-wrap{margin:0 10px 10px;border-radius:10px;overflow:hidden;border:1px solid #1f2937;}
+.cl-hdr{display:grid;grid-template-columns:26px 1fr 38px 38px 38px 38px;gap:2px;padding:6px 8px;background:#111827;font-size:9px;font-weight:700;color:#6b7280;letter-spacing:.5px;}
+.cl-row{display:grid;grid-template-columns:26px 1fr 38px 38px 38px 38px;gap:2px;padding:6px 8px;border-bottom:1px solid #1f2937;align-items:center;background:#0d0d0d;}
+.cl-row:last-child{border-bottom:none;}
+.cl-row.t1{background:linear-gradient(90deg,#1a1400,#0d0d0d);}
+.cl-row.t2{background:linear-gradient(90deg,#0e1014,#0d0d0d);}
+.cl-row.t3{background:linear-gradient(90deg,#110e05,#0d0d0d);}
+.pos{font-size:12px;font-weight:900;text-align:center;}
+.p1{color:#f1c40f;}.p2{color:#9ca3af;}.p3{color:#d97706;}
+.nm{font-size:11px;font-weight:700;color:#e5e7eb;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pt{font-size:13px;font-weight:900;text-align:center;color:#34d399;}
+.cn{font-size:10px;font-weight:700;text-align:center;color:#6b7280;}
+.up{color:#34d399;font-size:9px;font-weight:700;}
+.dn{color:#ef4444;font-size:9px;font-weight:700;}
+.vazio{text-align:center;padding:24px;color:#4b5563;font-size:13px;}
+.spinner{width:30px;height:30px;border:3px solid #1f2937;border-top-color:#ffdf00;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 8px;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.erro-msg{background:#1f0808;border:1px solid #ef4444;border-radius:8px;padding:12px;margin:8px 10px;font-size:12px;color:#fca5a5;line-height:1.6;}
+.info-api{background:#111827;border:1px solid #1f2937;border-radius:8px;padding:8px 12px;margin:6px 10px;font-size:11px;color:#6b7280;text-align:center;}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <h1>⚽ Bolão Copa 2026 ZAPZAP</h1>
+  <h2>Acompanhamento Ao Vivo</h2>
+</div>
+
+<div class="status-bar">
+  <span class="st-item st-live" id="st-live"><span class="pulse"></span>Iniciando...</span>
+  <span class="st-item" id="st-hora"></span>
+  <button class="btn-rf" onclick="atualizarForcar()">🔄 Atualizar</button>
+</div>
+
+<div class="sec-tit" style="color:#ef4444;margin-top:6px;">
+  <span class="pulse"></span> JOGOS DE HOJE
+</div>
+<div id="jogos-wrap">
+  <div class="vazio"><div class="spinner"></div>Buscando jogos...</div>
+</div>
+
+<div class="sec-tit" style="color:#ffdf00;margin-top:6px;">
+  🏆 CLASSIFICAÇÃO EM TEMPO REAL
+</div>
+<div class="cl-wrap" id="cl-wrap">
+  <div class="vazio"><div class="spinner"></div>Calculando...</div>
+</div>
+<div class="info-api" id="info-api"></div>
+
+<script>
+// =====================================================
+// CONFIG
+// =====================================================
+var WORKER_BASE = 'https://bolaocopa-api.fdv-e09.workers.dev';
+var WC_CODE     = 'WC';
+var RAW_URL     = 'https://raw.githubusercontent.com/sergio13elias/bolaocopa2026/main/resultados.txt';
+
+// Limites: 10 req/hora na API free
+// Intervalo mínimo entre chamadas: 6 minutos
+var INTERVALO_API        = 6 * 60 * 1000;   // 6 min entre chamadas à API
+var JANELA_ANTES_JOGO    = 30 * 60 * 1000;  // começa 30min antes do jogo
+var JANELA_DEPOIS_JOGO   = 3 * 60 * 60 * 1000; // termina 3h depois
+var INTERVALO_FORA_JOGO  = 30 * 60 * 1000;  // verifica a cada 30min fora do jogo
+var TIMER_ATUALIZACAO    = null;
+
+// =====================================================
+// MAPEAMENTO TIMES
+// =====================================================
+var NMAP = {
+  'Mexico':'MEXICO','South Africa':'AFRICA DO SUL',
+  'Korea Republic':'COREIA DO SUL','Czech Republic':'REP. TCHECA','Czechia':'REP. TCHECA',
+  'Canada':'CANADA','Bosnia and Herzegovina':'BOSNIA','Bosnia & Herzegovina':'BOSNIA',
+  'USA':'EUA','United States':'EUA','Paraguay':'PARAGUAI',
+  'Haiti':'HAITI','Scotland':'ESCOCIA',
+  'Australia':'AUSTRALIA','Türkiye':'TURQUIA','Turkey':'TURQUIA',
+  'Brazil':'BRASIL','Morocco':'MARROCOS',
+  'Qatar':'CATAR','Switzerland':'SUICA',
+  "Côte d'Ivoire":'COSTA DO MARFIM','Ivory Coast':'COSTA DO MARFIM',
+  'Ecuador':'EQUADOR','Germany':'ALEMANHA','Curaçao':'CURACAU','Curacao':'CURACAU',
+  'Netherlands':'HOLANDA','Japan':'JAPAO','Sweden':'SUECIA','Tunisia':'TUNISIA',
+  'Saudi Arabia':'ARABIA SAUDITA','Uruguay':'URUGUAI',
+  'Iran':'IRA','IR Iran':'IRA','New Zealand':'NOVA ZELANDIA',
+  'Belgium':'BELGICA','Egypt':'EGITO',
+  'France':'FRANCA','Senegal':'SENEGAL','Iraq':'IRAQUE','Norway':'NORUEGA',
+  'Argentina':'ARGENTINA','Algeria':'ARGELIA','Austria':'AUSTRIA','Jordan':'JORDANIA',
+  'Ghana':'GANA','Panama':'PANAMA','England':'INGLATERRA','Croatia':'CROACIA',
+  'Portugal':'PORTUGAL','Congo DR':'RD CONGO','DR Congo':'RD CONGO',
+  'Uzbekistan':'UZBEQUISTAO','Colombia':'COLOMBIA',
+  'Spain':'ESPANHA','Cabo Verde':'CABO VERDE','Cape Verde':'CABO VERDE'
+};
+function normTime(n){ return NMAP[n] || (n||'').toUpperCase(); }
+
+// =====================================================
+// MAPA JOGOS BOLÃO
+// =====================================================
+var JM = [
+  {n:1,a:'MEXICO',b:'AFRICA DO SUL'},{n:2,a:'COREIA DO SUL',b:'REP. TCHECA'},
+  {n:3,a:'CANADA',b:'BOSNIA'},{n:4,a:'EUA',b:'PARAGUAI'},
+  {n:5,a:'HAITI',b:'ESCOCIA'},{n:6,a:'AUSTRALIA',b:'TURQUIA'},
+  {n:7,a:'BRASIL',b:'MARROCOS'},{n:8,a:'CATAR',b:'SUICA'},
+  {n:9,a:'COSTA DO MARFIM',b:'EQUADOR'},{n:10,a:'ALEMANHA',b:'CURACAU'},
+  {n:11,a:'HOLANDA',b:'JAPAO'},{n:12,a:'SUECIA',b:'TUNISIA'},
+  {n:13,a:'ARABIA SAUDITA',b:'URUGUAI'},{n:14,a:'ESPANHA',b:'CABO VERDE'},
+  {n:15,a:'IRA',b:'NOVA ZELANDIA'},{n:16,a:'BELGICA',b:'EGITO'},
+  {n:17,a:'FRANCA',b:'SENEGAL'},{n:18,a:'IRAQUE',b:'NORUEGA'},
+  {n:19,a:'ARGENTINA',b:'ARGELIA'},{n:20,a:'AUSTRIA',b:'JORDANIA'},
+  {n:21,a:'GANA',b:'PANAMA'},{n:22,a:'INGLATERRA',b:'CROACIA'},
+  {n:23,a:'PORTUGAL',b:'RD CONGO'},{n:24,a:'UZBEQUISTAO',b:'COLOMBIA'},
+  {n:25,a:'REP. TCHECA',b:'AFRICA DO SUL'},{n:26,a:'SUICA',b:'BOSNIA'},
+  {n:27,a:'CANADA',b:'CATAR'},{n:28,a:'MEXICO',b:'COREIA DO SUL'},
+  {n:29,a:'BRASIL',b:'HAITI'},{n:30,a:'ESCOCIA',b:'MARROCOS'},
+  {n:31,a:'TURQUIA',b:'PARAGUAI'},{n:32,a:'EUA',b:'AUSTRALIA'},
+  {n:33,a:'ALEMANHA',b:'COSTA DO MARFIM'},{n:34,a:'EQUADOR',b:'CURACAU'},
+  {n:35,a:'HOLANDA',b:'SUECIA'},{n:36,a:'TUNISIA',b:'JAPAO'},
+  {n:37,a:'URUGUAI',b:'CABO VERDE'},{n:38,a:'ESPANHA',b:'ARABIA SAUDITA'},
+  {n:39,a:'BELGICA',b:'IRA'},{n:40,a:'NOVA ZELANDIA',b:'EGITO'},
+  {n:41,a:'NORUEGA',b:'SENEGAL'},{n:42,a:'FRANCA',b:'IRAQUE'},
+  {n:43,a:'ARGENTINA',b:'AUSTRIA'},{n:44,a:'JORDANIA',b:'ARGELIA'},
+  {n:45,a:'INGLATERRA',b:'GANA'},{n:46,a:'PANAMA',b:'CROACIA'},
+  {n:47,a:'PORTUGAL',b:'UZBEQUISTAO'},{n:48,a:'COLOMBIA',b:'RD CONGO'},
+  {n:49,a:'ESCOCIA',b:'BRASIL'},{n:50,a:'MARROCOS',b:'HAITI'},
+  {n:51,a:'SUICA',b:'CANADA'},{n:52,a:'BOSNIA',b:'CATAR'},
+  {n:53,a:'REP. TCHECA',b:'MEXICO'},{n:54,a:'AFRICA DO SUL',b:'COREIA DO SUL'},
+  {n:55,a:'CURACAU',b:'COSTA DO MARFIM'},{n:56,a:'EQUADOR',b:'ALEMANHA'},
+  {n:57,a:'JAPAO',b:'SUECIA'},{n:58,a:'TUNISIA',b:'HOLANDA'},
+  {n:59,a:'TURQUIA',b:'EUA'},{n:60,a:'PARAGUAI',b:'AUSTRALIA'},
+  {n:61,a:'NORUEGA',b:'FRANCA'},{n:62,a:'SENEGAL',b:'IRAQUE'},
+  {n:63,a:'EGITO',b:'IRA'},{n:64,a:'NOVA ZELANDIA',b:'BELGICA'},
+  {n:65,a:'CABO VERDE',b:'ARABIA SAUDITA'},{n:66,a:'URUGUAI',b:'ESPANHA'},
+  {n:67,a:'PANAMA',b:'INGLATERRA'},{n:68,a:'CROACIA',b:'GANA'},
+  {n:69,a:'ARGELIA',b:'AUSTRIA'},{n:70,a:'JORDANIA',b:'ARGENTINA'},
+  {n:71,a:'COLOMBIA',b:'PORTUGAL'},{n:72,a:'RD CONGO',b:'UZBEQUISTAO'}
+];
+
+function encontrarJogo(nA,nB){
+  var a=normTime(nA),b=normTime(nB);
+  for(var i=0;i<JM.length;i++){
+    var j=JM[i];
+    if((j.a===a&&j.b===b)||(j.a===b&&j.b===a))return j;
+  }
+  return null;
+}
+
+// =====================================================
+// ESTADO
+// =====================================================
+var DADOS   = null;
+var JOGOS   = [];
+var PTS_ANT = {};
+
+// =====================================================
+// CACHE LOCAL (localStorage)
+// =====================================================
+function hojeISO(){
+  var d=new Date();
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
+
+// FIX [3][8]: Separar leitura de cache da lógica de controle
+function lerCacheJogos(){
+  try{
+    var raw=localStorage.getItem('fdCache');
+    if(!raw) return null;
+    var c=JSON.parse(raw);
+    if(c.data!==hojeISO()) return null; // cache de outro dia
+    return c;
+  }catch(e){ return null; }
+}
+
+function salvarCacheJogos(matches){
+  try{
+    localStorage.setItem('fdCache',JSON.stringify({
+      data: hojeISO(),
+      ts: Date.now(),
+      matches: matches||[]
+    }));
+  }catch(e){}
+}
+
+function ultimaChamada(){
+  return Number(localStorage.getItem('fdLastCall')||0);
+}
+
+function registrarChamada(){
+  localStorage.setItem('fdLastCall',String(Date.now()));
+}
+
+// FIX [3]: Lógica limpa sem side-effects no if
+function deveConsultarAPI(){
+  // 1. Respeita intervalo mínimo entre chamadas
+  if(Date.now()-ultimaChamada() < INTERVALO_API) return false;
+  // 2. Se não tem cache do dia, precisa buscar agenda
+  var cache=lerCacheJogos();
+  if(!cache) return true;
+  // 3. Com cache, só busca se estiver na janela de jogo
+  return estaNaJanela(cache.matches||[]);
+}
+
+function estaNaJanela(matches){
+  var agora=Date.now();
+  return (matches||JOGOS).some(function(m){
+    if(!m||!m.utcDate) return false;
+    var ini=new Date(m.utcDate).getTime();
+    return agora>=(ini-JANELA_ANTES_JOGO) && agora<=(ini+JANELA_DEPOIS_JOGO);
+  });
+}
+
+function proximaJanela(matches){
+  var agora=Date.now(), prox=null;
+  (matches||JOGOS).forEach(function(m){
+    if(!m||!m.utcDate) return;
+    var abre=new Date(m.utcDate).getTime()-JANELA_ANTES_JOGO;
+    if(abre>agora&&(prox===null||abre<prox)) prox=abre;
+  });
+  return prox;
+}
+
+// =====================================================
+// FETCH via Cloudflare Worker
+// =====================================================
+function fdFetch(endpoint){
+  var ep=String(endpoint||'').replace(/^\/+/,'');
+  var url=WORKER_BASE+'/?endpoint='+encodeURIComponent(ep);
+  return fetch(url,{cache:'no-store'})
+    .then(function(r){
+      // FIX [10]: trata 429 explicitamente
+      if(r.status===429) throw new Error('Limite de requisições atingido. Aguarde alguns minutos.');
+      if(!r.ok) return r.json().then(function(e){
+        throw new Error(e.message||e.erro||'Erro HTTP '+r.status);
+      }).catch(function(){ throw new Error('Erro HTTP '+r.status); });
+      return r.json();
+    });
+}
+
+function buscarJogosHoje(){
+  var cache=lerCacheJogos();
+
+  // Carrega JOGOS do cache imediatamente (sem side-effect no controle)
+  if(cache) JOGOS=cache.matches||[];
+
+  if(!deveConsultarAPI()){
+    return Promise.resolve(JOGOS);
+  }
+
+  registrarChamada();
+
+  var d=hojeISO();
+  return fdFetch('competitions/'+WC_CODE+'/matches?dateFrom='+d+'&dateTo='+d)
+    .then(function(data){
+      JOGOS=data.matches||[];
+      salvarCacheJogos(JOGOS);
+      return JOGOS;
+    })
+    .catch(function(e){
+      // Fallback: mantém cache se disponível
+      var c=lerCacheJogos();
+      if(c){ JOGOS=c.matches||[]; return JOGOS; }
+      throw e;
+    });
+}
+
+// =====================================================
+// FETCH resultados.txt
+// =====================================================
+function buscarTxt(){
+  return fetch(RAW_URL+'?v='+Date.now(),{cache:'no-store'})
+    .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.text();})
+    .then(function(txt){DADOS=parseTxt(txt);});
+}
+
+// =====================================================
+// PARSER resultados.txt
+// =====================================================
+function parseTxt(txt){
+  var ls=txt.split('\n').map(function(l){return l.trim();});
+  var d={resultados:{},campea:'',vice:'',artilheiro:'',vice_artilheiro:'',participantes:[]};
+  var sec=null,pt=null,ptf=null;
+  ls.forEach(function(l){
+    if(!l||l[0]==='#') return;
+    if(l==='[RESULTADOS]'){sec='r';return;}
+    if(l==='[CAMPEA]'){sec='c';return;}if(l==='[VICE]'){sec='v';return;}
+    if(l==='[ARTILHEIRO]'){sec='a';return;}if(l==='[VICE_ARTILHEIRO]'){sec='va';return;}
+    if(l==='[FASES]'){sec='skip';return;}
+    if(l==='[PARTICIPANTE]'){
+      sec='pt';
+      pt={nome:'',fase1:{},fase2:{},fase3:{},campea:'',vice:'',artilheiro:'',vice_artilheiro:''};
+      d.participantes.push(pt);ptf=null;return;
+    }
+    if(l==='[FASE1]'){ptf='f1';return;}
+    if(l==='[FASE2]'){ptf='f2';return;}
+    if(l==='[FASE3]'){ptf='f3';return;}
+    var mN=l.match(/^(\d+)\s+(\d+)[xX](\d+)/);
+    if(sec==='r'&&mN) d.resultados[+mN[1]]={ga:+mN[2],gb:+mN[3]};
+    else if(sec==='c'&&l) d.campea=l;
+    else if(sec==='v'&&l) d.vice=l;
+    else if(sec==='a'&&l) d.artilheiro=l;
+    else if(sec==='va'&&l) d.vice_artilheiro=l;
+    else if(sec==='pt'&&pt){
+      var u=l.toUpperCase();
+      if(u.startsWith('NOME:'))           pt.nome=l.slice(5).trim();
+      else if(u.startsWith('CAMPEA:'))    pt.campea=l.slice(7).trim();
+      else if(u.startsWith('VICE:'))      pt.vice=l.slice(5).trim();
+      else if(u.startsWith('ARTILHEIRO:'))pt.artilheiro=l.slice(11).trim();
+      else if(u.startsWith('VICE_ARTILHEIRO:')) pt.vice_artilheiro=l.slice(16).trim();
+      else if(mN&&ptf){
+        var o=ptf==='f1'?pt.fase1:ptf==='f2'?pt.fase2:pt.fase3;
+        o[+mN[1]]={ga:+mN[2],gb:+mN[3]};
+      }
+    }
+  });
+  return d;
+}
+
+// =====================================================
+// INTEGRA PLACARES AO VIVO
+// =====================================================
+var STATUS_LIVE=['IN_PLAY','PAUSED','HALF_TIME'];
+var STATUS_FIN=['FINISHED','AWARDED'];
+
+// FIX [5]: extrai placar correto dependendo do status
+function extrairPlacar(m){
+  var st=m.status;
+  var s=m.score||{};
+  if(STATUS_FIN.indexOf(st)>=0){
+    // Encerrado: usa fullTime
+    var ga=s.fullTime&&s.fullTime.home!==null?s.fullTime.home:null;
+    var gb=s.fullTime&&s.fullTime.away!==null?s.fullTime.away:null;
+    return (ga!==null&&gb!==null)?{ga:ga,gb:gb}:null;
+  }
+  if(STATUS_LIVE.indexOf(st)>=0){
+    // Ao vivo: tenta fullTime (2o tempo) depois halfTime (1o tempo) depois 0x0
+    var ga2=null,gb2=null;
+    if(s.fullTime&&s.fullTime.home!==null) ga2=s.fullTime.home;
+    else if(s.halfTime&&s.halfTime.home!==null) ga2=s.halfTime.home;
+    else ga2=0;
+    if(s.fullTime&&s.fullTime.away!==null) gb2=s.fullTime.away;
+    else if(s.halfTime&&s.halfTime.away!==null) gb2=s.halfTime.away;
+    else gb2=0;
+    return{ga:ga2,gb:gb2};
+  }
+  return null;
+}
+
+function resultadosComLive(){
+  var res={};
+  Object.keys(DADOS.resultados).forEach(function(k){ res[+k]=DADOS.resultados[+k]; });
+  JOGOS.forEach(function(m){
+    var pl=extrairPlacar(m);
+    if(!pl) return;
+    var nA=m.homeTeam&&m.homeTeam.name?m.homeTeam.name:'';
+    var nB=m.awayTeam&&m.awayTeam.name?m.awayTeam.name:'';
+    var jb=encontrarJogo(nA,nB);
+    if(!jb) return;
+    // FIX: inverte se ordem dos times é diferente do bolão
+    if(jb.a!==normTime(nA)){var tmp=pl.ga;pl.ga=pl.gb;pl.gb=tmp;}
+    res[jb.n]=pl;
+  });
+  return res;
+}
+
+// =====================================================
+// PONTUACAO
+// =====================================================
+var NS1=[],NS2=[],NS3=[];
+for(var _i=1;_i<=72;_i++) NS1.push(_i);
+for(var _i=73;_i<=88;_i++) NS2.push(_i);
+for(var _i=89;_i<=104;_i++) NS3.push(_i);
+
+function calcFase(pals,res,ns){
+  var pts=0,ex=0,vc=0;
+  ns.forEach(function(n){
+    var r=res[n],p=pals[n];if(!r||!p)return;
+    var rv=r.ga>r.gb?'A':r.ga<r.gb?'B':'E';
+    var pv=p.ga>p.gb?'A':p.ga<p.gb?'B':'E';
+    if(r.ga===p.ga&&r.gb===p.gb){pts+=3;ex++;}
+    else if(rv===pv){pts+=1;vc++;}
+  });
+  return{pts:pts,ex:ex,vc:vc};
+}
+
+function normS(s){
+  return String(s||'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+}
+
+function calcTotal(pt,res){
+  var c1=calcFase(pt.fase1,res,NS1);
+  var c2=calcFase(pt.fase2,res,NS2);
+  var c3=calcFase(pt.fase3,res,NS3);
+  var pf=0;
+  if(DADOS.campea&&normS(pt.campea)===normS(DADOS.campea))pf+=5;
+  if(DADOS.vice&&normS(pt.vice)===normS(DADOS.vice))pf+=3;
+  if(DADOS.artilheiro&&normS(pt.artilheiro)===normS(DADOS.artilheiro))pf+=5;
+  if(DADOS.vice_artilheiro&&normS(pt.vice_artilheiro)===normS(DADOS.vice_artilheiro))pf+=3;
+  return c1.pts+c2.pts+c3.pts+pf;
+}
+
+// =====================================================
+// RENDER JOGOS
+// =====================================================
+function tipoStatus(st){
+  if(STATUS_LIVE.indexOf(st)>=0) return 'live';
+  if(STATUS_FIN.indexOf(st)>=0)  return 'fin';
+  return 'sched';
+}
+
+function horaLocal(dateStr){
+  try{ return new Date(dateStr).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})+' BRT'; }
+  catch(e){ return ''; }
+}
+
+// FIX [4]: minuteStr recebe o match completo corretamente
+function minuteStr(match){
+  if(!match) return '';
+  var st=match.status;
+  if(st==='HALF_TIME') return 'Intervalo';
+  if(st==='IN_PLAY'||st==='PAUSED'){
+    // football-data.org não retorna minuto atual na v4 free
+    // mostra só o status
+    return 'Em andamento';
+  }
+  return '';
+}
+
+function renderJogos(){
+  var wrap=document.getElementById('jogos-wrap');
+  if(!JOGOS.length){
+    wrap.innerHTML='<div class="vazio">📅 Nenhum jogo da Copa hoje</div>';
+    return;
+  }
+  var h='<div class="jogos-wrap">';
+  JOGOS.forEach(function(m){
+    var tipo=tipoStatus(m.status);
+    var nA=m.homeTeam&&m.homeTeam.name?m.homeTeam.name:'?';
+    var nB=m.awayTeam&&m.awayTeam.name?m.awayTeam.name:'?';
+    var logoA=m.homeTeam&&m.homeTeam.crest?m.homeTeam.crest:'';
+    var logoB=m.awayTeam&&m.awayTeam.crest?m.awayTeam.crest:'';
+
+    var pl=extrairPlacar(m);
+    var ga=pl?pl.ga:'-';
+    var gb=pl?pl.gb:'-';
+    var scCls=tipo==='live'?' live-sc':'';
+
+    var badge='',minTxt='';
+    if(tipo==='live'){
+      badge='<span class="badge-live"><span class="pulse"></span>AO VIVO</span>';
+      var ms=minuteStr(m);
+      if(ms) minTxt='<span class="jmin">'+ms+'</span>';
+    } else if(tipo==='fin'){
+      badge='<span class="badge-fin">⏱ Encerrado</span>';
+    } else {
+      badge='<span class="badge-sched">🕐 '+horaLocal(m.utcDate)+'</span>';
+    }
+
+    h+='<div class="jcard '+tipo+'">'
+      +'<div class="jtop">'+badge+minTxt+'</div>'
+      +'<div class="jbody">'
+      +(logoA?'<img class="tlogo" src="'+logoA+'" onerror="this.style.display=\'none\'">':'<div class="nologo"></div>')
+      +'<span class="tname a">'+esc(nA)+'</span>'
+      +'<div class="scbox">'
+      +'<span class="sc'+scCls+'">'+ga+'</span>'
+      +'<span class="scsep">×</span>'
+      +'<span class="sc'+scCls+'">'+gb+'</span>'
+      +'</div>'
+      +'<span class="tname">'+esc(nB)+'</span>'
+      +(logoB?'<img class="tlogo" src="'+logoB+'" onerror="this.style.display=\'none\'">':'<div class="nologo"></div>')
+      +'</div></div>';
+  });
+  h+='</div>';
+  wrap.innerHTML=h;
+}
+
+// =====================================================
+// RENDER CLASSIFICACAO
+// =====================================================
+function renderClass(res){
+  if(!DADOS||!DADOS.participantes.length){
+    document.getElementById('cl-wrap').innerHTML='<div class="vazio">Aguardando dados do bolão...</div>';
+    return;
+  }
+  var rnk=DADOS.participantes.map(function(p){
+    return{nome:p.nome,pts:calcTotal(p,res)};
+  });
+  rnk.sort(function(a,b){
+    if(b.pts!==a.pts) return b.pts-a.pts;
+    return a.nome.localeCompare(b.nome);
+  });
+  var h='<div class="cl-hdr"><span>#</span><span>Participante</span>'
+    +'<span style="text-align:center">Pts</span>'
+    +'<span style="text-align:center;font-size:8px">Ant.</span>'
+    +'<span style="text-align:center;font-size:8px">\u0394</span>'
+    +'<span style="text-align:center;font-size:8px">Pos</span>'
+    +'</div>';
+
+  rnk.forEach(function(r,i){
+    var med=i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
+    var rc='cl-row'+(i===0?' t1':i===1?' t2':i===2?' t3':'');
+    var pc='pos '+(i===0?'p1':i===1?'p2':i===2?'p3':'');
+    var ant=PTS_ANT[r.nome]!==undefined?PTS_ANT[r.nome]:r.pts;
+    var diff=r.pts-ant;
+    var dH=diff>0?'<span class="up">\u25b2+'+diff+'</span>':
+           diff<0?'<span class="dn">\u25bc'+diff+'</span>':
+           '<span style="color:#4b5563">\u2014</span>';
+    h+='<div class="'+rc+'">'
+      +'<span class="'+pc+'">'+(med||i+1)+'</span>'
+      +'<span class="nm">'+esc(r.nome)+'</span>'
+      +'<span class="pt">'+r.pts+'</span>'
+      +'<span class="cn">'+ant+'</span>'
+      +'<span class="cn">'+dH+'</span>'
+      +'<span class="cn" style="font-size:9px;">'+(i+1)+'\u00ba</span>'
+      +'</div>';
+  });
+  document.getElementById('cl-wrap').innerHTML=h;
+  rnk.forEach(function(r){ PTS_ANT[r.nome]=r.pts; });
+}
+
+// =====================================================
+// INFO DE API (quantas chamadas restantes hoje)
+// =====================================================
+function atualizarInfoApi(){
+  var cache=lerCacheJogos();
+  var ultima=ultimaChamada();
+  var proxima=ultima+INTERVALO_API;
+  var agora=Date.now();
+  var faltaSeg=Math.max(0,Math.round((proxima-agora)/1000));
+  var mins=Math.ceil(faltaSeg/60);
+  var naJanela=cache?estaNaJanela(cache.matches||[]):false;
+  var info='';
+  if(cache){
+    info+='Cache do dia: '+( cache.matches||[]).length+' jogo(s). ';
+  }
+  if(naJanela){
+    info+=faltaSeg>0?'Próxima consulta API em '+mins+' min.':'Consultando API em breve.';
+  } else {
+    var prox=cache?proximaJanela(cache.matches||[]):null;
+    if(prox){
+      var faltaProx=Math.max(0,Math.round((prox-agora)/60000));
+      info+='Fora da janela. Próximo jogo em ~'+faltaProx+' min.';
+    } else {
+      info+='Sem jogos hoje — atualiza a cada 30min.';
+    }
+  }
+  document.getElementById('info-api').textContent=info;
+}
+
+// =====================================================
+// AGENDAR PRÓXIMA ATUALIZAÇÃO
+// =====================================================
+function agendarProxima(){
+  if(TIMER_ATUALIZACAO) clearTimeout(TIMER_ATUALIZACAO);
+  var cache=lerCacheJogos();
+  var matches=cache?cache.matches||[]:[];
+  var intervalo;
+  if(estaNaJanela(matches)){
+    intervalo=INTERVALO_API;
+  } else {
+    var prox=proximaJanela(matches);
+    if(prox){
+      var falta=prox-Date.now();
+      intervalo=falta>0?Math.max(falta,60000):INTERVALO_FORA_JOGO;
+    } else {
+      intervalo=INTERVALO_FORA_JOGO;
+    }
+  }
+  TIMER_ATUALIZACAO=setTimeout(atualizar,intervalo);
+}
+
+// =====================================================
+// ATUALIZAR
+// =====================================================
+function atualizar(){
+  document.getElementById('st-live').innerHTML='<span class="pulse"></span>Atualizando...';
+  Promise.all([buscarJogosHoje(),buscarTxt()])
+    .then(function(){
+      var res=resultadosComLive();
+      renderJogos();
+      renderClass(res);
+      atualizarInfoApi();
+      var nLive=JOGOS.filter(function(m){return STATUS_LIVE.indexOf(m.status)>=0;}).length;
+      var nFin=JOGOS.filter(function(m){return STATUS_FIN.indexOf(m.status)>=0;}).length;
+      if(nLive>0){
+        document.getElementById('st-live').innerHTML='<span class="pulse"></span>'+nLive+' jogo(s) ao vivo';
+      } else if(JOGOS.length>0){
+        document.getElementById('st-live').innerHTML='📅 '+nFin+'/'+JOGOS.length+' encerrado(s) hoje';
+      } else {
+        document.getElementById('st-live').innerHTML='📅 Sem jogos hoje';
+      }
+      document.getElementById('st-hora').textContent='Atualizado: '+new Date().toLocaleTimeString('pt-BR');
+      agendarProxima();
+    })
+    .catch(function(e){
+      document.getElementById('st-live').innerHTML='❌ '+e.message;
+      document.getElementById('jogos-wrap').innerHTML=
+        '<div class="erro-msg">⚠️ Erro: <b>'+esc(e.message)+'</b><br>Verifique se o Worker está ativo.</div>';
+      document.getElementById('st-hora').textContent=new Date().toLocaleTimeString('pt-BR');
+      agendarProxima();
+    });
+}
+
+// Botão forçar ignora cache de tempo
+function atualizarForcar(){
+  localStorage.removeItem('fdLastCall');
+  atualizar();
+}
+
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// INIT
+atualizar();
+</script>
+</body>
+</html>
