@@ -1,5 +1,6 @@
 [RESULTADOS]
 1 2x0
+2 2x1
 
 [CAMPEA]
 
