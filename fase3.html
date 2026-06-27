@@ -47,22 +47,22 @@ body{font-family:'Roboto',Arial,sans-serif;background:var(--bg);color:#1a1a2e;pa
 .jcard.ok{border-color:var(--verde);}
 .jcard.final-card{border:2px solid var(--amarelo);box-shadow:0 2px 12px rgba(255,223,0,.25);}
 .jcard.terceiro-card{border:2px solid #e67e00;}
-.jnum{font-size:8px;font-weight:700;color:var(--cinza3);padding:2px 6px 0;letter-spacing:.3px;}
-.jdate{font-size:8px;color:var(--cinza3);padding:0 6px 2px;}
-.trow{display:flex;align-items:center;padding:2px 5px;gap:3px;min-height:22px;}
+.jnum{font-size:11px;font-weight:700;color:var(--cinza3);padding:5px 10px 0;letter-spacing:.3px;}
+.jdate{font-size:11px;color:var(--cinza3);padding:0 10px 4px;}
+.trow{display:flex;align-items:center;padding:6px 10px;gap:6px;min-height:36px;}
 .trow.win{background:#f0fff4;}
 .trow.lose{opacity:.4;}
-.tnome{flex:1;font-size:10px;font-weight:600;color:#1a1a2e;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.tnome.ph{color:var(--cinza3);font-weight:400;font-style:italic;}
-.sc{width:22px;height:20px;border:1px solid var(--cinza2);border-radius:4px;text-align:center;font-size:12px;font-weight:700;color:var(--azul);background:var(--branco);outline:none;-webkit-appearance:none;appearance:none;flex-shrink:0;padding:0;}
+.tnome{flex:1;font-size:13px;font-weight:600;color:#1a1a2e;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.tnome.ph{color:var(--cinza3);font-weight:400;font-style:italic;font-size:12px;}
+.sc{width:38px;height:34px;border:1px solid var(--cinza2);border-radius:6px;text-align:center;font-size:16px;font-weight:700;color:var(--azul);background:var(--branco);outline:none;-webkit-appearance:none;appearance:none;flex-shrink:0;padding:0;}
 .sc:focus{border-color:var(--verde);background:#f0fff4;}
-.scsep{font-size:10px;color:var(--cinza3);flex-shrink:0;}
-.tdiv{height:1px;background:var(--cinza1);margin:0 5px;}
+.scsep{font-size:14px;color:var(--cinza3);flex-shrink:0;}
+.tdiv{height:1px;background:var(--cinza1);margin:0 10px;}
 /* Pênaltis */
-.penrow{display:none;background:#fff8f0;border-top:1px solid #ffe0c0;padding:3px 5px;}
-.penrow.on{display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
-.penlbl{font-size:9px;font-weight:700;color:#e67e00;white-space:nowrap;}
-.penbtn{flex:1;min-width:50px;font-size:9px;font-weight:700;padding:2px 4px;background:#fff3e0;border:1px solid #e67e00;border-radius:4px;color:#e67e00;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center;}
+.penrow{display:none;background:#fff8f0;border-top:1px solid #ffe0c0;padding:8px 10px;}
+.penrow.on{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.penlbl{font-size:11px;font-weight:700;color:#e67e00;white-space:nowrap;}
+.penbtn{flex:1;min-width:70px;font-size:12px;font-weight:700;padding:6px 8px;background:#fff3e0;border:1.5px solid #e67e00;border-radius:6px;color:#e67e00;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center;}
 .penbtn.on{background:#e67e00;color:#fff;}
 
 /* ===== CONECTORES ===== */
@@ -272,7 +272,7 @@ function card(n){
     +'<span class="tnome'+(isPH(tb)?' ph':'')+'" id="nb'+n+'">'+tb+'</span>'
     +'</div>'
     +'<div class="penrow" id="pr'+n+'">'
-    +'<span class="penlbl">Pênaltis:</span>'
+    +'<span class="penlbl">Quem avança?</span>'
     +'<button class="penbtn" id="pba'+n+'" onclick="onPen('+n+',\'a\')">'+ta+'</button>'
     +'<button class="penbtn" id="pbb'+n+'" onclick="onPen('+n+',\'b\')">'+tb+'</button>'
     +'</div>'
@@ -315,8 +315,8 @@ var POS = {
 function buildBracket(){
   var br=document.getElementById('bracket');
   // Grid: 9 colunas x 16 linhas
-  br.style.gridTemplateColumns='130px 28px 130px 28px 140px 28px 130px 28px 130px';
-  br.style.gridTemplateRows='repeat(16, 30px)';
+  br.style.gridTemplateColumns='180px 36px 180px 36px 190px 36px 180px 36px 180px';
+  br.style.gridTemplateRows='repeat(16, 90px)';
 
   // Labels das fases
   var labels=[
@@ -329,7 +329,7 @@ function buildBracket(){
 
   var h='';
   labels.forEach(function(lb){
-    h+='<div style="grid-column:'+lb.c+';grid-row:1;align-self:center;font-family:Montserrat,sans-serif;font-size:8px;font-weight:700;letter-spacing:.8px;color:'+lb.cor+';text-align:center;text-transform:uppercase;">'+lb.txt+'</div>';
+    h+='<div style="grid-column:'+lb.c+';grid-row:1;align-self:center;font-family:Montserrat,sans-serif;font-size:11px;font-weight:700;letter-spacing:.8px;color:'+lb.cor+';text-align:center;text-transform:uppercase;">'+lb.txt+'</div>';
   });
 
   // Jogos
@@ -354,51 +354,51 @@ function buildBracket(){
   connLeft.forEach(function(c){
     // Linha horizontal da col2
     h+='<div style="grid-column:2;grid-row:'+(c.r_oi+1)+';display:flex;align-items:center;">'
-      +'<div style="width:100%;height:2px;background:var(--conn);"></div></div>';
+      +'<div style="width:100%;height:3px;background:var(--conn);"></div></div>';
   });
   // Linha vertical col2 ligando J89 e J90 ao J97
   h+='<div style="grid-column:2;grid-row:3/span 3;display:flex;justify-content:flex-end;align-items:stretch;">'
-    +'<div style="width:2px;background:var(--conn);height:100%;"></div></div>';
+    +'<div style="width:3px;background:var(--conn);height:100%;"></div></div>';
   h+='<div style="grid-column:2;grid-row:10/span 4;display:flex;justify-content:flex-end;align-items:stretch;">'
-    +'<div style="width:2px;background:var(--conn);height:100%;"></div></div>';
+    +'<div style="width:3px;background:var(--conn);height:100%;"></div></div>';
 
   // Col 4: QU-L → SEMI
   h+='<div style="grid-column:4;grid-row:3;display:flex;align-items:center;">'
-    +'<div style="width:100%;height:2px;background:var(--conn);"></div></div>';
+    +'<div style="width:100%;height:3px;background:var(--conn);"></div></div>';
   h+='<div style="grid-column:4;grid-row:10;display:flex;align-items:center;">'
-    +'<div style="width:100%;height:2px;background:var(--conn);"></div></div>';
+    +'<div style="width:100%;height:3px;background:var(--conn);"></div></div>';
   h+='<div style="grid-column:4;grid-row:4/span 7;display:flex;justify-content:flex-end;align-items:stretch;">'
-    +'<div style="width:2px;background:var(--conn);height:100%;"></div></div>';
+    +'<div style="width:3px;background:var(--conn);height:100%;"></div></div>';
 
   // Col 6: SEMI → FINAL (esquerda)
   h+='<div style="grid-column:6;grid-row:6;display:flex;align-items:center;">'
-    +'<div style="width:100%;height:2px;background:var(--conn);"></div></div>';
+    +'<div style="width:100%;height:3px;background:var(--conn);"></div></div>';
   // Col 6 direita: SEMI → FINAL
   h+='<div style="grid-column:6;grid-row:6;display:flex;align-items:center;">'
-    +'<div style="width:100%;height:2px;background:var(--conn);"></div></div>';
+    +'<div style="width:100%;height:3px;background:var(--conn);"></div></div>';
 
   // Lado direito (espelho)
   // Col 8: OI-R → QU-R
   h+='<div style="grid-column:8;grid-row:2;display:flex;align-items:center;">'
-    +'<div style="width:100%;height:2px;background:var(--conn);"></div></div>';
+    +'<div style="width:100%;height:3px;background:var(--conn);"></div></div>';
   h+='<div style="grid-column:8;grid-row:5;display:flex;align-items:center;">'
-    +'<div style="width:100%;height:2px;background:var(--conn);"></div></div>';
+    +'<div style="width:100%;height:3px;background:var(--conn);"></div></div>';
   h+='<div style="grid-column:8;grid-row:3/span 3;display:flex;justify-content:flex-start;align-items:stretch;">'
-    +'<div style="width:2px;background:var(--conn);height:100%;"></div></div>';
+    +'<div style="width:3px;background:var(--conn);height:100%;"></div></div>';
   h+='<div style="grid-column:8;grid-row:9;display:flex;align-items:center;">'
-    +'<div style="width:100%;height:2px;background:var(--conn);"></div></div>';
+    +'<div style="width:100%;height:3px;background:var(--conn);"></div></div>';
   h+='<div style="grid-column:8;grid-row:13;display:flex;align-items:center;">'
-    +'<div style="width:100%;height:2px;background:var(--conn);"></div></div>';
+    +'<div style="width:100%;height:3px;background:var(--conn);"></div></div>';
   h+='<div style="grid-column:8;grid-row:10/span 4;display:flex;justify-content:flex-start;align-items:stretch;">'
-    +'<div style="width:2px;background:var(--conn);height:100%;"></div></div>';
+    +'<div style="width:3px;background:var(--conn);height:100%;"></div></div>';
 
   // Col 6: QU-R → SEMI-R
   h+='<div style="grid-column:6;grid-row:3;display:flex;align-items:center;">'
-    +'<div style="width:100%;height:2px;background:var(--conn);"></div></div>';
+    +'<div style="width:100%;height:3px;background:var(--conn);"></div></div>';
   h+='<div style="grid-column:6;grid-row:10;display:flex;align-items:center;">'
-    +'<div style="width:100%;height:2px;background:var(--conn);"></div></div>';
+    +'<div style="width:100%;height:3px;background:var(--conn);"></div></div>';
   h+='<div style="grid-column:6;grid-row:4/span 7;display:flex;justify-content:flex-start;align-items:stretch;">'
-    +'<div style="width:2px;background:var(--conn);height:100%;"></div></div>';
+    +'<div style="width:3px;background:var(--conn);height:100%;"></div></div>';
 
   // Label SEMI
   h+='<div style="grid-column:5;grid-row:4;font-family:Montserrat,sans-serif;font-size:8px;font-weight:700;letter-spacing:.8px;color:#16213e;text-align:center;text-transform:uppercase;align-self:end;">SEMIFINAL</div>';
