@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Bolão Copa 2026 — Oitavas até Final</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Roboto:wght@400;500;700&display=swap');
+:root{
+  --azul:#002776;--verde:#009c3b;--amarelo:#ffdf00;
+  --bg:#f4f7fa;--branco:#fff;--cinza1:#e8edf3;--cinza2:#c8d0db;--cinza3:#8a96a3;
+  --conn:#c8d0db;--radius:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Roboto',Arial,sans-serif;background:var(--bg);color:#1a1a2e;padding-bottom:100px;}
+
+.hdr{background:var(--azul);padding:16px;text-align:center;border-bottom:4px solid var(--amarelo);}
+.hdr h1{font-family:'Montserrat',sans-serif;font-weight:900;font-size:20px;color:var(--amarelo);}
+.hdr h2{font-size:11px;color:rgba(255,255,255,.65);margin-top:3px;font-family:'Montserrat',sans-serif;}
+
+.nome-wrap{padding:12px 14px 0;}
+.nome-wrap label{font-weight:700;font-size:12px;color:var(--azul);display:block;margin-bottom:4px;}
+.nome-inp{width:100%;border:2px solid var(--cinza1);border-radius:var(--radius);padding:10px 12px;font-size:15px;font-family:'Roboto',sans-serif;outline:none;}
+.nome-inp:focus{border-color:var(--azul);}
+.aviso{background:#fffde7;border:1px solid #ffe082;border-radius:var(--radius);padding:9px 12px;margin:10px 14px 0;font-size:11px;color:#7b5e00;line-height:1.6;}
+
+/* ===================== BRACKET ===================== */
+.bracket-outer{overflow-x:auto;padding:12px 10px 0;-webkit-overflow-scrolling:touch;}
+.bracket{
+  display:grid;
+  /* 7 colunas: OI-L | conn | QU-L | conn | SEMI+FINAL | conn | QU-R | conn | OI-R */
+  grid-template-columns: 130px 28px 130px 28px 140px 28px 130px 28px 130px;
+  grid-template-rows: repeat(16, 28px);  /* 16 linhas de 28px = 448px altura útil */
+  min-width: 760px;
+  position:relative;
+}
+
+/* ===== CARD DO JOGO ===== */
+.jcard{
+  background:var(--branco);
+  border:1px solid var(--cinza1);
+  border-radius:var(--radius);
+  overflow:hidden;
+  position:relative;
+  grid-column-end: span 1;
+}
+.jcard.ok{border-color:var(--verde);}
+.jcard.final-card{border:2px solid var(--amarelo);box-shadow:0 2px 12px rgba(255,223,0,.25);}
+.jcard.terceiro-card{border:2px solid #e67e00;}
+.jnum{font-size:8px;font-weight:700;color:var(--cinza3);padding:2px 6px 0;letter-spacing:.3px;}
+.jdate{font-size:8px;color:var(--cinza3);padding:0 6px 2px;}
+.trow{display:flex;align-items:center;padding:2px 5px;gap:3px;min-height:22px;}
+.trow.win{background:#f0fff4;}
+.trow.lose{opacity:.4;}
+.tnome{flex:1;font-size:10px;font-weight:600;color:#1a1a2e;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.tnome.ph{color:var(--cinza3);font-weight:400;font-style:italic;}
+.sc{width:22px;height:20px;border:1px solid var(--cinza2);border-radius:4px;text-align:center;font-size:12px;font-weight:700;color:var(--azul);background:var(--branco);outline:none;-webkit-appearance:none;appearance:none;flex-shrink:0;padding:0;}
+.sc:focus{border-color:var(--verde);background:#f0fff4;}
+.scsep{font-size:10px;color:var(--cinza3);flex-shrink:0;}
+.tdiv{height:1px;background:var(--cinza1);margin:0 5px;}
+/* Pênaltis */
+.penrow{display:none;background:#fff8f0;border-top:1px solid #ffe0c0;padding:3px 5px;}
+.penrow.on{display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
+.penlbl{font-size:9px;font-weight:700;color:#e67e00;white-space:nowrap;}
+.penbtn{flex:1;min-width:50px;font-size:9px;font-weight:700;padding:2px 4px;background:#fff3e0;border:1px solid #e67e00;border-radius:4px;color:#e67e00;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center;}
+.penbtn.on{background:#e67e00;color:#fff;}
+
+/* ===== CONECTORES ===== */
+.conn{position:relative;}
+/* linhas SVG inline */
+svg.conn-svg{position:absolute;top:0;left:0;width:100%;height:100%;overflow:visible;}
+
+/* ===== LABELS FASE ===== */
+.flbl{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--cinza3);text-align:center;text-transform:uppercase;padding:4px 0 2px;align-self:end;}
+
+/* ===== BOTAO ===== */
+.btn-wrap{padding:14px;}
+.alerta{display:none;background:#e74c3c;color:#fff;border-radius:var(--radius);padding:10px 12px;margin-bottom:8px;font-size:12px;font-weight:700;line-height:1.7;}
+.alerta.on{display:block;}
+.btn-enviar{width:100%;padding:14px;background:#25d366;color:#fff;font-size:15px;font-weight:700;font-family:'Montserrat',sans-serif;border:none;border-radius:var(--radius);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn-enviar:active{opacity:.85;}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <h1>⚽ Bolão Copa 2026 ZAPZAP</h1>
+  <h2>Fase 3 — Oitavas até Final</h2>
+</div>
+
+<div class="nome-wrap">
+  <label>👤 Seu nome completo</label>
+  <input class="nome-inp" type="text" id="nome" placeholder="Digite seu nome...">
+</div>
+<div class="aviso">
+  📋 Digite o placar do <strong>tempo normal</strong>. Em empate, escolha quem avança nos pênaltis.<br>
+  Os times se propagam automaticamente para a próxima fase. ✅ = jogo completo.
+</div>
+
+<div class="bracket-outer">
+<div class="bracket" id="bracket"></div>
+</div>
+
+<div class="btn-wrap">
+  <div class="alerta" id="alerta">⚠️ <span id="alerta-msg"></span></div>
+  <button class="btn-enviar" onclick="enviar()">📲 ENVIAR FASE 3 VIA WHATSAPP</button>
+</div>
+
+<script>
+// =====================================================
+// TIMES — substitua pelos classificados reais
+// =====================================================
+var T = {
+  1:'Time 1', 2:'Time 2', 3:'Time 3', 4:'Time 4',
+  5:'Time 5', 6:'Time 6', 7:'Time 7', 8:'Time 8',
+  9:'Time 9', 10:'Time 10',11:'Time 11',12:'Time 12',
+  13:'Time 13',14:'Time 14',15:'Time 15',16:'Time 16'
+};
+
+// =====================================================
+// ESTRUTURA DOS JOGOS
+// Baseada exatamente na imagem da FIFA
+// =====================================================
+// Oitavas (left side): J89(W74+W77), J90(W73+W75), J93(W83+W84), J94(W81+W82)
+// Oitavas (right side): J91(W76+W78), J92(W79+W80), J95(W86+W88), J96(W85+W87)
+// Quartas: J97(W89+W90), J98(W93+W94), J99(W91+W92), J100(W95+W96)
+// Semi: J101(W97+W98), J102(W99+W100)
+// 3o: J103(RU101+RU102)
+// Final: J104(W101+W102)
+
+var JOGOS = {
+  89: {n:89, d:'04/Jul 18:00', oa:{t:'T',v:1},  ob:{t:'T',v:2}},
+  90: {n:90, d:'04/Jul 14:00', oa:{t:'T',v:3},  ob:{t:'T',v:4}},
+  91: {n:91, d:'05/Jul 17:00', oa:{t:'T',v:5},  ob:{t:'T',v:6}},
+  92: {n:92, d:'05/Jul 21:00', oa:{t:'T',v:7},  ob:{t:'T',v:8}},
+  93: {n:93, d:'06/Jul 16:00', oa:{t:'T',v:9},  ob:{t:'T',v:10}},
+  94: {n:94, d:'06/Jul 21:00', oa:{t:'T',v:11}, ob:{t:'T',v:12}},
+  95: {n:95, d:'07/Jul 13:00', oa:{t:'T',v:13}, ob:{t:'T',v:14}},
+  96: {n:96, d:'07/Jul 17:00', oa:{t:'T',v:15}, ob:{t:'T',v:16}},
+  97: {n:97, d:'09/Jul 17:00', oa:{t:'V',v:89}, ob:{t:'V',v:90}},
+  98: {n:98, d:'10/Jul 16:00', oa:{t:'V',v:93}, ob:{t:'V',v:94}},
+  99: {n:99, d:'11/Jul 18:00', oa:{t:'V',v:91}, ob:{t:'V',v:92}},
+ 100: {n:100,d:'11/Jul 22:00', oa:{t:'V',v:95}, ob:{t:'V',v:96}},
+ 101: {n:101,d:'14/Jul 16:00', oa:{t:'V',v:97}, ob:{t:'V',v:98}},
+ 102: {n:102,d:'15/Jul 16:00', oa:{t:'V',v:99}, ob:{t:'V',v:100}},
+ 103: {n:103,d:'18/Jul 18:00', oa:{t:'P',v:101},ob:{t:'P',v:102}},
+ 104: {n:104,d:'19/Jul 16:00', oa:{t:'V',v:101},ob:{t:'V',v:102}}
+};
+
+var ESTADO = {};
+Object.keys(JOGOS).forEach(function(k){
+  ESTADO[+k]={ga:'',gb:'',pen:'',venc:'',perd:''};
+});
+
+// =====================================================
+// RESOLVER TIME
+// =====================================================
+function resTime(slot){
+  if(!slot) return '?';
+  if(slot.t==='T') return T[slot.v]||'Time '+slot.v;
+  if(slot.t==='V'){
+    var e=ESTADO[slot.v];
+    return (e&&e.venc) ? e.venc : 'V.J'+slot.v;
+  }
+  if(slot.t==='P'){
+    var e=ESTADO[slot.v];
+    return (e&&e.perd) ? e.perd : 'P.J'+slot.v;
+  }
+  return '?';
+}
+function isPH(s){ return s.startsWith('V.J')||s.startsWith('P.J')||s.startsWith('Time '); }
+
+// =====================================================
+// CALCULAR + PROPAGAR
+// =====================================================
+function calcJogo(n){
+  var e=ESTADO[n], j=JOGOS[n];
+  if(!j) return;
+  var ta=resTime(j.oa), tb=resTime(j.ob);
+  var ga=parseInt(e.ga), gb=parseInt(e.gb);
+  if(isNaN(ga)||isNaN(gb)||e.ga===''||e.gb===''){e.venc='';e.perd='';return;}
+  if(ga>gb){e.venc=ta;e.perd=tb;}
+  else if(gb>ga){e.venc=tb;e.perd=ta;}
+  else{
+    if(e.pen==='a'){e.venc=ta;e.perd=tb;}
+    else if(e.pen==='b'){e.venc=tb;e.perd=ta;}
+    else{e.venc='';e.perd='';}
+  }
+}
+
+function propagar(){
+  [89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104].forEach(calcJogo);
+  atualizarUI();
+}
+
+function atualizarUI(){
+  Object.keys(JOGOS).forEach(function(k){
+    var n=+k, j=JOGOS[n], e=ESTADO[n];
+    var ta=resTime(j.oa), tb=resTime(j.ob);
+    // Nomes
+    var eA=document.getElementById('na'+n), eB=document.getElementById('nb'+n);
+    if(eA){eA.textContent=ta; eA.className='tnome'+(isPH(ta)?' ph':'');}
+    if(eB){eB.textContent=tb; eB.className='tnome'+(isPH(tb)?' ph':'');}
+    // Pen btns
+    var pA=document.getElementById('pba'+n), pB=document.getElementById('pbb'+n);
+    if(pA) pA.textContent=ta;
+    if(pB) pB.textContent=tb;
+    if(pA) pA.className='penbtn'+(e.pen==='a'?' on':'');
+    if(pB) pB.className='penbtn'+(e.pen==='b'?' on':'');
+    // Empate?
+    var ga=parseInt(e.ga),gb=parseInt(e.gb);
+    var emp=!isNaN(ga)&&!isNaN(gb)&&ga===gb&&e.ga!=='';
+    var pr=document.getElementById('pr'+n);
+    if(pr) pr.className='penrow'+(emp?' on':'');
+    // Vencedor highlight
+    var rA=document.getElementById('ra'+n), rB=document.getElementById('rb'+n);
+    if(rA&&rB){
+      rA.className='trow'; rB.className='trow';
+      if(e.venc){
+        if(e.venc===ta){rA.className='trow win';rB.className='trow lose';}
+        else{rB.className='trow win';rA.className='trow lose';}
+      }
+    }
+    // Card status
+    var card=document.getElementById('jc'+n);
+    if(card){
+      var ok=e.ga!==''&&e.gb!==''&&(!emp||e.pen!=='');
+      var base='jcard';
+      if(n===104) base+=' final-card';
+      else if(n===103) base+=' terceiro-card';
+      if(ok) base+=' ok';
+      card.className=base;
+    }
+  });
+}
+
+// =====================================================
+// HANDLERS
+// =====================================================
+function onSc(n){
+  var a=document.getElementById('sa'+n), b=document.getElementById('sb'+n);
+  if(!a||!b) return;
+  [a,b].forEach(function(el){
+    if(el.value!==''){var v=Math.min(20,Math.max(0,parseInt(el.value)||0));el.value=v;}
+  });
+  ESTADO[n].ga=a.value; ESTADO[n].gb=b.value;
+  if(a.value===''||b.value===''||a.value!==b.value) ESTADO[n].pen='';
+  propagar();
+}
+function onPen(n,l){
+  ESTADO[n].pen=l;
+  propagar();
+}
+
+// =====================================================
+// RENDER CARD
+// =====================================================
+function card(n){
+  var j=JOGOS[n], ta=resTime(j.oa), tb=resTime(j.ob);
+  var cls='jcard'+(n===104?' final-card':n===103?' terceiro-card':'');
+  return '<div class="'+cls+'" id="jc'+n+'">'
+    +'<div class="jnum">J'+n+'</div>'
+    +'<div class="jdate">'+j.d+'</div>'
+    +'<div class="trow" id="ra'+n+'">'
+    +'<span class="tnome'+(isPH(ta)?' ph':'')+'" id="na'+n+'">'+ta+'</span>'
+    +'<input class="sc" type="number" min="0" max="20" id="sa'+n+'" placeholder="-" inputmode="numeric" oninput="onSc('+n+')">'
+    +'<span class="scsep">x</span>'
+    +'<input class="sc" type="number" min="0" max="20" id="sb'+n+'" placeholder="-" inputmode="numeric" oninput="onSc('+n+')">'
+    +'</div>'
+    +'<div class="tdiv"></div>'
+    +'<div class="trow" id="rb'+n+'">'
+    +'<span class="tnome'+(isPH(tb)?' ph':'')+'" id="nb'+n+'">'+tb+'</span>'
+    +'</div>'
+    +'<div class="penrow" id="pr'+n+'">'
+    +'<span class="penlbl">Pênaltis:</span>'
+    +'<button class="penbtn" id="pba'+n+'" onclick="onPen('+n+',\'a\')">'+ta+'</button>'
+    +'<button class="penbtn" id="pbb'+n+'" onclick="onPen('+n+',\'b\')">'+tb+'</button>'
+    +'</div>'
+    +'</div>';
+}
+
+// =====================================================
+// MONTAR GRID
+// Colunas: 0=OI-L 1=conn 2=QU-L 3=conn 4=CENTRO 5=conn 6=QU-R 7=conn 8=OI-R
+// Linhas 1-16 (grid-row 1 a 16), cada jogo ocupa 2 linhas
+// =====================================================
+// Posições (col-start, row-start, col-span, row-span)
+var POS = {
+  // OI esquerda (col 1)
+   89: [1, 1, 1, 2],   // J89 linhas 1-2
+   90: [1, 4, 1, 2],   // J90 linhas 4-5
+   93: [1, 8, 1, 2],   // J93 linhas 8-9
+   94: [1,12, 1, 2],   // J94 linhas 12-13
+  // QU esquerda (col 3)
+   97: [3, 2, 1, 2],   // J97 linhas 2-3
+   98: [3, 9, 1, 2],   // J98 linhas 9-10
+  // SEMI esquerda (col 5, metade esquerda)
+  101: [5, 5, 1, 2],   // J101 linhas 5-6
+  // FINAL centro (col 5)
+  104: [5, 8, 1, 3],   // J104 linhas 8-10 (mais alto)
+  // 3o lugar (col 5)
+  103: [5,12, 1, 2],   // J103 linhas 12-13
+  // SEMI direita (col 5, mas depois)  → usamos col 7 para espelhar
+  102: [7, 5, 1, 2],   // J102 linhas 5-6
+  // QU direita (col 7)
+   99: [7, 2, 1, 2],   // J99 linhas 2-3
+  100: [7, 9, 1, 2],   // J100 linhas 9-10
+  // OI direita (col 9)
+   91: [9, 1, 1, 2],   // J91 linhas 1-2
+   92: [9, 4, 1, 2],   // J92 linhas 4-5
+   95: [9, 8, 1, 2],   // J95 linhas 8-9
+   96: [9,12, 1, 2],   // J96 linhas 12-13
+};
+
+function buildBracket(){
+  var br=document.getElementById('bracket');
+  // Grid: 9 colunas x 16 linhas
+  br.style.gridTemplateColumns='130px 28px 130px 28px 140px 28px 130px 28px 130px';
+  br.style.gridTemplateRows='repeat(16, 30px)';
+
+  // Labels das fases
+  var labels=[
+    {c:1,r:0,txt:'OITAVAS DE FINAL',cor:'#8e44ad'},
+    {c:3,r:0,txt:'QUARTAS',cor:'#c0392b'},
+    {c:5,r:0,txt:'FINAL',cor:'#b8860b'},
+    {c:7,r:0,txt:'QUARTAS',cor:'#c0392b'},
+    {c:9,r:0,txt:'OITAVAS DE FINAL',cor:'#8e44ad'},
+  ];
+
+  var h='';
+  labels.forEach(function(lb){
+    h+='<div style="grid-column:'+lb.c+';grid-row:1;align-self:center;font-family:Montserrat,sans-serif;font-size:8px;font-weight:700;letter-spacing:.8px;color:'+lb.cor+';text-align:center;text-transform:uppercase;">'+lb.txt+'</div>';
+  });
+
+  // Jogos
+  Object.keys(POS).forEach(function(k){
+    var n=+k, p=POS[n];
+    var col=p[0], row=p[1]+1, cs=p[2], rs=p[3]; // +1 pois linha 1 é label
+    h+='<div style="grid-column:'+col+'/span '+cs+';grid-row:'+row+'/span '+rs+';padding:2px;">'+card(n)+'</div>';
+  });
+
+  // Conectores SVG simples (linhas horizontais nas colunas pares)
+  // Coluna 2: conecta OI-L (col1) com QU-L (col3)
+  // Linha conector J89→J97: row 2 (meio de J89=rows 2-3, meio de J97=rows 3-4)
+  // Vamos usar divs simples com bordas para os conectores
+  var connLeft=[
+    // {jogo_oi, jogo_qu, mid_oi_row, mid_qu_row}
+    {r_oi:2, r_qu:3},   // J89 → J97
+    {r_oi:5, r_qu:3},   // J90 → J97
+    {r_oi:9, r_qu:10},  // J93 → J98
+    {r_oi:13,r_qu:10},  // J94 → J98
+  ];
+  // Conectores col 2 (entre col1 e col3)
+  connLeft.forEach(function(c){
+    // Linha horizontal da col2
+    h+='<div style="grid-column:2;grid-row:'+(c.r_oi+1)+';display:flex;align-items:center;">'
+      +'<div style="width:100%;height:2px;background:var(--conn);"></div></div>';
+  });
+  // Linha vertical col2 ligando J89 e J90 ao J97
+  h+='<div style="grid-column:2;grid-row:3/span 3;display:flex;justify-content:flex-end;align-items:stretch;">'
+    +'<div style="width:2px;background:var(--conn);height:100%;"></div></div>';
+  h+='<div style="grid-column:2;grid-row:10/span 4;display:flex;justify-content:flex-end;align-items:stretch;">'
+    +'<div style="width:2px;background:var(--conn);height:100%;"></div></div>';
+
+  // Col 4: QU-L → SEMI
+  h+='<div style="grid-column:4;grid-row:3;display:flex;align-items:center;">'
+    +'<div style="width:100%;height:2px;background:var(--conn);"></div></div>';
+  h+='<div style="grid-column:4;grid-row:10;display:flex;align-items:center;">'
+    +'<div style="width:100%;height:2px;background:var(--conn);"></div></div>';
+  h+='<div style="grid-column:4;grid-row:4/span 7;display:flex;justify-content:flex-end;align-items:stretch;">'
+    +'<div style="width:2px;background:var(--conn);height:100%;"></div></div>';
+
+  // Col 6: SEMI → FINAL (esquerda)
+  h+='<div style="grid-column:6;grid-row:6;display:flex;align-items:center;">'
+    +'<div style="width:100%;height:2px;background:var(--conn);"></div></div>';
+  // Col 6 direita: SEMI → FINAL
+  h+='<div style="grid-column:6;grid-row:6;display:flex;align-items:center;">'
+    +'<div style="width:100%;height:2px;background:var(--conn);"></div></div>';
+
+  // Lado direito (espelho)
+  // Col 8: OI-R → QU-R
+  h+='<div style="grid-column:8;grid-row:2;display:flex;align-items:center;">'
+    +'<div style="width:100%;height:2px;background:var(--conn);"></div></div>';
+  h+='<div style="grid-column:8;grid-row:5;display:flex;align-items:center;">'
+    +'<div style="width:100%;height:2px;background:var(--conn);"></div></div>';
+  h+='<div style="grid-column:8;grid-row:3/span 3;display:flex;justify-content:flex-start;align-items:stretch;">'
+    +'<div style="width:2px;background:var(--conn);height:100%;"></div></div>';
+  h+='<div style="grid-column:8;grid-row:9;display:flex;align-items:center;">'
+    +'<div style="width:100%;height:2px;background:var(--conn);"></div></div>';
+  h+='<div style="grid-column:8;grid-row:13;display:flex;align-items:center;">'
+    +'<div style="width:100%;height:2px;background:var(--conn);"></div></div>';
+  h+='<div style="grid-column:8;grid-row:10/span 4;display:flex;justify-content:flex-start;align-items:stretch;">'
+    +'<div style="width:2px;background:var(--conn);height:100%;"></div></div>';
+
+  // Col 6: QU-R → SEMI-R
+  h+='<div style="grid-column:6;grid-row:3;display:flex;align-items:center;">'
+    +'<div style="width:100%;height:2px;background:var(--conn);"></div></div>';
+  h+='<div style="grid-column:6;grid-row:10;display:flex;align-items:center;">'
+    +'<div style="width:100%;height:2px;background:var(--conn);"></div></div>';
+  h+='<div style="grid-column:6;grid-row:4/span 7;display:flex;justify-content:flex-start;align-items:stretch;">'
+    +'<div style="width:2px;background:var(--conn);height:100%;"></div></div>';
+
+  // Label SEMI
+  h+='<div style="grid-column:5;grid-row:4;font-family:Montserrat,sans-serif;font-size:8px;font-weight:700;letter-spacing:.8px;color:#16213e;text-align:center;text-transform:uppercase;align-self:end;">SEMIFINAL</div>';
+  h+='<div style="grid-column:7;grid-row:4;font-family:Montserrat,sans-serif;font-size:8px;font-weight:700;letter-spacing:.8px;color:#16213e;text-align:center;text-transform:uppercase;align-self:end;">SEMIFINAL</div>';
+  h+='<div style="grid-column:5;grid-row:11;font-family:Montserrat,sans-serif;font-size:8px;font-weight:700;letter-spacing:.8px;color:#e67e00;text-align:center;text-transform:uppercase;align-self:end;">3º LUGAR</div>';
+
+  br.innerHTML=h;
+}
+
+// =====================================================
+// ENVIAR
+// =====================================================
+function enviar(){
+  var nome=document.getElementById('nome').value.trim();
+  var erros=[];
+  if(!nome) erros.push('nome');
+  [89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104].forEach(function(n){
+    var e=ESTADO[n];
+    if(e.ga===''||e.gb==='') erros.push('J'+n);
+    else{
+      var ga=parseInt(e.ga),gb=parseInt(e.gb);
+      if(ga===gb&&e.pen==='') erros.push('J'+n+' (pênaltis)');
+    }
+  });
+  if(erros.length){
+    document.getElementById('alerta-msg').textContent='Corrija: '+erros.slice(0,5).join(', ')+(erros.length>5?'...':'');
+    document.getElementById('alerta').className='alerta on';
+    window.scrollTo({top:0,behavior:'smooth'});
+    return;
+  }
+  document.getElementById('alerta').className='alerta';
+  var agora=new Date().toLocaleString('pt-BR');
+  var ls=['BOLÃO COPA 2026 ZAPZAP','Participante: '+nome,'Data: '+agora,'Horários em Brasília (BRT)'];
+  var fases=[
+    {lb:'OITAVAS DE FINAL', ns:[89,90,91,92,93,94,95,96]},
+    {lb:'QUARTAS DE FINAL',  ns:[97,98,99,100]},
+    {lb:'SEMIFINAL',         ns:[101,102]},
+    {lb:'DISPUTA 3º LUGAR',  ns:[103]},
+    {lb:'FINAL',             ns:[104]}
+  ];
+  fases.forEach(function(f){
+    ls.push('-- '+f.lb+' --');
+    f.ns.forEach(function(n){
+      var j=JOGOS[n],e=ESTADO[n];
+      var ta=resTime(j.oa),tb=resTime(j.ob);
+      var l='#'+n+' '+ta+' '+e.ga+'x'+e.gb+' '+tb;
+      if(e.pen) l+=' - avança: '+(e.pen==='a'?ta:tb)+' nos pênaltis';
+      ls.push(l);
+    });
+  });
+  ls.push('PIX R$ 20,00: 27 99913-5090');
+  var tel='5527999135090';
+  window.location.href='https://api.whatsapp.com/send?phone='+tel+'&text='+encodeURIComponent(ls.join('\n'));
+}
+
+buildBracket();
+propagar();
+</script>
+</body>
+</html>
