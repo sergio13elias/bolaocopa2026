@@ -1741,6 +1741,22 @@ CAMPEA: Portugal
 VICE: França
 ARTILHEIRO: Mbappe
 VICE_ARTILHEIRO: Haland
+[FASE2]
+73 1x1
+74 1x0
+75 0x0
+76 1x0
+77 1x0
+79 1x1
+80 1x0
+81 2x0
+82 0x0
+83 1x1
+84 2x0
+85 1x0
+86 1x0
+87 1x0
+88 1x1
 
 [PARTICIPANTE]
 NOME: Alice Pilon
