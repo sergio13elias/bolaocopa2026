@@ -1421,6 +1421,23 @@ CAMPEA: Brasil
 VICE: Espanha
 ARTILHEIRO: Lamine yamal
 VICE_ARTILHEIRO: Luiz Henrique
+[FASE2]
+73 0x0
+74 2x2
+75 2x1
+76 4x2
+77 3x0
+78 1x2
+79 2x0
+80 3x0
+81 3x0
+82 2x2
+83 1x1
+84 1x0
+85 1x0
+86 5x0
+87 0x1
+88 1x2
 
 [PARTICIPANTE]
 NOME: Américo Bedê freire junior
