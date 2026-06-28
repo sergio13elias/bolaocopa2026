@@ -722,6 +722,22 @@ CAMPEA: Brasil
 VICE: Alemanha
 ARTILHEIRO: Endrik
 VICE_ARTILHEIRO: Musiala
+[FASE2]
+73 2x2
+74 3x1
+75 2x0
+76 3x1
+77 3x1
+78 1x3
+79 2x2
+80 2x0
+81 1x0
+82 1x1
+83 1x1
+85 0x0
+86 3x0
+87 0x0
+88 2x2
 
 [PARTICIPANTE]
 NOME: Geiza Machado Moreira
