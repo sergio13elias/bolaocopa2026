@@ -6067,6 +6067,23 @@ CAMPEA: Brasil
 VICE: França
 ARTILHEIRO: Mbappé
 VICE_ARTILHEIRO: C. Ronaldo
+[FASE2]
+73 1x2
+74 3x1
+75 1x2
+76 3x1
+77 3x0
+78 2x2
+79 2x1
+80 4x1
+81 3x1
+82 2x2
+83 1x2
+84 4x0
+85 3x0
+86 5x1
+87 3x2
+88 1x3
 
 [PARTICIPANTE]
 NOME: Pedro Willian
