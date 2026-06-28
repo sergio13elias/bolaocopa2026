@@ -5850,3 +5850,20 @@ CAMPEA: Portugal
 VICE: França
 ARTILHEIRO: Kylian Mbappé
 VICE_ARTILHEIRO: Cristiano Ronaldo
+[FASE2]
+73 1x2
+74 2x0
+75 2x1
+76 2x0
+77 3x1
+78 1x2
+79 1x1
+80 2x0
+81 2x1
+82 2x1
+83 2x1
+84 2x0
+85 1x0
+86 3x0
+87 2x1
+88 0x1
