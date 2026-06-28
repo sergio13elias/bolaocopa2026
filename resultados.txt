@@ -3970,6 +3970,22 @@ CAMPEA: Argentina
 VICE: Inglaterra
 ARTILHEIRO: Harry Kane
 VICE_ARTILHEIRO: Mbappe
+[FASE2]
+73 1x2
+74 2x0
+75 3x1
+76 2x1
+77 3x1
+78 1x2
+79 2x0
+80 3x0
+81 3x1
+82 2x1
+84 3x0
+85 1x1
+86 4x0
+87 3x1
+88 2x1
 
 [PARTICIPANTE]
 NOME: Daury Cesar Fabriz
