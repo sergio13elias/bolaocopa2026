@@ -1733,6 +1733,23 @@ CAMPEA: Portugal
 VICE: França
 ARTILHEIRO: Mbape
 VICE_ARTILHEIRO: Cristiano Ronaldo
+[FASE2]
+73 0x2
+74 4x0
+75 2x2
+76 2x1
+77 3x0
+78 1x2
+79 1x1
+80 2x0
+81 3x1
+82 2x1
+83 1x1
+84 2x0
+85 1x0
+86 2x1
+87 1x0
+88 1x1
 
 [PARTICIPANTE]
 NOME: André dos Santos Bessa
