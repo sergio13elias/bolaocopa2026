@@ -3395,6 +3395,23 @@ CAMPEA: Espanha
 VICE: Portugal
 ARTILHEIRO: Cristiano Ronaldo CR7
 VICE_ARTILHEIRO: Harry Kane
+[FASE2]
+73 1x1
+74 2x0
+75 2x1
+76 3x1
+77 3x0
+78 2x3
+79 2x0
+80 3x0
+81 2x0
+82 1x0
+83 2x2
+84 2x0
+85 4x2
+86 4x0
+87 1x0
+88 1x2
 
 [PARTICIPANTE]
 NOME: Lucas Salarolli
