@@ -2000,6 +2000,23 @@ CAMPEA: Brasil
 VICE: Espanha
 ARTILHEIRO: Cristiano Ronaldo
 VICE_ARTILHEIRO: Vini Jr
+[FASE2]
+73 0x1
+74 1x1
+75 1x1
+76 3x0
+77 4x0
+78 1x1
+79 1x1
+80 1x0
+81 2x0
+82 1x1
+83 1x1
+84 1x0
+85 1x1
+86 2x0
+87 1x0
+88 1x1
 
 [PARTICIPANTE]
 NOME: Fábio Abib
