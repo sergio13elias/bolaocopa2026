@@ -3101,6 +3101,23 @@ CAMPEA: França
 VICE: Espanha
 ARTILHEIRO: M bapee França
 VICE_ARTILHEIRO: Yamal
+[FASE2]
+73 0x1
+74 2x0
+75 2x1
+76 2x1
+77 2x0
+78 2x1
+79 1x0
+80 2x0
+81 2x0
+82 0x1
+83 1x1
+84 2x0
+85 1x0
+86 3x0
+87 2x1
+88 1x1
 
 [PARTICIPANTE]
 NOME: Juninho motorola
