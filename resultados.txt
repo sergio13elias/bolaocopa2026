@@ -2532,6 +2532,23 @@ CAMPEA: França
 VICE: Brasil
 ARTILHEIRO: Mbappé
 VICE_ARTILHEIRO: Kane
+[FASE2]
+73 1x2
+74 5x0
+75 2x1
+76 2x0
+77 3x0
+78 0x1
+79 0x2
+80 2x0
+81 2x0
+82 2x2
+83 1x1
+84 3x0
+85 2x1
+86 4x0
+87 2x0
+88 1x1
 
 [PARTICIPANTE]
 NOME: Clovis Amâncio
