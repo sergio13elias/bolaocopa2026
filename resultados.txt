@@ -818,6 +818,15 @@ CAMPEA: Brasil
 VICE: Espanha
 ARTILHEIRO: Endrick
 VICE_ARTILHEIRO: Harry kane
+[FASE2]
+81 2x1
+82 1x1
+83 2x1
+84 1x0
+85 0x1
+86 2x0
+87 1x0
+88 0x2
 
 [PARTICIPANTE]
 NOME: Almir Ribeiro
