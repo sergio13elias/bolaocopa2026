@@ -4471,6 +4471,23 @@ CAMPEA: França
 VICE: Espanha
 ARTILHEIRO: Kylian Mbappé
 VICE_ARTILHEIRO: Erling Haaland
+[FASE2]
+73 1x1
+74 2x0
+75 2x1
+76 3x2
+77 2x0
+78 1x2
+79 2x1
+80 3x0
+81 2x1
+82 2x1
+83 2x1
+84 3x0
+85 2x0
+86 3x0
+87 2x1
+88 1x2
 
 [PARTICIPANTE]
 NOME: Rafael juvena
