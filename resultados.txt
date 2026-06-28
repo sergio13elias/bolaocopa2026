@@ -4893,6 +4893,7 @@ VICE_ARTILHEIRO: Lautario Matinez
 [FASE2]
 73 0x1
 74 2x0
+75 1x0
 76 2x0
 77 2x1
 78 1x1
@@ -4900,6 +4901,7 @@ VICE_ARTILHEIRO: Lautario Matinez
 80 3x0
 81 3x1
 82 1x2
+83 1x0
 84 1x0
 85 0x0
 86 2x0
