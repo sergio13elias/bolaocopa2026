@@ -1105,6 +1105,23 @@ CAMPEA: França
 VICE: Brasil
 ARTILHEIRO: Dembele da franca
 VICE_ARTILHEIRO: Vinícius Junio brasil
+[FASE2]
+73 1x1
+74 2x0
+75 1x1
+76 2x0
+77 2x0
+78 1x1
+79 1x1
+80 1x1
+81 1x1
+82 1x1
+83 1x1
+84 2x0
+85 1x1
+86 2x0
+87 1x1
+88 1x1
 
 [PARTICIPANTE]
 NOME: Heitor Silva Ramos
