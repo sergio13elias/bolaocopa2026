@@ -6183,6 +6183,23 @@ CAMPEA: França
 VICE: Portugal
 ARTILHEIRO: Mbape
 VICE_ARTILHEIRO: Cr7
+[FASE2]
+73 1x1
+74 2x1
+75 2x0
+76 2x0
+77 3x0
+78 2x1
+79 1x1
+80 1x0
+81 2x1
+82 1x1
+83 2x1
+84 2x1
+85 1x1
+86 3x0
+87 2x0
+88 2x1
 
 [PARTICIPANTE]
 NOME: Bernardo C. Barreri
