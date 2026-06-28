@@ -2612,6 +2612,23 @@ CAMPEA: Brasil
 VICE: França
 ARTILHEIRO: Mbappe
 VICE_ARTILHEIRO: Haaland
+[FASE2]
+73 0x1
+74 2x1
+75 1x1
+76 2x0
+77 3x0
+78 1x2
+79 1x0
+80 2x0
+81 1x0
+82 1x1
+83 2x1
+84 2x0
+85 1x1
+86 3x0
+87 2x0
+88 1x1
 
 [PARTICIPANTE]
 NOME: Pedro Henrique De Melo Gomes Amancio Silva
