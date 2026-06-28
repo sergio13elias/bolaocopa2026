@@ -3831,6 +3831,23 @@ CAMPEA: Brasil
 VICE: Espanha
 ARTILHEIRO: Dembele
 VICE_ARTILHEIRO: Ygor Thiago
+[FASE2]
+73 1x1
+74 2x0
+75 2x2
+76 3x0
+77 4x0
+78 1x2
+79 1x0
+80 3x1
+81 2x0
+82 0x1
+83 2x1
+84 2x0
+85 1x1
+86 3x0
+87 1x1
+88 0x1
 
 [PARTICIPANTE]
 NOME: Renan Meneguite
