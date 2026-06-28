@@ -4630,6 +4630,21 @@ CAMPEA: Argentina
 VICE: França
 ARTILHEIRO: Michael olise
 VICE_ARTILHEIRO: Lautario Matinez
+[FASE2]
+73 0x1
+74 2x0
+76 2x0
+77 2x1
+78 1x1
+79 0x1
+80 3x0
+81 3x1
+82 1x2
+84 1x0
+85 0x0
+86 2x0
+87 0x1
+88 0x1
 
 [PARTICIPANTE]
 NOME: Antonio Leal de Oliveira
