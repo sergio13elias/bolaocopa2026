@@ -356,6 +356,23 @@ CAMPEA: França
 VICE: Espanha
 ARTILHEIRO: Mbappé
 VICE_ARTILHEIRO: Erling Haaland
+[FASE2]
+73 0x1
+74 2x1
+75 2x1
+76 2x1
+77 2x0
+78 1x1
+79 1x1
+80 2x0
+81 1x0
+82 1x1
+83 1x1
+84 2x0
+85 1x0
+86 2x0
+87 2x1
+88 0x1
 
 [PARTICIPANTE]
 NOME: Sidney Henrique
