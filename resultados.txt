@@ -3408,6 +3408,23 @@ CAMPEA: Brasil
 VICE: Franca
 ARTILHEIRO: Mbappe
 VICE_ARTILHEIRO: Harry Kane
+[FASE2]
+73 1x2
+74 3x0
+75 2x1
+76 4x1
+77 4x1
+78 1x3
+79 2x2
+80 3x0
+81 2x1
+82 1x2
+83 3x2
+84 3x1
+85 3x2
+86 2x0
+87 2x0
+88 1x2
 
 [PARTICIPANTE]
 NOME: José Maria da Cruz
