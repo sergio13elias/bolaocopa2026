@@ -3021,6 +3021,23 @@ CAMPEA: Inglaterra
 VICE: Espanha
 ARTILHEIRO: Harry Kane
 VICE_ARTILHEIRO: Lâmina Yamal
+[FASE2]
+73 0x0
+74 2x0
+75 1x2
+76 0x0
+77 3x0
+78 1x2
+79 1x2
+80 2x0
+81 1x0
+82 0x1
+83 2x1
+84 2x0
+85 1x0
+86 2x0
+87 1x0
+88 0x1
 
 [PARTICIPANTE]
 NOME: Alexandre Barriga
