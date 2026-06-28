@@ -4704,6 +4704,23 @@ CAMPEA: Brasil
 VICE: Espanha
 ARTILHEIRO: Vini jr
 VICE_ARTILHEIRO: Lamine yamal
+[FASE2]
+73 0x2
+74 4x1
+75 2x2
+76 3x1
+77 5x0
+78 2x1
+79 1x0
+80 3x0
+81 2x0
+82 3x2
+83 1x0
+84 3x1
+85 1x0
+86 1x1
+87 2x1
+88 1x1
 
 [PARTICIPANTE]
 NOME: Jorge Abikair
