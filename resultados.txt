@@ -5790,6 +5790,23 @@ CAMPEA: Espanha
 VICE: França
 ARTILHEIRO: Kylian  Mbappé
 VICE_ARTILHEIRO: Ousmane Dembélé
+[FASE2]
+73 2x1
+74 2x1
+75 1x0
+76 0x2
+77 2x0
+78 1x1
+79 1x0
+80 2x0
+81 1x0
+82 1x0
+83 1x1
+84 1x1
+85 1x0
+86 2x0
+87 2x2
+88 1x1
 
 [PARTICIPANTE]
 NOME: Sidney Silva III
