@@ -5378,6 +5378,23 @@ CAMPEA: Espanha
 VICE: Brasil
 ARTILHEIRO: Vini jr
 VICE_ARTILHEIRO: Lamine yamal
+[FASE2]
+73 1x2
+74 3x1
+75 2x1
+76 2x2
+77 4x1
+78 1x1
+79 1x2
+80 3x1
+81 4x0
+82 1x1
+83 2x1
+84 3x0
+85 0x0
+86 3x1
+87 3x1
+88 2x0
 
 [PARTICIPANTE]
 NOME: Bruno Vieira
