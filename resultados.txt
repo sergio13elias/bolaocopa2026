@@ -4916,6 +4916,23 @@ CAMPEA: Portugal
 VICE: Espanha
 ARTILHEIRO: Dembelee
 VICE_ARTILHEIRO: Mbappe
+[FASE2]
+73 1x2
+74 2x0
+75 1x1
+76 2x0
+77 3x0
+78 1x2
+79 2x1
+80 3x0
+81 2x1
+82 2x1
+83 2x2
+84 2x1
+85 2x0
+86 3x1
+87 2x2
+88 0x1
 
 [PARTICIPANTE]
 NOME: Serginho II
