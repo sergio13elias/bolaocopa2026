@@ -2279,6 +2279,23 @@ CAMPEA: França
 VICE: Argentina
 ARTILHEIRO: Kylian Mbappé
 VICE_ARTILHEIRO: Harry Kane
+[FASE2]
+73 0x2
+74 3x0
+75 1x2
+76 2x0
+77 2x1
+78 2x0
+79 3x0
+80 3x1
+81 2x1
+82 2x0
+83 1x2
+84 2x0
+85 2x0
+86 3x1
+87 1x2
+88 0x2
 
 [PARTICIPANTE]
 NOME: Alan Cesar da Silva
