@@ -1830,6 +1830,23 @@ CAMPEA: Brasil
 VICE: Inglaterra
 ARTILHEIRO: Harry kane
 VICE_ARTILHEIRO: Vinicius jr
+[FASE2]
+73 0x2
+74 3x0
+75 2x2
+76 3x1
+77 3x0
+78 1x3
+79 1x1
+80 3x0
+81 2x0
+82 2x1
+83 1x1
+84 1x0
+85 1x0
+86 0x1
+87 2x0
+88 1x1
 
 [PARTICIPANTE]
 NOME: Estevan Sancio Ferrari
