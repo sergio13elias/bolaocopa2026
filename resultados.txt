@@ -4864,6 +4864,23 @@ CAMPEA: Espanha
 VICE: Brasil
 ARTILHEIRO: Mbappe
 VICE_ARTILHEIRO: Haaland
+[FASE2]
+73 0x1
+74 2x0
+75 2x1
+76 2x1
+77 2x0
+78 1x1
+79 1x0
+80 1x0
+81 1x0
+82 1x0
+83 1x0
+84 1x0
+85 1x0
+86 4x0
+87 1x0
+88 0x1
 
 [PARTICIPANTE]
 NOME: Ana Paula Florentino Santos Pires
