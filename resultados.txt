@@ -3126,6 +3126,23 @@ CAMPEA: Espanha
 VICE: França
 ARTILHEIRO: Kylian Mbappé
 VICE_ARTILHEIRO: Harry Kane
+[FASE2]
+73 1x2
+74 2x0
+75 2x1
+76 2x0
+77 2x0
+78 1x1
+79 1x1
+80 3x1
+81 2x1
+82 1x0
+83 2x1
+84 2x0
+85 1x0
+86 3x0
+87 2x1
+88 1x2
 
 [PARTICIPANTE]
 NOME: Felipe Grillo
