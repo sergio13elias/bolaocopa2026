@@ -595,6 +595,23 @@ CAMPEA: Brasil
 VICE: França
 ARTILHEIRO: Mbappe
 VICE_ARTILHEIRO: Harry kane
+[FASE2]
+73 0x2
+74 3x0
+75 3x1
+76 3x0
+77 4x1
+78 1x3
+79 2x1
+80 3x0
+81 3x0
+82 2x0
+83 3x0
+84 4x1
+85 0x0
+86 3x0
+87 2x0
+88 0x1
 
 [PARTICIPANTE]
 NOME: José Alimateia
