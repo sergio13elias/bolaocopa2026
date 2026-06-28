@@ -5887,6 +5887,23 @@ CAMPEA: Argentina
 VICE: Espanha
 ARTILHEIRO: Olise
 VICE_ARTILHEIRO: Dembele
+[FASE2]
+73 1x1
+74 2x1
+75 2x1
+76 2x1
+77 3x0
+78 1x2
+79 1x1
+80 3x0
+81 2x0
+82 0x1
+83 1x0
+84 1x0
+85 1x1
+86 3x0
+87 2x1
+88 0x1
 
 [PARTICIPANTE]
 NOME: Sidney Silva I
