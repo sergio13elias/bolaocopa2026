@@ -4533,6 +4533,23 @@ CAMPEA: Franca
 VICE: Argentina
 ARTILHEIRO: Lautaro Martinez
 VICE_ARTILHEIRO: Michael Olise
+[FASE2]
+73 0x0
+74 3x0
+75 0x0
+76 3x0
+77 2x0
+78 1x2
+79 0x0
+80 4x0
+81 2x0
+82 1x1
+83 0x0
+84 2x0
+85 2x0
+86 3x0
+87 1x2
+88 2x1
 
 [PARTICIPANTE]
 NOME: Bruno Souza (BB) 2
