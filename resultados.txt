@@ -4676,6 +4676,23 @@ CAMPEA: Argentina
 VICE: Brasil
 ARTILHEIRO: Mbppé
 VICE_ARTILHEIRO: Haaland
+[FASE2]
+73 0x2
+74 2x1
+75 2x1
+76 2x1
+77 3x1
+78 1x2
+79 2x1
+80 3x0
+81 2x1
+82 1x2
+83 1x2
+84 2x0
+85 2x0
+86 3x0
+87 2x1
+88 5x4
 
 [PARTICIPANTE]
 NOME: Rafaella Vimercati
