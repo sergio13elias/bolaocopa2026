@@ -3957,6 +3957,23 @@ CAMPEA: Brasil
 VICE: Portugal
 ARTILHEIRO: Harry Kane
 VICE_ARTILHEIRO: Havertz
+[FASE2]
+73 1x2
+74 3x0
+75 2x2
+76 2x0
+77 3x1
+78 1x2
+79 2x0
+80 1x0
+81 3x1
+82 1x0
+83 1x1
+84 2x0
+85 2x0
+86 3x0
+87 2x1
+88 2x1
 
 [PARTICIPANTE]
 NOME: Rodrigo Di Santo
