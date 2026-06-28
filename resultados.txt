@@ -922,6 +922,14 @@ VICE: Espanha
 ARTILHEIRO: Endrick
 VICE_ARTILHEIRO: Harry kane
 [FASE2]
+73 0x1
+74 2x0
+75 2x1
+76 2x1
+77 3x1
+78 1x2
+79 1x1
+80 2x0
 81 2x1
 82 1x1
 83 2x1
