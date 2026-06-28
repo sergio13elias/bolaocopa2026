@@ -3665,6 +3665,21 @@ CAMPEA: Brasil
 VICE: França
 ARTILHEIRO: Endrick
 VICE_ARTILHEIRO: Paqueta
+[FASE2]
+73 1x2
+74 2x1
+76 3x1
+77 3x1
+78 0x2
+80 3x0
+81 2x1
+82 3x1
+83 2x1
+84 2x1
+85 2x1
+86 2x1
+87 3x0
+88 3x1
 
 [PARTICIPANTE]
 NOME: Maria Celi- Cris fdv
