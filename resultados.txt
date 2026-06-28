@@ -1326,6 +1326,23 @@ CAMPEA: Argentina
 VICE: Colômbia
 ARTILHEIRO: Hery Cane
 VICE_ARTILHEIRO: Leonel Messi
+[FASE2]
+73 1x1
+74 2x1
+75 1x2
+76 1x1
+77 2x1
+78 1x1
+79 1x2
+80 2x0
+81 2x0
+82 1x1
+83 2x1
+84 2x0
+85 1x0
+86 2x0
+87 1x0
+88 0x1
 
 [PARTICIPANTE]
 NOME: Matheus Marmo Sorio
