@@ -5116,6 +5116,23 @@ CAMPEA: Brasil
 VICE: Alemanha
 ARTILHEIRO: Harry Kane
 VICE_ARTILHEIRO: Vini Jr
+[FASE2]
+73 0x2
+74 2x0
+75 2x1
+76 2x1
+77 3x0
+78 1x0
+79 2x1
+80 3x0
+81 1x0
+82 1x1
+83 1x1
+84 2x0
+85 1x0
+86 3x0
+87 1x1
+88 0x0
 
 [PARTICIPANTE]
 NOME: Daniela Teixeira
