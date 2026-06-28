@@ -3215,6 +3215,23 @@ CAMPEA: Brasil
 VICE: Portugal
 ARTILHEIRO: Mbappe
 VICE_ARTILHEIRO: CR7
+[FASE2]
+73 1x3
+74 2x2
+75 1x2
+76 3x1
+77 3x1
+78 1x2
+79 1x1
+80 4x1
+81 3x0
+82 3x1
+83 1x1
+84 2x1
+85 1x0
+86 2x0
+87 3x1
+88 1x2
 
 [PARTICIPANTE]
 NOME: Ronaldo Alves da Silva
