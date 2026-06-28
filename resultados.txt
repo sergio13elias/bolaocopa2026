@@ -3585,6 +3585,22 @@ CAMPEA: França
 VICE: Brasil
 ARTILHEIRO: Kylian Mbappe
 VICE_ARTILHEIRO: Endrik
+[FASE2]
+73 2x1
+74 3x1
+75 2x1
+76 3x1
+78 1x1
+79 2x1
+80 2x1
+81 2x1
+82 1x2
+83 2x1
+84 3x1
+85 2x1
+86 3x1
+87 1x0
+88 2x1
 
 [PARTICIPANTE]
 NOME: Angélica- Cris fdv
