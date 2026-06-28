@@ -1117,6 +1117,23 @@ CAMPEA: Espanha
 VICE: Inglaterra
 ARTILHEIRO: Harry Kane
 VICE_ARTILHEIRO: Mpabbe
+[FASE2]
+73 1x2
+74 2x0
+75 1x0
+76 3x0
+77 3x1
+78 1x1
+79 1x0
+80 1x0
+81 3x1
+82 0x1
+83 0x1
+84 2x0
+85 1x1
+86 1x0
+87 2x1
+88 0x1
 
 [PARTICIPANTE]
 NOME: Elionaldo Santos
