@@ -259,6 +259,23 @@ CAMPEA: Espanha
 VICE: França
 ARTILHEIRO: Jamal Musiala
 VICE_ARTILHEIRO: Lamine Yamal
+[FASE2]
+73 0x1
+74 3x0
+75 2x0
+76 2x0
+77 2x0
+78 0x2
+79 1x0
+80 2x0
+81 1x0
+82 1x0
+83 2x0
+84 3x0
+85 0x0
+86 3x0
+87 1x0
+88 1x0
 
 [PARTICIPANTE]
 NOME: Serginho
