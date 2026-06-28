@@ -5453,6 +5453,23 @@ CAMPEA: Brasil
 VICE: França
 ARTILHEIRO: Kylian Mbappé (França) - 8 gols
 VICE_ARTILHEIRO: Julián Álvarez (Argentina) - 6 gols
+[FASE2]
+73 1x1
+74 2x0
+75 2x1
+76 2x0
+77 2x1
+78 1x1
+79 1x1
+80 2x0
+81 2x1
+82 1x1
+83 1x1
+84 2x0
+85 1x0
+86 3x0
+87 2x1
+88 1x1
 
 [PARTICIPANTE]
 NOME: Valdir Gomes Gonçalves da Silva
