@@ -91,7 +91,7 @@
 [VICE_ARTILHEIRO]
 
 [FASES]
-f1:true f2:false f3:false
+f1:true f2:false f3:true
 
 [PARTICIPANTE]
 NOME: Domingos Nascimento
