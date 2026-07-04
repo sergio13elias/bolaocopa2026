@@ -63,6 +63,12 @@ textarea{resize:vertical;min-height:140px;font-size:12px;}
 .sc{width:32px;height:30px;text-align:center;font-size:14px;font-weight:700;border:1px solid #c8cdd5;border-radius:5px;-webkit-appearance:none;appearance:none;background:#fff;color:#002776;padding:0;}
 .sc:focus{border-color:#009c3b;}
 .sc-x{font-size:11px;color:#bbb;flex-shrink:0;}
+.j-row.conf{flex-wrap:wrap;}
+.tm{flex:1;min-width:0;height:28px;font-size:10px;font-weight:700;color:#002776;border:1px solid #c8cdd5;border-radius:5px;padding:0 6px;text-transform:uppercase;}
+.tm:focus{border-color:#8e44ad;}
+.tm.tm-erro{border-color:#e74c3c;background:#fff5f5;}
+.conf-times{display:flex;gap:5px;flex-basis:100%;margin-top:4px;align-items:center;}
+.conf-hint{font-size:9px;color:#999;flex-basis:100%;margin-top:2px;}
 .prog-bg{height:5px;background:#dde1e7;border-radius:3px;overflow:hidden;margin:6px 0 8px;}
 .prog-fill{height:100%;background:#009c3b;border-radius:3px;transition:width .3s;}
 /* PART */
@@ -258,10 +264,10 @@ var JOGOS_TODOS=[
   {n:82,f:'32',a:'BELGICA',b:'SENEGAL'},{n:83,f:'32',a:'PORTUGAL',b:'CROACIA'},{n:84,f:'32',a:'ESPANHA',b:'AUSTRIA'},
   {n:85,f:'32',a:'SUICA',b:'ARGELIA'},{n:86,f:'32',a:'ARGENTINA',b:'CABO VERDE'},{n:87,f:'32',a:'COLOMBIA',b:'GANA'},
   {n:88,f:'32',a:'AUSTRALIA',b:'EGITO'},
-  {n:89,f:'OI',a:'V.J74',b:'V.J77'},{n:90,f:'OI',a:'V.J73',b:'V.J75'},
-  {n:91,f:'OI',a:'V.J76',b:'V.J78'},{n:92,f:'OI',a:'V.J79',b:'V.J80'},
-  {n:93,f:'OI',a:'V.J83',b:'V.J84'},{n:94,f:'OI',a:'V.J81',b:'V.J82'},
-  {n:95,f:'OI',a:'V.J86',b:'V.J88'},{n:96,f:'OI',a:'V.J85',b:'V.J87'},
+  {n:89,f:'OI',a:'PARAGUAI',b:'FRANCA'},{n:90,f:'OI',a:'CANADA',b:'MARROCOS'},
+  {n:91,f:'OI',a:'BRASIL',b:'NORUEGA'},{n:92,f:'OI',a:'MEXICO',b:'INGLATERRA'},
+  {n:93,f:'OI',a:'PORTUGAL',b:'ESPANHA'},{n:94,f:'OI',a:'EUA',b:'BELGICA'},
+  {n:95,f:'OI',a:'ARGENTINA',b:'EGITO'},{n:96,f:'OI',a:'SUICA',b:'COLOMBIA'},
   {n:97,f:'QU',a:'V.J89',b:'V.J90'},{n:98,f:'QU',a:'V.J93',b:'V.J94'},
   {n:99,f:'QU',a:'V.J91',b:'V.J92'},{n:100,f:'QU',a:'V.J95',b:'V.J96'},
   {n:101,f:'SE',a:'V.J97',b:'V.J98'},{n:102,f:'SE',a:'V.J99',b:'V.J100'},
@@ -333,8 +339,11 @@ function parseTxt(txt){
       ptFase=null;DADOS.participantes.push(pt);return;
     }
     if(l==='[FASE1]'){ptFase='f1';return;}if(l==='[FASE2]'){ptFase='f2';return;}if(l==='[FASE3]'){ptFase='f3';return;}
-    var mN=l.match(/^(\d+)\s+(\d+)[xX](\d+)/);
-    if(sec==='r'&&mN)DADOS.resultados[+mN[1]]={ga:+mN[2],gb:+mN[3]};
+    // Formato com confronto (J97+): "97 FRANCA 2x0 CANADA" | formato simples: "97 2x0"
+    var mT=l.match(/^(\d+)\s+(\S.*?)\s+(\d+)\s*[xX]\s*(\d+)\s+(\S.*)$/);
+    var mN=l.match(/^(\d+)\s+(\d+)\s*[xX]\s*(\d+)/);
+    if(sec==='r'&&mT)DADOS.resultados[+mT[1]]={ga:+mT[3],gb:+mT[4],ta:mT[2].trim(),tb:mT[5].trim()};
+    else if(sec==='r'&&mN)DADOS.resultados[+mN[1]]={ga:+mN[2],gb:+mN[3]};
     else if(sec==='c'&&l)DADOS.campea=l;
     else if(sec==='v'&&l)DADOS.vice=l;
     else if(sec==='a'&&l)DADOS.artilheiro=l;
@@ -350,6 +359,9 @@ function parseTxt(txt){
       else if(u.startsWith('VICE:'))pt.vice=l.slice(5).trim();
       else if(u.startsWith('ARTILHEIRO:'))pt.artilheiro=l.slice(11).trim();
       else if(u.startsWith('VICE_ARTILHEIRO:'))pt.vice_artilheiro=l.slice(16).trim();
+      else if(mT&&ptFase==='f3'){
+        pt.fase3[+mT[1]]={ga:+mT[3],gb:+mT[4],ta:mT[2].trim(),tb:mT[5].trim()};
+      }
       else if(mN&&ptFase){
         var obj=ptFase==='f1'?pt.fase1:ptFase==='f2'?pt.fase2:pt.fase3;
         obj[+mN[1]]={ga:+mN[2],gb:+mN[3]};
@@ -361,7 +373,8 @@ function parseTxt(txt){
 function gerarTxt(){
   var ls=['[RESULTADOS]'];
   Object.keys(DADOS.resultados).map(Number).sort(function(a,b){return a-b;}).forEach(function(n){
-    var r=DADOS.resultados[n];ls.push(n+' '+r.ga+'x'+r.gb);
+    var r=DADOS.resultados[n];
+    ls.push(r.ta&&r.tb ? n+' '+r.ta+' '+r.ga+'x'+r.gb+' '+r.tb : n+' '+r.ga+'x'+r.gb);
   });
   ls.push('','[CAMPEA]');if(DADOS.campea)ls.push(DADOS.campea);
   ls.push('','[VICE]');if(DADOS.vice)ls.push(DADOS.vice);
@@ -392,7 +405,11 @@ function gerarTxt(){
     var ns3=Object.keys(p.fase3).map(Number).sort(function(a,b){return a-b;});
     if(ns3.length){
       ls.push('[FASE3]');
-      ns3.forEach(function(n){var pl=p.fase3[n];ls.push(n+' '+pl.ga+'x'+pl.gb);});
+      ns3.forEach(function(n){
+        var pl=p.fase3[n];
+        // Das Quartas em diante grava o confronto palpitado junto com o placar
+        ls.push(pl.ta&&pl.tb ? n+' '+pl.ta+' '+pl.ga+'x'+pl.gb+' '+pl.tb : n+' '+pl.ga+'x'+pl.gb);
+      });
     }
     ls.push('');
   });
@@ -422,42 +439,132 @@ function salvarFases(){
 }
 
 // ===== JOGOS FORM =====
+// A partir do J97 (Quartas) o confronto não é fixo: o admin lança os DOIS TIMES + placar.
 function renderJogos(){
   var pre=0,h='',fa=null;
+  // Datalist com as 32 seleções classificadas (para autocomplete dos times)
+  var times={};
+  JOGOS_TODOS.forEach(function(j){if(j.f==='32'){times[j.a]=1;times[j.b]=1;}});
+  h+='<datalist id="dl-times">'+Object.keys(times).sort().map(function(t){return '<option value="'+t+'">';}).join('')+'</datalist>';
   JOGOS_TODOS.forEach(function(j){
     if(j.f!==fa){
       if(fa)h+='</div>';
-      h+='<span class="fase-lbl" style="background:'+FASE_CORES[j.f]+'">'+FASE_LABELS[j.f]+'</span><div>';
+      h+='<span class="fase-lbl" style="background:'+FASE_CORES[j.f]+'">'+FASE_LABELS[j.f]+'</span>';
+      if(j.n===97)h+='<button class="btn btn-roxo btn-sm" style="margin:4px 0 6px;display:block;" onclick="sugerirConfrontos()">\u26a1 Preencher confrontos pelos resultados (J97\u2013J104)</button>';
+      h+='<div>';
       fa=j.f;
     }
     var r=DADOS.resultados[j.n];if(r!==undefined)pre++;
-    h+='<div class="j-row'+(r!==undefined?' ok':'')+'" id="jr'+j.n+'">'
-      +'<span class="j-n">'+j.n+'</span>'
-      +'<div class="j-nm"><span>'+j.a+'</span><span>'+j.b+'</span></div>'
-      +'<input class="sc" type="number" min="0" max="30" id="ra'+j.n+'" value="'+(r?r.ga:'')+'" placeholder="-" oninput="onR('+j.n+')">'
-      +'<span class="sc-x">x</span>'
-      +'<input class="sc" type="number" min="0" max="30" id="rb'+j.n+'" value="'+(r?r.gb:'')+'" placeholder="-" oninput="onR('+j.n+')">'
-      +'</div>';
+    if(j.n>=97){
+      // Linha com placar + linha com os dois times reais do confronto
+      h+='<div class="j-row conf'+(r!==undefined?' ok':'')+'" id="jr'+j.n+'">'
+        +'<span class="j-n">'+j.n+'</span>'
+        +'<div class="j-nm"><span>'+j.a+'</span><span>'+j.b+'</span></div>'
+        +'<input class="sc" type="number" min="0" max="30" id="ra'+j.n+'" value="'+(r&&r.ga!==undefined?r.ga:'')+'" placeholder="-" oninput="onR('+j.n+')">'
+        +'<span class="sc-x">x</span>'
+        +'<input class="sc" type="number" min="0" max="30" id="rb'+j.n+'" value="'+(r&&r.gb!==undefined?r.gb:'')+'" placeholder="-" oninput="onR('+j.n+')">'
+        +'<div class="conf-times">'
+        +'<input class="tm" id="ta'+j.n+'" list="dl-times" value="'+esc(r&&r.ta?r.ta:'')+'" placeholder="Time A (mandante)" oninput="onR('+j.n+')">'
+        +'<span class="sc-x">x</span>'
+        +'<input class="tm" id="tb'+j.n+'" list="dl-times" value="'+esc(r&&r.tb?r.tb:'')+'" placeholder="Time B (visitante)" oninput="onR('+j.n+')">'
+        +'</div>'
+        +'<span class="conf-hint">Confronto real \u00e9 obrigat\u00f3rio para pontuar este jogo</span>'
+        +'</div>';
+    }else{
+      h+='<div class="j-row'+(r!==undefined?' ok':'')+'" id="jr'+j.n+'">'
+        +'<span class="j-n">'+j.n+'</span>'
+        +'<div class="j-nm"><span>'+j.a+'</span><span>'+j.b+'</span></div>'
+        +'<input class="sc" type="number" min="0" max="30" id="ra'+j.n+'" value="'+(r?r.ga:'')+'" placeholder="-" oninput="onR('+j.n+')">'
+        +'<span class="sc-x">x</span>'
+        +'<input class="sc" type="number" min="0" max="30" id="rb'+j.n+'" value="'+(r?r.gb:'')+'" placeholder="-" oninput="onR('+j.n+')">'
+        +'</div>';
+    }
   });
   if(fa)h+='</div>';
   document.getElementById('prog-txt').textContent=pre+'/104';
   document.getElementById('prog-fill').style.width=Math.round(pre/104*100)+'%';
   document.getElementById('form-jogos').innerHTML=h;
 }
+
+// Sugere os times de J97–J104 propagando vencedores/perdedores dos resultados já lançados.
+// Empates (decididos nos pênaltis) não são propagados: digite o classificado manualmente.
+var MAPA_CONF={97:{a:{v:89},b:{v:90}},98:{a:{v:93},b:{v:94}},99:{a:{v:91},b:{v:92}},100:{a:{v:95},b:{v:96}},
+               101:{a:{v:97},b:{v:98}},102:{a:{v:99},b:{v:100}},103:{a:{p:101},b:{p:102}},104:{a:{v:101},b:{v:102}}};
+function timesDoJogo(n){
+  if(n<=96){var j=JOGOS_TODOS.filter(function(x){return x.n===n;})[0];return j?[j.a,j.b]:null;}
+  var ea=document.getElementById('ta'+n),eb=document.getElementById('tb'+n);
+  if(ea&&eb&&ea.value.trim()&&eb.value.trim())return[ea.value.trim().toUpperCase(),eb.value.trim().toUpperCase()];
+  return null;
+}
+function placarDoJogo(n){
+  var ea=document.getElementById('ra'+n),eb=document.getElementById('rb'+n);
+  if(ea&&eb&&ea.value!==''&&eb.value!=='')return[+ea.value,+eb.value];
+  var r=DADOS.resultados[n];return r?[r.ga,r.gb]:null;
+}
+function resolverSlot(slot){
+  var m=slot.v||slot.p, ts=timesDoJogo(m), pl=placarDoJogo(m);
+  if(!ts||!pl)return '';
+  if(pl[0]===pl[1])return '';// empate: decisão nos pênaltis, admin digita
+  var venc=pl[0]>pl[1]?ts[0]:ts[1], perd=pl[0]>pl[1]?ts[1]:ts[0];
+  return slot.v?venc:perd;
+}
+function sugerirConfrontos(){
+  var preencheu=0,pend=[];
+  [97,98,99,100,101,102,103,104].forEach(function(n){
+    var m=MAPA_CONF[n];
+    var ea=document.getElementById('ta'+n),eb=document.getElementById('tb'+n);
+    if(ea&&!ea.value.trim()){var tA=resolverSlot(m.a);if(tA){ea.value=tA;preencheu++;}else pend.push('J'+n);}
+    if(eb&&!eb.value.trim()){var tB=resolverSlot(m.b);if(tB){eb.value=tB;preencheu++;}else if(pend.indexOf('J'+n)<0)pend.push('J'+n);}
+    onR(n);
+  });
+  var msg='\u26a1 '+preencheu+' time(s) preenchido(s).';
+  if(pend.length)msg+=' Pendentes (sem resultado ou empate/p\u00eanaltis): '+pend.join(', ');
+  toast(msg);
+}
 function onR(n){
   var a=document.getElementById('ra'+n),b=document.getElementById('rb'+n),c=document.getElementById('jr'+n);
-  if(a.value!==''&&b.value!==''){DADOS.resultados[n]={ga:+a.value,gb:+b.value};c.className='j-row ok';}
-  else{delete DADOS.resultados[n];c.className='j-row';}
+  var base=n>=97?'j-row conf':'j-row';
+  if(a.value!==''&&b.value!==''){
+    var r={ga:+a.value,gb:+b.value};
+    if(n>=97){
+      var ta=document.getElementById('ta'+n),tb=document.getElementById('tb'+n);
+      if(ta&&ta.value.trim())r.ta=ta.value.trim().toUpperCase();
+      if(tb&&tb.value.trim())r.tb=tb.value.trim().toUpperCase();
+    }
+    DADOS.resultados[n]=r;c.className=base+' ok';
+  }
+  else{delete DADOS.resultados[n];c.className=base;}
   var pre=Object.keys(DADOS.resultados).length;
   document.getElementById('prog-txt').textContent=pre+'/104';
   document.getElementById('prog-fill').style.width=Math.round(pre/104*100)+'%';
 }
 function salvarResultados(){
+  var faltaTime=[];
   JOGOS_TODOS.forEach(function(j){
     var a=document.getElementById('ra'+j.n),b=document.getElementById('rb'+j.n);
-    if(a&&b&&a.value!==''&&b.value!=='')DADOS.resultados[j.n]={ga:+a.value,gb:+b.value};
+    if(a&&b&&a.value!==''&&b.value!==''){
+      var r={ga:+a.value,gb:+b.value};
+      if(j.n>=97){
+        var ta=document.getElementById('ta'+j.n),tb=document.getElementById('tb'+j.n);
+        var vA=ta?ta.value.trim():'',vB=tb?tb.value.trim():'';
+        if(!vA||!vB){
+          faltaTime.push('J'+j.n);
+          if(ta&&!vA)ta.classList.add('tm-erro');
+          if(tb&&!vB)tb.classList.add('tm-erro');
+        }else{
+          if(ta)ta.classList.remove('tm-erro');if(tb)tb.classList.remove('tm-erro');
+          r.ta=vA.toUpperCase();r.tb=vB.toUpperCase();
+        }
+      }
+      DADOS.resultados[j.n]=r;
+    }
     else delete DADOS.resultados[j.n];
   });
+  if(faltaTime.length){
+    toast('\u274c Informe os DOIS times de: '+faltaTime.join(', ')+' (obrigat\u00f3rio das Quartas em diante)');
+    setStatus('st-err','\u274c Confronto incompleto em '+faltaTime.join(', ')+'. Nada foi salvo.');
+    return;
+  }
   var btn=document.getElementById('btn-sr');btn.disabled=true;btn.textContent='\u23f3 Salvando...';
   setStatus('st-load','\u23f3 Salvando...');
   salvarGH(gerarTxt(),'Atualiza resultados '+new Date().toLocaleString('pt-BR'))
@@ -489,8 +596,17 @@ function importar(){
   if(!fase){toast('\u274c Fase n\u00e3o identificada no texto.');return;}
 
   // Extrai palpites
+  // Linha do WhatsApp: "#97 FRANCA 2x0 CANADA - avança: FRANCA nos pênaltis"
+  // Das Quartas em diante (J97+) o confronto palpitado (times) também é guardado.
   var palpites={};
   ls.forEach(function(l){
+    var mFull=l.match(/^#(\d+)\s+(\S.*?)\s+(\d+)\s*[xX]\s*(\d+)\s+(\S.*?)(?:\s*[-\u2013]\s*avan[\u00e7c]a:.*)?$/i);
+    if(mFull){
+      var n=+mFull[1];
+      palpites[n]={ga:+mFull[3],gb:+mFull[4]};
+      if(n>=97){palpites[n].ta=mFull[2].trim().toUpperCase();palpites[n].tb=mFull[5].trim().toUpperCase();}
+      return;
+    }
     var mJ=l.match(/^#(\d+)\s+.+?\s+(\d+)[xX](\d+)/);
     if(mJ)palpites[+mJ[1]]={ga:+mJ[2],gb:+mJ[3]};
   });
@@ -506,6 +622,17 @@ function importar(){
 
   var total=Object.keys(palpites).length;
   var faseLbl=['','Fase de Grupos','Segunda Fase (32-avos)','Oitavas at\u00e9 Final'][fase];
+
+  // Fase 3: confere se os confrontos (times) das Quartas em diante foram capturados
+  if(fase===3){
+    var semConf=[];
+    Object.keys(palpites).map(Number).forEach(function(n){
+      if(n>=97&&(!palpites[n].ta||!palpites[n].tb))semConf.push('J'+n);
+    });
+    if(semConf.length){
+      toast('\u26a0\ufe0f Sem confronto em: '+semConf.join(', ')+'. Texto em formato antigo? Sem os times, esses jogos n\u00e3o pontuam.');
+    }
+  }
 
   // Acha ou cria participante
   var idx=DADOS.participantes.findIndex(function(p){return p.nome.trim().toLowerCase()===nome.trim().toLowerCase();});

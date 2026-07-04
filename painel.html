@@ -83,7 +83,12 @@ select:focus{border-color:#002776;}
 .jd-pl.exato{background:#009c3b;color:#fff;}
 .jd-pl.venc{background:#f39c12;color:#fff;}
 .jd-pl.errou{background:#e74c3c;color:#fff;}
+.jd-pl.conf{background:#7b241c;color:#fff;}
 .jd-pl.aguarda{background:#eee;color:#aaa;}
+.jd.jd-conf{flex-wrap:wrap;}
+.jd-sub{flex-basis:100%;font-size:9px;color:#999;padding:2px 0 0 64px;line-height:1.4;}
+.jd-sub b{color:#666;}
+.jd-sub .sub-err{color:#c0392b;font-weight:700;}
 .jd-b{flex:1;font-weight:700;color:#002776;font-size:11px;padding-left:3px;}
 .jd-pts{font-size:12px;font-weight:900;text-align:right;min-width:28px;flex-shrink:0;}
 .jd-pts.p3{color:#009c3b;}.jd-pts.p1{color:#f39c12;}.jd-pts.p0{color:#e74c3c;}.jd-pts.pa{color:#aaa;}
@@ -227,8 +232,11 @@ function parseTxt(txt){
     if(l==='[FASES]'){sec='skip';return;}
     if(l==='[PARTICIPANTE]'){sec='pt';pt={nome:'',fase1:{},fase2:{},fase3:{},campea:'',vice:'',artilheiro:'',vice_artilheiro:''};d.participantes.push(pt);ptFase=null;return;}
     if(l==='[FASE1]'){ptFase='f1';return;}if(l==='[FASE2]'){ptFase='f2';return;}if(l==='[FASE3]'){ptFase='f3';return;}
-    var mN=l.match(/^(\d+)\s+(\d+)[xX](\d+)/);
-    if(sec==='r'&&mN)d.resultados[+mN[1]]={ga:+mN[2],gb:+mN[3]};
+    // Formato com confronto (J97+): "97 FRANCA 2x0 CANADA" | formato simples: "97 2x0"
+    var mT=l.match(/^(\d+)\s+(\S.*?)\s+(\d+)\s*[xX]\s*(\d+)\s+(\S.*)$/);
+    var mN=l.match(/^(\d+)\s+(\d+)\s*[xX]\s*(\d+)/);
+    if(sec==='r'&&mT)d.resultados[+mT[1]]={ga:+mT[3],gb:+mT[4],ta:mT[2].trim(),tb:mT[5].trim()};
+    else if(sec==='r'&&mN)d.resultados[+mN[1]]={ga:+mN[2],gb:+mN[3]};
     else if(sec==='c'&&l)d.campea=l;else if(sec==='v'&&l)d.vice=l;
     else if(sec==='a'&&l)d.artilheiro=l;else if(sec==='va'&&l)d.vice_artilheiro=l;
     else if(sec==='pt'&&pt){
@@ -238,6 +246,7 @@ function parseTxt(txt){
       else if(u.startsWith('VICE:'))pt.vice=l.slice(5).trim();
       else if(u.startsWith('ARTILHEIRO:'))pt.artilheiro=l.slice(11).trim();
       else if(u.startsWith('VICE_ARTILHEIRO:'))pt.vice_artilheiro=l.slice(16).trim();
+      else if(mT&&ptFase==='f3'){pt.fase3[+mT[1]]={ga:+mT[3],gb:+mT[4],ta:mT[2].trim(),tb:mT[5].trim()};}
       else if(mN&&ptFase){var o=ptFase==='f1'?pt.fase1:ptFase==='f2'?pt.fase2:pt.fase3;o[+mN[1]]={ga:+mN[2],gb:+mN[3]};}
     }
   });
@@ -266,10 +275,57 @@ function norm(s){
   return String(s||'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
 }
 
+// FASE 3 — regra especial das QUARTAS em diante (J97–J104):
+// o participante palpitou também o CONFRONTO. Dois critérios obrigatórios:
+//   1) Times corretos: os dois times do confronto precisam bater (em qualquer ordem)
+//   2) Placar correto: comparado DENTRO do confronto certo (alinhado por time)
+// Se os times não baterem → 0 pontos, independente do placar.
+// Oitavas (J89–J96) seguem a regra normal (confronto igual para todos).
+function calcFase3(palpites,resultados,jogos){
+  var pts=0,ex=0,vc=0,err=0;
+  var det={};
+  jogos.forEach(function(j){
+    var r=resultados[j.n],p=palpites[j.n];
+    if(!r||!p)return;
+    var tipo='errou',pt2=0;
+    if(j.n<97){
+      // Oitavas: só placar
+      var rv=r.ga>r.gb?'A':r.ga<r.gb?'B':'E';
+      var pv=p.ga>p.gb?'A':p.ga<p.gb?'B':'E';
+      if(r.ga===p.ga&&r.gb===p.gb){pt2=3;ex++;tipo='exato';}
+      else if(rv===pv){pt2=1;vc++;tipo='vencedor';}
+      else{err++;}
+    }else{
+      // Quartas em diante: exige confronto real lançado pelo admin
+      if(!r.ta||!r.tb)return; // resultado sem times ainda → aguardando
+      if(!p.ta||!p.tb){
+        // Palpite antigo sem confronto registrado → não há como validar os times
+        tipo='confronto';err++;
+      }else{
+        var direto=norm(p.ta)===norm(r.ta)&&norm(p.tb)===norm(r.tb);
+        var invertido=norm(p.ta)===norm(r.tb)&&norm(p.tb)===norm(r.ta);
+        if(!direto&&!invertido){
+          tipo='confronto';err++; // errou o confronto → 0 pts
+        }else{
+          // Alinha o placar do palpite à orientação do resultado real
+          var pga=direto?p.ga:p.gb, pgb=direto?p.gb:p.ga;
+          var rv2=r.ga>r.gb?'A':r.ga<r.gb?'B':'E';
+          var pv2=pga>pgb?'A':pga<pgb?'B':'E';
+          if(r.ga===pga&&r.gb===pgb){pt2=3;ex++;tipo='exato';}
+          else if(rv2===pv2){pt2=1;vc++;tipo='vencedor';}
+          else{err++;}
+        }
+      }
+    }
+    pts+=pt2;det[j.n]={pts:pt2,tipo:tipo};
+  });
+  return{pts:pts,ex:ex,vc:vc,err:err,det:det};
+}
+
 function calcTotal(pt,dados){
   var c1=calcFase(pt.fase1,dados.resultados,JOGOS_F1);
   var c2=calcFase(pt.fase2,dados.resultados,JOGOS_F2);
-  var c3=calcFase(pt.fase3,dados.resultados,JOGOS_F3);
+  var c3=calcFase3(pt.fase3,dados.resultados,JOGOS_F3);
   var pf=0;
   if(dados.campea&&norm(pt.campea)===norm(dados.campea))pf+=5;
   if(dados.vice&&norm(pt.vice)===norm(dados.vice))pf+=3;
@@ -375,7 +431,8 @@ function renderDet(idx){
   h+='<div class="legenda">'
     +'<div class="leg-i"><div class="leg-d" style="background:#009c3b"></div>Exato (3pts)</div>'
     +'<div class="leg-i"><div class="leg-d" style="background:#f39c12"></div>Vencedor (1pt)</div>'
-    +'<div class="leg-i"><div class="leg-d" style="background:#e74c3c"></div>Errou</div>'
+    +'<div class="leg-i"><div class="leg-d" style="background:#e74c3c"></div>Errou placar</div>'
+    +'<div class="leg-i"><div class="leg-d" style="background:#7b241c"></div>Errou confronto (Quartas+)</div>'
     +'<div class="leg-i"><div class="leg-d" style="background:#eee"></div>Aguardando</div>'
     +'</div>';
   // Jogos por fase
@@ -406,18 +463,47 @@ function renderDet(idx){
       if(det){
         if(det.tipo==='exato'){pCls='exato';ptStr='+3';ptCls='p3';}
         else if(det.tipo==='vencedor'){pCls='venc';ptStr='+1';ptCls='p1';}
+        else if(det.tipo==='confronto'){pCls='conf';ptStr='0';ptCls='p0';}
         else{pCls='errou';ptStr='0';ptCls='p0';}
       }
       var nc=!r?' nao-jog':'';
-      h+='<div class="jd'+nc+'">'
-        +'<span class="jd-n">'+j.n+'</span>'
-        +'<span class="jd-d">'+j.d+'</span>'
-        +'<span class="jd-a">'+j.a+'</span>'
-        +'<span class="jd-pl real">'+rStr+'</span>'
-        +'<span class="jd-pl '+pCls+'">'+pStr+'</span>'
-        +'<span class="jd-b">'+j.b+'</span>'
-        +'<span class="jd-pts '+ptCls+'">'+ptStr+'</span>'
-        +'</div>';
+      if(fd.jogos===JOGOS_F3&&j.n>=97){
+        // Quartas em diante: o confronto foi palpitado pelo participante.
+        // Linha principal = CONFRONTO APOSTADO pelo participante + placar palpitado.
+        // Sub-linha = confronto/placar REAL lançado pelo admin.
+        var pa=p&&p.ta?p.ta:'?',pb=p&&p.tb?p.tb:'?';
+        var temRealConf=r&&r.ta&&r.tb;
+        var apurado=!!(temRealConf); // sem times reais, jogo segue aguardando
+        var sub;
+        if(!r)sub='\u23f3 Aguardando resultado';
+        else if(!temRealConf)sub='\u23f3 Resultado real sem confronto lan\u00e7ado';
+        else sub='<b>Real:</b> '+esc(r.ta)+' '+r.ga+'x'+r.gb+' '+esc(r.tb);
+        if(det&&det.tipo==='confronto'){
+          sub+=' <span class="sub-err">\u2715 Errou o confronto \u2192 0 pts</span>';
+          if(p&&(!p.ta||!p.tb))sub+=' <span class="sub-err">(palpite sem confronto registrado)</span>';
+        }
+        if(!apurado){pCls='aguarda';ptStr='\u2014';ptCls='pa';}
+        var nc3=!apurado?' nao-jog':'';
+        h+='<div class="jd jd-conf'+nc3+'">'
+          +'<span class="jd-n">'+j.n+'</span>'
+          +'<span class="jd-d">'+j.d+'</span>'
+          +'<span class="jd-a">'+esc(pa)+'</span>'
+          +'<span class="jd-pl '+pCls+'">'+pStr+'</span>'
+          +'<span class="jd-b">'+esc(pb)+'</span>'
+          +'<span class="jd-pts '+ptCls+'">'+ptStr+'</span>'
+          +'<span class="jd-sub">'+sub+'</span>'
+          +'</div>';
+      }else{
+        h+='<div class="jd'+nc+'">'
+          +'<span class="jd-n">'+j.n+'</span>'
+          +'<span class="jd-d">'+j.d+'</span>'
+          +'<span class="jd-a">'+j.a+'</span>'
+          +'<span class="jd-pl real">'+rStr+'</span>'
+          +'<span class="jd-pl '+pCls+'">'+pStr+'</span>'
+          +'<span class="jd-b">'+j.b+'</span>'
+          +'<span class="jd-pts '+ptCls+'">'+ptStr+'</span>'
+          +'</div>';
+      }
     });
     h+='</div></div>';
   });
